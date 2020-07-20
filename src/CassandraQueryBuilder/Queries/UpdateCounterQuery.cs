@@ -7,46 +7,46 @@ using System.Threading.Tasks;
 
 namespace DB.Cassandra.QueryBuilder
 {
-    public class DBUpdateCounterQuery// : IPreparedStatement
+    public class UpdateCounterQuery// : IPreparedStatement
     {
         private String keyspace;
         private String tableName;
-        private DBColumn variable;
-        private DBColumn[] whereVariables;
+        private Column variable;
+        private Column[] whereVariables;
         private int? increaseBy; //increaseBy = Increase or decrease by (e.g. 1, 2, -1, -5)
 
         //private Object preparedStatmentLock = new Object();
         //private PreparedStatement preparedStatement;
         private ConsistencyLevel consistencyLevel;
 
-        public DBUpdateCounterQuery()
+        public UpdateCounterQuery()
         {
 
         }
 
 
-        public DBUpdateCounterQuery SetKeyspace(String keyspace)
+        public UpdateCounterQuery SetKeyspace(String keyspace)
         {
             this.keyspace = keyspace;
 
             return this;
         }
 
-        public DBUpdateCounterQuery SetTableName(String tableName)
+        public UpdateCounterQuery SetTableName(String tableName)
         {
             this.tableName = tableName;
 
             return this;
         }
 
-        public DBUpdateCounterQuery SetVariables(DBColumn variable)
+        public UpdateCounterQuery SetVariables(Column variable)
         {
             this.variable = variable;
 
             return this;
         }
 
-        public DBUpdateCounterQuery SetWhereVariables(params DBColumn[] whereVariables)
+        public UpdateCounterQuery SetWhereVariables(params Column[] whereVariables)
         {
             this.whereVariables = whereVariables;
 
@@ -54,14 +54,14 @@ namespace DB.Cassandra.QueryBuilder
         }
 
         //increaseBy = Increase or decrease by (e.g. 1, 2, -1, -5)
-        public DBUpdateCounterQuery SetIncreaseBy(int increaseBy)
+        public UpdateCounterQuery SetIncreaseBy(int increaseBy)
         {
             this.increaseBy = increaseBy;
 
             return this;
         }
 
-        public DBUpdateCounterQuery SetConsistencyLevel(ConsistencyLevel consistencyLevel)
+        public UpdateCounterQuery SetConsistencyLevel(ConsistencyLevel consistencyLevel)
         {
             this.consistencyLevel = consistencyLevel;
 
@@ -70,13 +70,13 @@ namespace DB.Cassandra.QueryBuilder
 
 
         //Returns e.g. "name text, " or "name text static, "
-        private void AppendVariableRow(StringBuilder sb, DBColumn variable)
+        private void AppendVariableRow(StringBuilder sb, Column variable)
         {
             sb.Append(variable.GetName() + " = ?");
         }
 
         //Returns e.g. "name text, address text, " or "" if null
-        private void AppendVariableRows(StringBuilder sb, DBColumn[] variables, String delimiter)
+        private void AppendVariableRows(StringBuilder sb, Column[] variables, String delimiter)
         {
             if (variables == null)
                 return;

@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 
 namespace DB.Cassandra.QueryBuilder
 {
-    public class DBColumn
+    public class Column
     {
         String name;
         ColumnType dbVariableType;
         bool isStatic;
 
-        public DBColumn(String name, ColumnType dbColumnType, bool isStatic = false)
+        public Column(String name, ColumnType dbColumnType, bool isStatic = false)
         {
             this.name = name;
             this.dbVariableType = dbColumnType;
@@ -23,7 +23,7 @@ namespace DB.Cassandra.QueryBuilder
             return name;
         }
 
-        public String GetDBColumnType()
+        public String GetColumnType()
         {
             return dbVariableType.Value;
         }

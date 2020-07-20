@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace DB.Cassandra.QueryBuilder
 {
-    public class DBUpdateQuery// : IPreparedStatement
+    public class UpdateQuery// : IPreparedStatement
     {
         private String keyspace;
         private String tableName;
-        private DBColumn[] variables;
-        private DBColumn[] whereVariables;
+        private Column[] variables;
+        private Column[] whereVariables;
         private Boolean ttl = false; //Om man har ttl så ska den ligga sist i valuesVariables;
         private Boolean ifExists = false;
         private Boolean setTimestamp = false;
@@ -23,34 +23,34 @@ namespace DB.Cassandra.QueryBuilder
 
         private ListUpdateType listUpdateType;
 
-        public DBUpdateQuery()
+        public UpdateQuery()
         {
 
         }
 
 
-        public DBUpdateQuery SetKeyspace(String keyspace)
+        public UpdateQuery SetKeyspace(String keyspace)
         {
             this.keyspace = keyspace;
 
             return this;
         }
 
-        public DBUpdateQuery SetTableName(String tableName)
+        public UpdateQuery SetTableName(String tableName)
         {
             this.tableName = tableName;
 
             return this;
         }
 
-        public DBUpdateQuery SetVariables(params DBColumn[] variables)
+        public UpdateQuery SetVariables(params Column[] variables)
         {
             this.variables = variables;
 
             return this;
         }
 
-        public DBUpdateQuery SetWhereVariables(params DBColumn[] whereVariables)
+        public UpdateQuery SetWhereVariables(params Column[] whereVariables)
         {
             this.whereVariables = whereVariables;
 
@@ -58,35 +58,35 @@ namespace DB.Cassandra.QueryBuilder
         }
 
         //Om man har ttl så ska den ligga sist i valuesVariables
-        public DBUpdateQuery SetTTL()
+        public UpdateQuery SetTTL()
         {
             this.ttl = true;
 
             return this;
         }
 
-        public DBUpdateQuery SetIfExists()
+        public UpdateQuery SetIfExists()
         {
             this.ifExists = true;
 
             return this;
         }
 
-        public DBUpdateQuery SetTimestamp()
+        public UpdateQuery SetTimestamp()
         {
             this.setTimestamp = true;
 
             return this;
         }
 
-        public DBUpdateQuery SetConsistencyLevel(ConsistencyLevel consistencyLevel)
+        public UpdateQuery SetConsistencyLevel(ConsistencyLevel consistencyLevel)
         {
             this.consistencyLevel = consistencyLevel;
 
             return this;
         }
 
-        public DBUpdateQuery SetListUpdateType(ListUpdateType listUpdateType)
+        public UpdateQuery SetListUpdateType(ListUpdateType listUpdateType)
         {
             this.listUpdateType = listUpdateType;
 
@@ -98,9 +98,9 @@ namespace DB.Cassandra.QueryBuilder
 
 
         //Returns e.g. "name text, " or "name text static, "
-        private void AppendVariableRow(StringBuilder sb, DBColumn variable)
+        private void AppendVariableRow(StringBuilder sb, Column variable)
         {
-            if(variable.GetDBColumnType().StartsWith("LIST<"))
+            if(variable.GetColumnType().StartsWith("LIST<"))
             {
                 if (listUpdateType == ListUpdateType.PREPEND)
                     sb.Append(variable.GetName() + " = ? + " + variable.GetName());
@@ -116,7 +116,7 @@ namespace DB.Cassandra.QueryBuilder
         }
 
         //Returns e.g. "name text, address text, " or "" if null
-        private void AppendVariableRows(StringBuilder sb, DBColumn[] variables, String delimiter)
+        private void AppendVariableRows(StringBuilder sb, Column[] variables, String delimiter)
         {
             if (variables == null)
                 return;

@@ -9,72 +9,72 @@ using System.Threading.Tasks;
 //http://www.datastax.com/dev/blog/new-in-cassandra-3-0-materialized-views
 namespace DB.Cassandra.QueryBuilder
 {
-    public class DBCreateMaterializedView : IQuery
+    public class CreateMaterializedView : IQuery
     {
         String keyspace;
         String toTableName; //ToMaterializedView(Name)
         String fromTableName;
-        DBColumn[] partitionKeys;
-        DBColumn[] clusteringKeys;
+        Column[] partitionKeys;
+        Column[] clusteringKeys;
         Boolean[] clusteringKeysOrderByASC;
-        DBColumn[] columns;
+        Column[] columns;
         private CompactionStrategy dbCompactionStrategy;
 
-        public DBCreateMaterializedView()
+        public CreateMaterializedView()
         {
 
         }
 
-        public DBCreateMaterializedView SetKeyspace(String keyspace)
+        public CreateMaterializedView SetKeyspace(String keyspace)
         {
             this.keyspace = keyspace;
 
             return this;
         }
 
-        public DBCreateMaterializedView SetToTableName(String toTableName)
+        public CreateMaterializedView SetToTableName(String toTableName)
         {
             this.toTableName = toTableName;
 
             return this;
         }
 
-        public DBCreateMaterializedView SetFromTableName(String fromTableName)
+        public CreateMaterializedView SetFromTableName(String fromTableName)
         {
             this.fromTableName = fromTableName;
 
             return this;
         }
 
-        public DBCreateMaterializedView SetPartitionKeys(params DBColumn[] partitionKeys)
+        public CreateMaterializedView SetPartitionKeys(params Column[] partitionKeys)
         {
             this.partitionKeys = partitionKeys;
 
             return this;
         }
         
-        public DBCreateMaterializedView SetClusteringKeys(params DBColumn[] clusteringKeys)
+        public CreateMaterializedView SetClusteringKeys(params Column[] clusteringKeys)
         {
             this.clusteringKeys = clusteringKeys;
 
             return this;
         }
 
-        public DBCreateMaterializedView SetClusteringKeysOrderByASC(params Boolean[] clusteringKeysOrderByASC)
+        public CreateMaterializedView SetClusteringKeysOrderByASC(params Boolean[] clusteringKeysOrderByASC)
         {
             this.clusteringKeysOrderByASC = clusteringKeysOrderByASC;
 
             return this;
         }
 
-        public DBCreateMaterializedView SetColumns(params DBColumn[] columns)
+        public CreateMaterializedView SetColumns(params Column[] columns)
         {
             this.columns = columns;
 
             return this;
         }
 
-        public DBCreateMaterializedView SetCompactionStrategy(CompactionStrategy dbCompactionStrategy)
+        public CreateMaterializedView SetCompactionStrategy(CompactionStrategy dbCompactionStrategy)
         {
             this.dbCompactionStrategy = dbCompactionStrategy;
 
@@ -89,13 +89,13 @@ namespace DB.Cassandra.QueryBuilder
 
 
         //Returns e.g. "name text, " or "name text static, "
-        private void AppendColumnRow(StringBuilder sb, DBColumn column)
+        private void AppendColumnRow(StringBuilder sb, Column column)
         {
             sb.Append(column.GetName());
         }
 
         //Returns e.g. "name text, address text, " or "" if null
-        private void AppendColumnRows(StringBuilder sb, DBColumn[] column)
+        private void AppendColumnRows(StringBuilder sb, Column[] column)
         {
             if (column == null)
                 return;
@@ -110,7 +110,7 @@ namespace DB.Cassandra.QueryBuilder
         }
 
         //Returns e.g. "name" or "name, address"
-        private void AppendColumnNames(StringBuilder sb, DBColumn[] column)
+        private void AppendColumnNames(StringBuilder sb, Column[] column)
         {
             if (column != null)
             {
@@ -124,7 +124,7 @@ namespace DB.Cassandra.QueryBuilder
         }
 
         //Returns e.g. "name IS NOT NULL AND address IS NOT NULL"
-        private void AppendColumnNamesWithIsNotNull(StringBuilder sb, DBColumn[] columns)
+        private void AppendColumnNamesWithIsNotNull(StringBuilder sb, Column[] columns)
         {
             if (columns != null)
             {

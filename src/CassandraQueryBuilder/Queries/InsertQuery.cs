@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace DB.Cassandra.QueryBuilder
 {
-    public class DBInsertQuery// : IPreparedStatement
+    public class InsertQuery// : IPreparedStatement
     {
         private String keyspace;
         private String tableName;
-        private DBColumn[] variables;
+        private Column[] variables;
         private Boolean ttl = false; //Om man har ttl så ska den ligga sist i valuesVariables
         private Boolean ifNotExists = false;
         private Boolean setTimestamp = false;
@@ -20,27 +20,27 @@ namespace DB.Cassandra.QueryBuilder
         //private PreparedStatement preparedStatement;
         private ConsistencyLevel consistencyLevel;
 
-        public DBInsertQuery()
+        public InsertQuery()
         {
 
         }
 
 
-        public DBInsertQuery SetKeyspace(String keyspace)
+        public InsertQuery SetKeyspace(String keyspace)
         {
             this.keyspace = keyspace;
 
             return this;
         }
 
-        public DBInsertQuery SetTableName(String tableName)
+        public InsertQuery SetTableName(String tableName)
         {
             this.tableName = tableName;
 
             return this;
         }
 
-        public DBInsertQuery SetColumns(params DBColumn[] variables)
+        public InsertQuery SetColumns(params Column[] variables)
         {
             this.variables = variables;
 
@@ -48,28 +48,28 @@ namespace DB.Cassandra.QueryBuilder
         }
 
         //Om man har ttl så ska den ligga sist i valuesVariables
-        public DBInsertQuery SetTTL()
+        public InsertQuery SetTTL()
         {
             this.ttl = true;
 
             return this;
         }
 
-        public DBInsertQuery SetIfNotExists()
+        public InsertQuery SetIfNotExists()
         {
             this.ifNotExists = true;
 
             return this;
         }
 
-        public DBInsertQuery SetTimestamp()
+        public InsertQuery SetTimestamp()
         {
             this.setTimestamp = true;
 
             return this;
         }
 
-        public DBInsertQuery SetConsistencyLevel(ConsistencyLevel consistencyLevel)
+        public InsertQuery SetConsistencyLevel(ConsistencyLevel consistencyLevel)
         {
             this.consistencyLevel = consistencyLevel;
 
@@ -80,13 +80,13 @@ namespace DB.Cassandra.QueryBuilder
 
 
         //Returns e.g. "name text, " or "name text static, "
-        private void AppendVariableRow(StringBuilder sb, DBColumn variable)
+        private void AppendVariableRow(StringBuilder sb, Column variable)
         {
             sb.Append(variable.GetName());
         }
 
         //Returns e.g. "name text, address text, " or "" if null
-        private void AppendVariableRows(StringBuilder sb, DBColumn[] variables)
+        private void AppendVariableRows(StringBuilder sb, Column[] variables)
         {
             if (variables == null)
                 return;

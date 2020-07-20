@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace DB.Cassandra.QueryBuilder
 {
-    public class DBCreateTable : IQuery
+    public class CreateTable : IQuery
     {
         private String keyspace;
         private String tableName;
-        private DBColumn[] partitionKeys;
-        private DBColumn[] clusteringKeys;
-        private DBColumn[] colums;
+        private Column[] partitionKeys;
+        private Column[] clusteringKeys;
+        private Column[] colums;
 
         private bool isClusteringKeysOrderByAscSet = false;
 
@@ -23,40 +23,40 @@ namespace DB.Cassandra.QueryBuilder
 
         private List<String> withProperties = new List<string>();
 
-        public DBCreateTable()
+        public CreateTable()
         {
 
         }
 
-        public DBCreateTable SetKeyspace(String keyspace)
+        public CreateTable SetKeyspace(String keyspace)
         {
             this.keyspace = keyspace;
 
             return this;
         }
 
-        public DBCreateTable SetTableName(String tableName)
+        public CreateTable SetTableName(String tableName)
         {
             this.tableName = tableName;
 
             return this;
         }
 
-        public DBCreateTable SetPartitionKeys(params DBColumn[] partitionKeys)
+        public CreateTable SetPartitionKeys(params Column[] partitionKeys)
         {
             this.partitionKeys = partitionKeys;
 
             return this;
         }
 
-        public DBCreateTable SetClusteringKeys(params DBColumn[] clusteringKeys)
+        public CreateTable SetClusteringKeys(params Column[] clusteringKeys)
         {
             this.clusteringKeys = clusteringKeys;
 
             return this;
         }
 
-        public DBCreateTable SetClusteringKeysOrderByASC(params Boolean[] clusteringKeysOrderByASC)
+        public CreateTable SetClusteringKeysOrderByASC(params Boolean[] clusteringKeysOrderByASC)
         {
             if (isClusteringKeysOrderByAscSet)
                 throw new Exception("SetClusteringKeysOrderByASC already set");
@@ -76,14 +76,14 @@ namespace DB.Cassandra.QueryBuilder
             return this;
         }
 
-        public DBCreateTable SetColumns(params DBColumn[] columns)
+        public CreateTable SetColumns(params Column[] columns)
         {
             this.colums = columns;
 
             return this;
         }
 
-        public DBCreateTable SetCompactionStrategy(CompactionStrategy dbCompactionStrategy)
+        public CreateTable SetCompactionStrategy(CompactionStrategy dbCompactionStrategy)
         {
             if (isDbCompactionStrategySet)
                 throw new Exception("SetCompactionStrategy already set");
@@ -95,7 +95,7 @@ namespace DB.Cassandra.QueryBuilder
             return this;
         }
 
-        public DBCreateTable SetGcGrace(int gcGraceSeconds)
+        public CreateTable SetGcGrace(int gcGraceSeconds)
         {
             if (isGcGraceSecondsSet)
                 throw new Exception("SetGcGrace already set");
@@ -112,17 +112,17 @@ namespace DB.Cassandra.QueryBuilder
 
 
         //Returns e.g. "name text, " or "name text static, "
-        private void AppendColumnRow(StringBuilder sb, DBColumn column)
+        private void AppendColumnRow(StringBuilder sb, Column column)
         {
             String static_ = "";
             if (column.IsStatic())
                 static_ = " STATIC";
 
-            sb.Append(column.GetName() + " " + column.GetDBColumnType() + static_ + ", ");
+            sb.Append(column.GetName() + " " + column.GetColumnType() + static_ + ", ");
         }
 
         //Returns e.g. "name text, address text, " or "" if null
-        private void AppendColumnRows(StringBuilder sb, DBColumn[] column)
+        private void AppendColumnRows(StringBuilder sb, Column[] column)
         {
             if (column == null)
                 return;
@@ -132,7 +132,7 @@ namespace DB.Cassandra.QueryBuilder
         }
 
         //Returns e.g. "name" or "name, address"
-        private void AppendColumnNames(StringBuilder sb, DBColumn[] column)
+        private void AppendColumnNames(StringBuilder sb, Column[] column)
         {
             if (column != null)
             {

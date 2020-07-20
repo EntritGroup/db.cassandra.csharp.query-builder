@@ -7,27 +7,27 @@ using System.Threading.Tasks;
 
 namespace DB.Cassandra.QueryBuilder
 {
-    public class DBDataCenter
+    public class DataCenter
     {
         private String name;
         private int? replicationFactor;
 
 
-        public DBDataCenter(String name, int replicationFactor)
+        public DataCenter(String name, int replicationFactor)
         {
             this.name = name;
             this.replicationFactor = replicationFactor;
         }
 
 
-        //public DBDataCenter SetName(String name)
+        //public DataCenter SetName(String name)
         //{
         //    this.name = name;
 
         //    return this;
         //}
         
-        //public DBDataCenter SetReplicationFactor(int replicationFactor)
+        //public DataCenter SetReplicationFactor(int replicationFactor)
         //{
         //    this.replicationFactor = replicationFactor;
 

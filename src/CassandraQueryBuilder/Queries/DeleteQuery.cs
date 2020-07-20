@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace DB.Cassandra.QueryBuilder
 {
-    public class DBDeleteQuery// : IPreparedStatement
+    public class DeleteQuery// : IPreparedStatement
     {
         private String keyspace;
         private String tableName;
-        private DBColumn[] variables;
-        private DBColumn[] whereVariables;
+        private Column[] variables;
+        private Column[] whereVariables;
         private Boolean ifExists = false;
         private Boolean setTimestamp = false;
 
@@ -22,62 +22,62 @@ namespace DB.Cassandra.QueryBuilder
 
         private ListDeleteType listDeleteType;
 
-        public DBDeleteQuery()
+        public DeleteQuery()
         {
 
         }
 
 
-        public DBDeleteQuery SetKeyspace(String keyspace)
+        public DeleteQuery SetKeyspace(String keyspace)
         {
             this.keyspace = keyspace;
 
             return this;
         }
 
-        public DBDeleteQuery SetTableName(String tableName)
+        public DeleteQuery SetTableName(String tableName)
         {
             this.tableName = tableName;
 
             return this;
         }
 
-        public DBDeleteQuery SetVariables(params DBColumn[] variables)
+        public DeleteQuery SetVariables(params Column[] variables)
         {
             this.variables = variables;
 
             return this;
         }
 
-        public DBDeleteQuery SetWhereVariables(params DBColumn[] whereVariables)
+        public DeleteQuery SetWhereVariables(params Column[] whereVariables)
         {
             this.whereVariables = whereVariables;
 
             return this;
         }
 
-        public DBDeleteQuery SetIfExists()
+        public DeleteQuery SetIfExists()
         {
             this.ifExists = true;
 
             return this;
         }
 
-        public DBDeleteQuery SetTimestamp()
+        public DeleteQuery SetTimestamp()
         {
             this.setTimestamp= true;
 
             return this;
         }
 
-        public DBDeleteQuery SetConsistencyLevel(ConsistencyLevel consistencyLevel)
+        public DeleteQuery SetConsistencyLevel(ConsistencyLevel consistencyLevel)
         {
             this.consistencyLevel = consistencyLevel;
 
             return this;
         }
 
-        public DBDeleteQuery SetListDeleteType(ListDeleteType listDeleteType)
+        public DeleteQuery SetListDeleteType(ListDeleteType listDeleteType)
         {
             this.listDeleteType = listDeleteType;
 
@@ -87,9 +87,9 @@ namespace DB.Cassandra.QueryBuilder
 
 
         //Returns e.g. "name text, " or "name text static, "
-        private void AppendVariableRow(StringBuilder sb, DBColumn variable, String suffix)
+        private void AppendVariableRow(StringBuilder sb, Column variable, String suffix)
         {
-            if (variable.GetDBColumnType().StartsWith("LIST<"))
+            if (variable.GetColumnType().StartsWith("LIST<"))
             {
                 if (listDeleteType == ListDeleteType.ALL)
                     sb.Append(variable.GetName() + suffix);
@@ -101,7 +101,7 @@ namespace DB.Cassandra.QueryBuilder
         }
 
         //Returns e.g. "name text, address text, " or "" if null
-        private void AppendVariableRows(StringBuilder sb, DBColumn[] variables, String delimiter, String suffix)
+        private void AppendVariableRows(StringBuilder sb, Column[] variables, String delimiter, String suffix)
         {
             if (variables == null)
                 return;

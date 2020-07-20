@@ -7,49 +7,49 @@ using System.Threading.Tasks;
 
 namespace DB.Cassandra.QueryBuilder
 {
-    public class DBSelectQuery// : IPreparedStatement
+    public class SelectQuery// : IPreparedStatement
     {
         private String keyspace;
         private String tableName;
-        private DBColumn[] columns;
-        private DBColumn[] whereColumns;
+        private Column[] columns;
+        private Column[] whereColumns;
         private String[] whereSigns;
         private int? limit;
-        private DBColumn inColumn;
+        private Column inColumn;
         private int inLength;
 
         //private Object preparedStatmentLock = new Object();
         //private PreparedStatement preparedStatement;
         private ConsistencyLevel consistencyLevel;
 
-        public DBSelectQuery()
+        public SelectQuery()
         {
 
         }
 
 
-        public DBSelectQuery SetKeyspace(String keyspace)
+        public SelectQuery SetKeyspace(String keyspace)
         {
             this.keyspace = keyspace;
 
             return this;
         }
 
-        public DBSelectQuery SetTableName(String tableName)
+        public SelectQuery SetTableName(String tableName)
         {
             this.tableName = tableName;
 
             return this;
         }
 
-        public DBSelectQuery SetColumns(params DBColumn[] columns)
+        public SelectQuery SetColumns(params Column[] columns)
         {
             this.columns = columns;
 
             return this;
         }
 
-        public DBSelectQuery SetWhereColumns(params DBColumn[] whereColumns)
+        public SelectQuery SetWhereColumns(params Column[] whereColumns)
         {
             this.whereColumns = whereColumns;
 
@@ -57,7 +57,7 @@ namespace DB.Cassandra.QueryBuilder
         }
 
         //"=", ">", "<" etc
-        public DBSelectQuery SetWhereSigns(params String[] whereSigns)
+        public SelectQuery SetWhereSigns(params String[] whereSigns)
         {
             this.whereSigns = whereSigns;
 
@@ -65,7 +65,7 @@ namespace DB.Cassandra.QueryBuilder
         }
 
         //if limit = null here, then it will be "?", otherwise, it will be 1,2,3, or whatever you set
-        public DBSelectQuery SetLimit(int? limit = null)
+        public SelectQuery SetLimit(int? limit = null)
         {
             if (limit == null)
                 this.limit = 0;
@@ -76,7 +76,7 @@ namespace DB.Cassandra.QueryBuilder
         }
 
         //if limit = null here, then it will be "?", otherwise, it will be 1,2,3, or whatever you set
-        public DBSelectQuery SetInColumns(DBColumn inColumn, int inLength)
+        public SelectQuery SetInColumns(Column inColumn, int inLength)
         {
             this.inColumn = inColumn;
             this.inLength = inLength;
@@ -84,7 +84,7 @@ namespace DB.Cassandra.QueryBuilder
             return this;
         }
 
-        public DBSelectQuery SetConsistencyLevel(ConsistencyLevel consistencyLevel)
+        public SelectQuery SetConsistencyLevel(ConsistencyLevel consistencyLevel)
         {
             this.consistencyLevel = consistencyLevel;
 
@@ -93,13 +93,13 @@ namespace DB.Cassandra.QueryBuilder
 
 
         //Returns e.g. "name text, " or "name text static, "
-        private void AppendColumnRow(StringBuilder sb, DBColumn column, String suffix)
+        private void AppendColumnRow(StringBuilder sb, Column column, String suffix)
         {
             sb.Append(column.GetName() + suffix);
         }
 
         //Returns e.g. "name text, address text, " or "" if null
-        private void AppendColumnRows(StringBuilder sb, DBColumn[] columns, String delimiter, String suffix)
+        private void AppendColumnRows(StringBuilder sb, Column[] columns, String delimiter, String suffix)
         {
             if (columns == null)
                 return;
@@ -114,7 +114,7 @@ namespace DB.Cassandra.QueryBuilder
         }
 
         //Returns e.g. "name text, address text, " or "" if null
-        private void AppendColumnRows(StringBuilder sb, DBColumn[] columns, String delimiter, String[] suffix)
+        private void AppendColumnRows(StringBuilder sb, Column[] columns, String delimiter, String[] suffix)
         {
             if (columns == null)
                 return;

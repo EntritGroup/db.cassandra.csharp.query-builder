@@ -7,17 +7,17 @@ using System.Threading.Tasks;
 
 namespace DB.Cassandra.QueryBuilder
 {
-    public class DBDropKeyspace : IQuery
+    public class DropKeyspace : IQuery
     {
         private String name;
 
-        public DBDropKeyspace()
+        public DropKeyspace()
         {
 
         }
 
 
-        public DBDropKeyspace SetName(String keyspace)
+        public DropKeyspace SetName(String keyspace)
         {
             this.name = keyspace;
 

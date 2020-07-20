@@ -7,35 +7,35 @@ using System.Threading.Tasks;
 
 namespace DB.Cassandra.QueryBuilder
 {
-    public class DBCreateKeyspace : IQuery
+    public class CreateKeyspace : IQuery
     {
         private String name;
         private ReplicationStrategy dbReplicationStrategy;
 
         //For SimpleStrategy
-        private DBDataCenter[] dbDataCenters;
+        private DataCenter[] dbDataCenters;
 
-        public DBCreateKeyspace()
+        public CreateKeyspace()
         {
 
         }
 
 
-        public DBCreateKeyspace SetName(String keyspace)
+        public CreateKeyspace SetName(String keyspace)
         {
             this.name = keyspace;
 
             return this;
         }
 
-        public DBCreateKeyspace SetReplicationStrategy(ReplicationStrategy dbReplicationStrategy)
+        public CreateKeyspace SetReplicationStrategy(ReplicationStrategy dbReplicationStrategy)
         {
             this.dbReplicationStrategy = dbReplicationStrategy;
 
             return this;
         }
         
-        public DBCreateKeyspace SetDataCenters(DBDataCenter[] dbDataCenters)
+        public CreateKeyspace SetDataCenters(DataCenter[] dbDataCenters)
         {
             this.dbDataCenters = dbDataCenters;
 
@@ -43,13 +43,13 @@ namespace DB.Cassandra.QueryBuilder
         }
 
         //Returns e.g. "name text, " or "name text static, "
-        private void AppendVariableRow(StringBuilder sb, DBColumn variable)
+        private void AppendVariableRow(StringBuilder sb, Column variable)
         {
             sb.Append(variable.GetName());
         }
 
         //Returns e.g. "name text, address text, " or "" if null
-        private void AppendVariableRows(StringBuilder sb, DBColumn[] variables)
+        private void AppendVariableRows(StringBuilder sb, Column[] variables)
         {
             if (variables == null)
                 return;
@@ -70,9 +70,9 @@ namespace DB.Cassandra.QueryBuilder
             if (name == null)
                 throw new NullReferenceException("Name cannot be null");
             if (dbReplicationStrategy == null)
-                throw new NullReferenceException("DBReplicationStrategy cannot be null");
+                throw new NullReferenceException("ReplicationStrategy cannot be null");
             if (dbDataCenters == null)
-                throw new NullReferenceException("DBDataCenters cannot be null");
+                throw new NullReferenceException("DataCenters cannot be null");
 
 
             StringBuilder sb = new StringBuilder();
@@ -82,16 +82,16 @@ namespace DB.Cassandra.QueryBuilder
             if (Utils.CompareStrings(dbReplicationStrategy.Value, ReplicationStrategy.SimpleStrategy.Value))
             {
                 if (dbDataCenters.Length != 1)
-                    throw new Exception("DBDataCenters must contain exactly one object for SimpleStrategy");
+                    throw new Exception("DataCenters must contain exactly one object for SimpleStrategy");
 
                 sb.Append(", 'replication_factor' : " + dbDataCenters[0].GetReplicationFactor()); //dbDataCenters[1].GetReplicationFactor() throws error if replication factor is not set
             }
             else if (Utils.CompareStrings(dbReplicationStrategy.Value, ReplicationStrategy.NetworkTopologyStrategy.Value))
             {
                 if (dbDataCenters.Length == 0)
-                    throw new Exception("DBDataCenters must contain at least one object for NetworkTopotogyStrategy");
+                    throw new Exception("DataCenters must contain at least one object for NetworkTopotogyStrategy");
 
-                foreach(DBDataCenter dataCenter in dbDataCenters)
+                foreach(DataCenter dataCenter in dbDataCenters)
                     sb.Append(", '" + dataCenter.GetName() + "' : " + dataCenter.GetReplicationFactor()); //dbDataCenters[1].GetReplicationFactor() throws error if replication factor is not set
             }
             
