@@ -18,8 +18,8 @@ namespace DB.Cassandra.QueryBuilder
         private DBColumn inColumn;
         private int inLength;
 
-        private Object preparedStatmentLock = new Object();
-        private PreparedStatement preparedStatement;
+        //private Object preparedStatmentLock = new Object();
+        //private PreparedStatement preparedStatement;
         private ConsistencyLevel consistencyLevel;
 
         public DBSelectQuery()

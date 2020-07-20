@@ -15,8 +15,8 @@ namespace DB.Cassandra.QueryBuilder
         private DBColumn[] whereVariables;
         private int? increaseBy; //increaseBy = Increase or decrease by (e.g. 1, 2, -1, -5)
 
-        private Object preparedStatmentLock = new Object();
-        private PreparedStatement preparedStatement;
+        //private Object preparedStatmentLock = new Object();
+        //private PreparedStatement preparedStatement;
         private ConsistencyLevel consistencyLevel;
 
         public DBUpdateCounterQuery()

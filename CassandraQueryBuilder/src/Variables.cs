@@ -13,9 +13,8 @@ namespace DB.Cassandra.QueryBuilder
 
 
 
-        public static readonly String ALL = "All"; //Is used for when counting api calls for "All" calls (the total number of calls)
+        //public static readonly String ALL = "All"; //Is used for when counting api calls for "All" calls (the total number of calls)
 
         
-        //groups, events, mapPoints names are all in the ServicesTypes enum in this project under Enums folder
     }
 }

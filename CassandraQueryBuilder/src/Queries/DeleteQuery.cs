@@ -16,8 +16,8 @@ namespace DB.Cassandra.QueryBuilder
         private Boolean ifExists = false;
         private Boolean setTimestamp = false;
 
-        private Object preparedStatmentLock = new Object();
-        private PreparedStatement preparedStatement;
+        //private Object preparedStatmentLock = new Object();
+        //private PreparedStatement preparedStatement;
         private ConsistencyLevel consistencyLevel;
 
         private ListDeleteType listDeleteType;

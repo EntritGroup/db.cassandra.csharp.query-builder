@@ -1,4 +1,4 @@
-﻿using Cassandra;
+﻿/*using Cassandra;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,4 +10,4 @@ namespace DB.Cassandra.QueryBuilder
     {
         Task<PreparedStatement> GetPreparedStatement();
     }
-}
+}*/
