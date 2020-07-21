@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CassandraQueryBuilder
 {
-    public class UpdateQuery// : IPreparedStatement
+    public class UpdateQuery : IPreparedStatement
     {
         private String keyspace;
         private String tableName;
@@ -130,6 +130,11 @@ namespace CassandraQueryBuilder
             }
         }
 
+        public ConsistencyLevel GetConsistencyLevel()
+        {
+            return consistencyLevel;
+        }
+        
         //Om man har ttl så ska den ligga sist i valuesVariables
         //UPDATE ks.tb SET v1 = ?, v2 = ? WHERE v1 = ? AND v2 = ? IF EXISTS;
         public String GetString()

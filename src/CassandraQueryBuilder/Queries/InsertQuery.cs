@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CassandraQueryBuilder
 {
-    public class InsertQuery// : IPreparedStatement
+    public class InsertQuery : IPreparedStatement
     {
         private String keyspace;
         private String tableName;
@@ -100,6 +100,11 @@ namespace CassandraQueryBuilder
             }
         }
 
+        public ConsistencyLevel GetConsistencyLevel()
+        {
+            return consistencyLevel;
+        }
+        
         //Om man har ttl så ska den ligga sist i valuesVariables
         //INSERT INTO ks.tb (v1, v2) VALUES (?, ?) IF NOT EXISTS USING TTL ?;
         public String GetString()

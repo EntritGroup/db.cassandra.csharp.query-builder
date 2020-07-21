@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CassandraQueryBuilder
 {
-    public class DeleteQuery// : IPreparedStatement
+    public class DeleteQuery : IPreparedStatement
     {
         private String keyspace;
         private String tableName;
@@ -113,6 +113,11 @@ namespace CassandraQueryBuilder
                 if (i < variables.Length - 1)
                     sb.Append(delimiter + " ");
             }
+        }
+
+        public ConsistencyLevel GetConsistencyLevel()
+        {
+            return consistencyLevel;
         }
 
         //Om man har ttl så ska den ligga sist i valuesVariables

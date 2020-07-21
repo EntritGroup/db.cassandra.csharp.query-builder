@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CassandraQueryBuilder
 {
-    public class UpdateCounterQuery// : IPreparedStatement
+    public class UpdateCounterQuery : IPreparedStatement
     {
         private String keyspace;
         private String tableName;
@@ -90,6 +90,11 @@ namespace CassandraQueryBuilder
             }
         }
 
+        public ConsistencyLevel GetConsistencyLevel()
+        {
+            return consistencyLevel;
+        }
+        
         //increaseBy = Increase or decrease by (e.g. 1, 2, -1, -5)
         //Om man har ttl så ska den ligga sist i valuesVariables
         //UPDATE ks.tb SET counter_column_name = counter_column_name + -1 WHERE pk1 = ? AND pk2 = ?;

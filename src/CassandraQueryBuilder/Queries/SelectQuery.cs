@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CassandraQueryBuilder
 {
-    public class SelectQuery// : IPreparedStatement
+    public class SelectQuery : IPreparedStatement
     {
         private String keyspace;
         private String tableName;
@@ -131,6 +131,11 @@ namespace CassandraQueryBuilder
             }
         }
 
+        public ConsistencyLevel GetConsistencyLevel()
+        {
+            return consistencyLevel;
+        }
+        
         //Om man har ttl så ska den ligga sist i valuesVariables
         //SELECT v1, v2 FROM ks.tb WHERE v1 = ? AND v2 = ?;
         public String GetString()
