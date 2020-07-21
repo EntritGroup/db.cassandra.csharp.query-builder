@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using DB.Cassandra.QueryBuilder;
+using DB.CassandraQueryBuilder;
 
 namespace CassandraQueryBuilder.Tests.UT
 {

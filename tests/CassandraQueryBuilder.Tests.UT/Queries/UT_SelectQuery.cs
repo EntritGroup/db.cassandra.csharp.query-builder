@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using DB.Cassandra.QueryBuilder;
+using DB.CassandraQueryBuilder;
 
 
 namespace CassandraQueryBuilder.Tests.UT

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DB.Cassandra.QueryBuilder
+namespace DB.CassandraQueryBuilder
 {
     public class DropKeyspace : IQuery
     {
