@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CassandraQueryBuilder
 {
-    public class UpdateQuery// : IPreparedStatement
+    public class UpdateQuery : IQuery// : IPreparedStatement
     {
         private String keyspace;
         private String tableName;

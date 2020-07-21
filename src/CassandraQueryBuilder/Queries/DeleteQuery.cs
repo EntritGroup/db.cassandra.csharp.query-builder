@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CassandraQueryBuilder
 {
-    public class DeleteQuery// : IPreparedStatement
+    public class DeleteQuery : IQuery// : IPreparedStatement
     {
         private String keyspace;
         private String tableName;
