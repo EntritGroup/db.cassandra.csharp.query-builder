@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CassandraQueryBuilder
 {
-    public class SelectQuery : IPreparedStatement
+    public class SelectQuery// : IPreparedStatement
     {
         private String keyspace;
         private String tableName;
@@ -20,7 +20,7 @@ namespace CassandraQueryBuilder
 
         //private Object preparedStatmentLock = new Object();
         //private PreparedStatement preparedStatement;
-        private ConsistencyLevel consistencyLevel;
+        // private ConsistencyLevel consistencyLevel;
 
         public SelectQuery()
         {
@@ -84,14 +84,6 @@ namespace CassandraQueryBuilder
             return this;
         }
 
-        public SelectQuery SetConsistencyLevel(ConsistencyLevel consistencyLevel)
-        {
-            this.consistencyLevel = consistencyLevel;
-
-            return this;
-        }
-
-
         //Returns e.g. "name text, " or "name text static, "
         private void AppendColumnRow(StringBuilder sb, Column column, String suffix)
         {
@@ -129,11 +121,6 @@ namespace CassandraQueryBuilder
                 if (i < columns.Length - 1)
                     sb.Append(delimiter + " ");
             }
-        }
-
-        public ConsistencyLevel GetConsistencyLevel()
-        {
-            return consistencyLevel;
         }
         
         //Om man har ttl så ska den ligga sist i valuesVariables

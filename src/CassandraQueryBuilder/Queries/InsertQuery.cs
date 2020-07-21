@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CassandraQueryBuilder
 {
-    public class InsertQuery : IPreparedStatement
+    public class InsertQuery// : IPreparedStatement
     {
         private String keyspace;
         private String tableName;
@@ -18,7 +18,7 @@ namespace CassandraQueryBuilder
 
         //private Object preparedStatmentLock = new Object();
         //private PreparedStatement preparedStatement;
-        private ConsistencyLevel consistencyLevel;
+        // private ConsistencyLevel consistencyLevel;
 
         public InsertQuery()
         {
@@ -69,15 +69,6 @@ namespace CassandraQueryBuilder
             return this;
         }
 
-        public InsertQuery SetConsistencyLevel(ConsistencyLevel consistencyLevel)
-        {
-            this.consistencyLevel = consistencyLevel;
-
-            return this;
-        }
-
-
-
 
         //Returns e.g. "name text, " or "name text static, "
         private void AppendVariableRow(StringBuilder sb, Column variable)
@@ -98,11 +89,6 @@ namespace CassandraQueryBuilder
                 if (i < variables.Length - 1)
                     sb.Append(", ");
             }
-        }
-
-        public ConsistencyLevel GetConsistencyLevel()
-        {
-            return consistencyLevel;
         }
         
         //Om man har ttl så ska den ligga sist i valuesVariables

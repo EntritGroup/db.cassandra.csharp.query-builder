@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CassandraQueryBuilder
 {
-    public class DeleteQuery : IPreparedStatement
+    public class DeleteQuery// : IPreparedStatement
     {
         private String keyspace;
         private String tableName;
@@ -18,7 +18,7 @@ namespace CassandraQueryBuilder
 
         //private Object preparedStatmentLock = new Object();
         //private PreparedStatement preparedStatement;
-        private ConsistencyLevel consistencyLevel;
+        // private ConsistencyLevel consistencyLevel;
 
         private ListDeleteType listDeleteType;
 
@@ -70,13 +70,6 @@ namespace CassandraQueryBuilder
             return this;
         }
 
-        public DeleteQuery SetConsistencyLevel(ConsistencyLevel consistencyLevel)
-        {
-            this.consistencyLevel = consistencyLevel;
-
-            return this;
-        }
-
         public DeleteQuery SetListDeleteType(ListDeleteType listDeleteType)
         {
             this.listDeleteType = listDeleteType;
@@ -113,11 +106,6 @@ namespace CassandraQueryBuilder
                 if (i < variables.Length - 1)
                     sb.Append(delimiter + " ");
             }
-        }
-
-        public ConsistencyLevel GetConsistencyLevel()
-        {
-            return consistencyLevel;
         }
 
         //Om man har ttl så ska den ligga sist i valuesVariables

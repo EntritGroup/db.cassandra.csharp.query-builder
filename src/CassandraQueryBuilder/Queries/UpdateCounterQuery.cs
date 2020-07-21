@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CassandraQueryBuilder
 {
-    public class UpdateCounterQuery : IPreparedStatement
+    public class UpdateCounterQuery// : IPreparedStatement
     {
         private String keyspace;
         private String tableName;
@@ -17,7 +17,7 @@ namespace CassandraQueryBuilder
 
         //private Object preparedStatmentLock = new Object();
         //private PreparedStatement preparedStatement;
-        private ConsistencyLevel consistencyLevel;
+        // private ConsistencyLevel consistencyLevel;
 
         public UpdateCounterQuery()
         {
@@ -61,14 +61,6 @@ namespace CassandraQueryBuilder
             return this;
         }
 
-        public UpdateCounterQuery SetConsistencyLevel(ConsistencyLevel consistencyLevel)
-        {
-            this.consistencyLevel = consistencyLevel;
-
-            return this;
-        }
-
-
         //Returns e.g. "name text, " or "name text static, "
         private void AppendVariableRow(StringBuilder sb, Column variable)
         {
@@ -88,11 +80,6 @@ namespace CassandraQueryBuilder
                 if (i < variables.Length - 1)
                     sb.Append(delimiter + " ");
             }
-        }
-
-        public ConsistencyLevel GetConsistencyLevel()
-        {
-            return consistencyLevel;
         }
         
         //increaseBy = Increase or decrease by (e.g. 1, 2, -1, -5)
