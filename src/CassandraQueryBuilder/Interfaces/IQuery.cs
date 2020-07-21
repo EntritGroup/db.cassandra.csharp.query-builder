@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DB.CassandraQueryBuilder
+namespace CassandraQueryBuilder
 {
     public interface IQuery
     {
