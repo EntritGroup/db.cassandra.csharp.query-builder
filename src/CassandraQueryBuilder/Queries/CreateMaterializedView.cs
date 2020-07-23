@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 //http://www.datastax.com/dev/blog/materialized-view-performance-in-cassandra-3-x
 //https://docs.datastax.com/en/cql/3.3/cql/cql_using/useCreateMV.html
