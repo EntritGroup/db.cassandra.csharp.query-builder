@@ -6,115 +6,115 @@ using CassandraQueryBuilder;
 namespace CassandraQueryBuilder.Tests.UT
 {
     [TestClass]
-    public class UT_InsertQuery
+    public class UT_Insert
     {
         [TestMethod]
-        public void UT_InsertQuery_GetString()
+        public void UT_Insert_GetString()
         {
             String result = "INSERT INTO ks.tb (v1) VALUES (?);";
             Assert.AreEqual(result,
-                new InsertQuery()
+                new Insert()
                     .SetKeyspace(Variables.keyspace)
                     .SetTableName(Tables.tableName)
                     .SetColumns(Columns.columns1)
-                    .GetString()
+                    .ToString()
                 )
             ;
 
             result = "INSERT INTO ks.tb (v1) VALUES (?) IF NOT EXISTS;";
             Assert.AreEqual(result,
-                new InsertQuery()
+                new Insert()
                     .SetKeyspace(Variables.keyspace)
                     .SetTableName(Tables.tableName)
                     .SetColumns(Columns.columns1)
                     .SetIfNotExists()
-                    .GetString()
+                    .ToString()
                 )
             ;
 
             result = "INSERT INTO ks.tb (v1, v2) VALUES (?, ?);";
             Assert.AreEqual(result,
-                new InsertQuery()
+                new Insert()
                     .SetKeyspace(Variables.keyspace)
                     .SetTableName(Tables.tableName)
                     .SetColumns(Columns.columns1, Columns.columns2)
-                    .GetString()
+                    .ToString()
                 )
             ;
 
             result = "INSERT INTO ks.tb (v1, v2) VALUES (?, ?) IF NOT EXISTS;";
             Assert.AreEqual(result,
-                new InsertQuery()
+                new Insert()
                     .SetKeyspace(Variables.keyspace)
                     .SetTableName(Tables.tableName)
                     .SetColumns(Columns.columns1, Columns.columns2)
                     .SetIfNotExists()
-                    .GetString()
+                    .ToString()
                 )
             ;
 
             result = "INSERT INTO ks.tb (v1, v2) VALUES (?, ?) IF NOT EXISTS USING TTL ?;";
             Assert.AreEqual(result,
-                new InsertQuery()
+                new Insert()
                     .SetKeyspace(Variables.keyspace)
                     .SetTableName(Tables.tableName)
                     .SetColumns(Columns.columns1, Columns.columns2)
                     .SetTTL()
                     .SetIfNotExists()
-                    .GetString()
+                    .ToString()
                 )
             ;
 
             result = "INSERT INTO ks.tb (v1, v2) VALUES (?, ?) IF NOT EXISTS USING TIMESTAMP ?;";
             Assert.AreEqual(result,
-                new InsertQuery()
+                new Insert()
                     .SetKeyspace(Variables.keyspace)
                     .SetTableName(Tables.tableName)
                     .SetColumns(Columns.columns1, Columns.columns2)
                     .SetIfNotExists()
                     .SetTimestamp()
-                    .GetString()
+                    .ToString()
                 )
             ;
 
             result = "INSERT INTO ks.tb (v1, v2) VALUES (?, ?) IF NOT EXISTS USING TIMESTAMP ? AND TTL ?;";
             Assert.AreEqual(result,
-                new InsertQuery()
+                new Insert()
                     .SetKeyspace(Variables.keyspace)
                     .SetTableName(Tables.tableName)
                     .SetColumns(Columns.columns1, Columns.columns2)
                     .SetTTL()
                     .SetIfNotExists()
                     .SetTimestamp()
-                    .GetString()
+                    .ToString()
                 )
             ;
         }
 
         [TestMethod]
-        public void UT_InsertQuery_GetString_DataIsNullOrInvalid()
+        public void UT_Insert_GetString_DataIsNullOrInvalid()
         {
             Assert.ThrowsException<NullReferenceException>(
                 () => {
-                    new InsertQuery()
-                        .GetString();
+                    new Insert()
+                        .ToString();
                 }
             );
 
             Assert.ThrowsException<NullReferenceException>(
                 () => {
-                    new InsertQuery()
+                    new Insert()
                         .SetKeyspace(Variables.keyspace)
-                        .GetString();
+                        .ToString();
                 }
             );
 
             Assert.ThrowsException<NullReferenceException>(
 (Action)(() => {
-                    new InsertQuery()
+                    new Insert()
                         .SetKeyspace(Variables.keyspace)
                         .SetTableName(Tables.tableName)
-                        .GetString();
+                        .ToString();
                 })
             );
         }

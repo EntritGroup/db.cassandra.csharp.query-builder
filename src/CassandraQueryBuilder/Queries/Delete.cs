@@ -3,7 +3,7 @@ using System.Text;
 
 namespace CassandraQueryBuilder
 {
-    public class DeleteQuery : IQuery// : IPreparedStatement
+    public class Delete : Query// : IPreparedStatement
     {
         private String keyspace;
         private String tableName;
@@ -18,55 +18,55 @@ namespace CassandraQueryBuilder
 
         private ListDeleteType listDeleteType;
 
-        public DeleteQuery()
+        public Delete()
         {
 
         }
 
 
-        public DeleteQuery SetKeyspace(String keyspace)
+        public Delete SetKeyspace(String keyspace)
         {
             this.keyspace = keyspace;
 
             return this;
         }
 
-        public DeleteQuery SetTableName(String tableName)
+        public Delete SetTableName(String tableName)
         {
             this.tableName = tableName;
 
             return this;
         }
 
-        public DeleteQuery SetVariables(params Column[] variables)
+        public Delete SetVariables(params Column[] variables)
         {
             this.variables = variables;
 
             return this;
         }
 
-        public DeleteQuery SetWhereVariables(params Column[] whereVariables)
+        public Delete SetWhereVariables(params Column[] whereVariables)
         {
             this.whereVariables = whereVariables;
 
             return this;
         }
 
-        public DeleteQuery SetIfExists()
+        public Delete SetIfExists()
         {
             this.ifExists = true;
 
             return this;
         }
 
-        public DeleteQuery SetTimestamp()
+        public Delete SetTimestamp()
         {
             this.setTimestamp= true;
 
             return this;
         }
 
-        public DeleteQuery SetListDeleteType(ListDeleteType listDeleteType)
+        public Delete SetListDeleteType(ListDeleteType listDeleteType)
         {
             this.listDeleteType = listDeleteType;
 
@@ -106,7 +106,7 @@ namespace CassandraQueryBuilder
 
         //Om man har ttl så ska den ligga sist i valuesVariables
         //DELETE v1, v2 FROM ks.tb WHERE v1 = ? AND v2 = ? IF EXISTS;
-        public String GetString()
+        public override String ToString()
         {
             if (keyspace == null)
                 throw new NullReferenceException("Keyspace cannot be null");
@@ -149,37 +149,6 @@ namespace CassandraQueryBuilder
 
             return sb.ToString();
         }
-
-
-        /*public async Task<PreparedStatement> GetPreparedStatement()
-        {
-            if (preparedStatement != null)
-                return preparedStatement;
-
-            await Task.Run(() => PrepareStatement());
-
-            return preparedStatement;
-        }
-
-        private void PrepareStatement()
-        {
-            lock (preparedStatmentLock)
-            {
-                //To make sure that if multiple threads are calling this at the same time. If two have passed the if statement above, then the second one getting into this will just return the prepared statement and not create another one
-                if (preparedStatement != null)
-                    return;
-
-                //Using the p below since in the GetPraparedStatement, the preparedStatement should not be set before by first setting it and then afterwards setting the consistency level
-                PreparedStatement p = DB.CreatePreparedStatement(GetString());
-
-                if (consistencyLevel != null)
-                    p.SetConsistencyLevel(consistencyLevel.Value);
-
-                preparedStatement = p;
-
-            }
-        }*/
-
 
     }
 }

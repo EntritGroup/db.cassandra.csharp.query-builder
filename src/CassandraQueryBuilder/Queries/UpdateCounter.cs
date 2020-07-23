@@ -3,7 +3,7 @@ using System.Text;
 
 namespace CassandraQueryBuilder
 {
-    public class UpdateCounterQuery : IQuery// : IPreparedStatement
+    public class UpdateCounter : Query// : IPreparedStatement
     {
         private String keyspace;
         private String tableName;
@@ -15,34 +15,34 @@ namespace CassandraQueryBuilder
         //private PreparedStatement preparedStatement;
         // private ConsistencyLevel consistencyLevel;
 
-        public UpdateCounterQuery()
+        public UpdateCounter()
         {
 
         }
 
 
-        public UpdateCounterQuery SetKeyspace(String keyspace)
+        public UpdateCounter SetKeyspace(String keyspace)
         {
             this.keyspace = keyspace;
 
             return this;
         }
 
-        public UpdateCounterQuery SetTableName(String tableName)
+        public UpdateCounter SetTableName(String tableName)
         {
             this.tableName = tableName;
 
             return this;
         }
 
-        public UpdateCounterQuery SetVariables(Column variable)
+        public UpdateCounter SetVariables(Column variable)
         {
             this.variable = variable;
 
             return this;
         }
 
-        public UpdateCounterQuery SetWhereVariables(params Column[] whereVariables)
+        public UpdateCounter SetWhereVariables(params Column[] whereVariables)
         {
             this.whereVariables = whereVariables;
 
@@ -50,7 +50,7 @@ namespace CassandraQueryBuilder
         }
 
         //increaseBy = Increase or decrease by (e.g. 1, 2, -1, -5)
-        public UpdateCounterQuery SetIncreaseBy(int increaseBy)
+        public UpdateCounter SetIncreaseBy(int increaseBy)
         {
             this.increaseBy = increaseBy;
 
@@ -81,7 +81,7 @@ namespace CassandraQueryBuilder
         //increaseBy = Increase or decrease by (e.g. 1, 2, -1, -5)
         //Om man har ttl så ska den ligga sist i valuesVariables
         //UPDATE ks.tb SET counter_column_name = counter_column_name + -1 WHERE pk1 = ? AND pk2 = ?;
-        public String GetString()
+        public override String ToString()
         {
             if (keyspace == null)
                 throw new NullReferenceException("Keyspace cannot be null");
@@ -115,37 +115,6 @@ namespace CassandraQueryBuilder
 
             return sb.ToString();
         }
-
-
-        /*public async Task<PreparedStatement> GetPreparedStatement()
-        {
-            if (preparedStatement != null)
-                return preparedStatement;
-
-            await Task.Run(() => PrepareStatement());
-
-            return preparedStatement;
-        }
-
-        private void PrepareStatement()
-        {
-            lock (preparedStatmentLock)
-            {
-                //To make sure that if multiple threads are calling this at the same time. If two have passed the if statement above, then the second one getting into this will just return the prepared statement and not create another one
-                if (preparedStatement != null)
-                    return;
-
-                //Using the p below since in the GetPraparedStatement, the preparedStatement should not be set before by first setting it and then afterwards setting the consistency level
-                PreparedStatement p = DB.CreatePreparedStatement(GetString());
-
-                if (consistencyLevel != null)
-                    p.SetConsistencyLevel(consistencyLevel.Value);
-
-                preparedStatement = p;
-
-            }
-        }*/
-
 
     }
 }

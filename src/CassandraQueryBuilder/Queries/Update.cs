@@ -3,7 +3,7 @@ using System.Text;
 
 namespace CassandraQueryBuilder
 {
-    public class UpdateQuery : IQuery// : IPreparedStatement
+    public class Update : Query// : IPreparedStatement
     {
         private String keyspace;
         private String tableName;
@@ -19,34 +19,34 @@ namespace CassandraQueryBuilder
 
         private ListUpdateType listUpdateType;
 
-        public UpdateQuery()
+        public Update()
         {
 
         }
 
 
-        public UpdateQuery SetKeyspace(String keyspace)
+        public Update SetKeyspace(String keyspace)
         {
             this.keyspace = keyspace;
 
             return this;
         }
 
-        public UpdateQuery SetTableName(String tableName)
+        public Update SetTableName(String tableName)
         {
             this.tableName = tableName;
 
             return this;
         }
 
-        public UpdateQuery SetVariables(params Column[] variables)
+        public Update SetVariables(params Column[] variables)
         {
             this.variables = variables;
 
             return this;
         }
 
-        public UpdateQuery SetWhereVariables(params Column[] whereVariables)
+        public Update SetWhereVariables(params Column[] whereVariables)
         {
             this.whereVariables = whereVariables;
 
@@ -54,28 +54,28 @@ namespace CassandraQueryBuilder
         }
 
         //Om man har ttl så ska den ligga sist i valuesVariables
-        public UpdateQuery SetTTL()
+        public Update SetTTL()
         {
             this.ttl = true;
 
             return this;
         }
 
-        public UpdateQuery SetIfExists()
+        public Update SetIfExists()
         {
             this.ifExists = true;
 
             return this;
         }
 
-        public UpdateQuery SetTimestamp()
+        public Update SetTimestamp()
         {
             this.setTimestamp = true;
 
             return this;
         }
 
-        public UpdateQuery SetListUpdateType(ListUpdateType listUpdateType)
+        public Update SetListUpdateType(ListUpdateType listUpdateType)
         {
             this.listUpdateType = listUpdateType;
 
@@ -121,7 +121,7 @@ namespace CassandraQueryBuilder
 
         //Om man har ttl så ska den ligga sist i valuesVariables
         //UPDATE ks.tb SET v1 = ?, v2 = ? WHERE v1 = ? AND v2 = ? IF EXISTS;
-        public String GetString()
+        public override String ToString()
         {
             if (keyspace == null)
                 throw new NullReferenceException("Keyspace cannot be null");
@@ -173,37 +173,6 @@ namespace CassandraQueryBuilder
 
             return sb.ToString();
         }
-
-
-        /*public async Task<PreparedStatement> GetPreparedStatement()
-        {
-            if (preparedStatement != null)
-                return preparedStatement;
-
-            await Task.Run(() => PrepareStatement());
-
-            return preparedStatement;
-        }
-
-        private void PrepareStatement()
-        {
-            lock (preparedStatmentLock)
-            {
-                //To make sure that if multiple threads are calling this at the same time. If two have passed the if statement above, then the second one getting into this will just return the prepared statement and not create another one
-                if (preparedStatement != null)
-                    return;
-
-                //Using the p below since in the GetPraparedStatement, the preparedStatement should not be set before by first setting it and then afterwards setting the consistency level
-                PreparedStatement p = DB.CreatePreparedStatement(GetString());
-
-                if (consistencyLevel != null)
-                    p.SetConsistencyLevel(consistencyLevel.Value);
-
-                preparedStatement = p;
-
-            }
-        }*/
-
 
     }
 }

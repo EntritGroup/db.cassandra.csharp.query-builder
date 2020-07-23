@@ -6,94 +6,94 @@ using CassandraQueryBuilder;
 namespace CassandraQueryBuilder.Tests.UT
 {
     [TestClass]
-    public class UT_UpdateCounterQuery
+    public class UT_UpdateCounter
     {
         [TestMethod]
-        public void UT_UpdateCounterQuery_GetString()
+        public void UT_UpdateCounter_GetString()
         {
             String result = "UPDATE ks.tb SET counter_column_name = counter_column_name + 1 WHERE pk1 = ?;";
             Assert.AreEqual(result,
-                new UpdateCounterQuery()
+                new UpdateCounter()
                     .SetKeyspace(Variables.keyspace)
                     .SetTableName(Tables.tableName)
                     .SetVariables(Columns.columnsCounter)
                     .SetWhereVariables(Columns.partitionKey1)
                     .SetIncreaseBy(1)
-                    .GetString()
+                    .ToString()
                 )
             ;
 
             result = "UPDATE ks.tb SET counter_column_name = counter_column_name + 1 WHERE pk1 = ? AND pk2 = ?;";
             Assert.AreEqual(result,
-                new UpdateCounterQuery()
+                new UpdateCounter()
                     .SetKeyspace(Variables.keyspace)
                     .SetTableName(Tables.tableName)
                     .SetVariables(Columns.columnsCounter)
                     .SetWhereVariables(Columns.partitionKey1, Columns.partitionKey2)
                     .SetIncreaseBy(1)
-                    .GetString()
+                    .ToString()
                 )
             ;
 
             result = "UPDATE ks.tb SET counter_column_name = counter_column_name + -1 WHERE pk1 = ? AND pk2 = ?;";
             Assert.AreEqual(result,
-                new UpdateCounterQuery()
+                new UpdateCounter()
                     .SetKeyspace(Variables.keyspace)
                     .SetTableName(Tables.tableName)
                     .SetVariables(Columns.columnsCounter)
                     .SetWhereVariables(Columns.partitionKey1, Columns.partitionKey2)
                     .SetIncreaseBy(-1)
-                    .GetString()
+                    .ToString()
                 )
             ;
 
             result = "UPDATE ks.tb SET counter_column_name = counter_column_name + ? WHERE pk1 = ? AND pk2 = ?;";
             Assert.AreEqual(result,
-                new UpdateCounterQuery()
+                new UpdateCounter()
                     .SetKeyspace(Variables.keyspace)
                     .SetTableName(Tables.tableName)
                     .SetVariables(Columns.columnsCounter)
                     .SetWhereVariables(Columns.partitionKey1, Columns.partitionKey2)
-                    .GetString()
+                    .ToString()
                 )
             ;
 
         }
 
         [TestMethod]
-        public void UT_UpdateCounterQuery_GetString_DataIsNullOrInvalid()
+        public void UT_UpdateCounter_GetString_DataIsNullOrInvalid()
         {
             Assert.ThrowsException<NullReferenceException>(
                 () => {
-                    new UpdateCounterQuery()
-                        .GetString();
+                    new UpdateCounter()
+                        .ToString();
                 }
             );
 
             Assert.ThrowsException<NullReferenceException>(
                 () => {
-                    new UpdateCounterQuery()
+                    new UpdateCounter()
                         .SetKeyspace(Variables.keyspace)
-                        .GetString();
+                        .ToString();
                 }
             );
 
             Assert.ThrowsException<NullReferenceException>(
 (Action)(() => {
-                    new UpdateCounterQuery()
+                    new UpdateCounter()
                         .SetKeyspace(Variables.keyspace)
                         .SetTableName(Tables.tableName)
-                        .GetString();
+                        .ToString();
                 })
             );
 
             Assert.ThrowsException<NullReferenceException>(
 (Action)(() => {
-                    new UpdateCounterQuery()
+                    new UpdateCounter()
                         .SetKeyspace(Variables.keyspace)
                         .SetTableName(Tables.tableName)
                         .SetVariables(Columns.columns1)
-                        .GetString();
+                        .ToString();
                 })
             );
         }

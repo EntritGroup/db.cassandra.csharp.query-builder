@@ -3,7 +3,7 @@ using System.Text;
 
 namespace CassandraQueryBuilder
 {
-    public class DropKeyspace : IQuery
+    public class DropKeyspace : Query
     {
         private String name;
 
@@ -20,7 +20,7 @@ namespace CassandraQueryBuilder
             return this;
         }
 
-        public String GetString()
+        public override String ToString()
         {
             if (name == null)
                 throw new NullReferenceException("Name cannot be null");

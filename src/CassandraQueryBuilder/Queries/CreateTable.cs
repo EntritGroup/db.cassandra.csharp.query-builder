@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace CassandraQueryBuilder
 {
-    public class CreateTable : IQuery
+    public class CreateTable : Query
     {
         private String keyspace;
         private String tableName;
@@ -162,7 +162,7 @@ namespace CassandraQueryBuilder
             }
         }
 
-        public String GetString()
+        public override String ToString()
         {
             if (keyspace == null)
                 throw new NullReferenceException("Keyspace cannot be null");

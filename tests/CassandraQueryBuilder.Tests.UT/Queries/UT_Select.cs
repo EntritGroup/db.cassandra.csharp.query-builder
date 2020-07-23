@@ -6,81 +6,81 @@ using CassandraQueryBuilder;
 namespace CassandraQueryBuilder.Tests.UT
 {
     [TestClass]
-    public class UT_SelectQuery
+    public class UT_Select
     {
         [TestMethod]
-        public void UT_SelectQuery_GetString()
+        public void UT_Select_GetString()
         {
             String result = "SELECT * FROM ks.tb;";
             Assert.AreEqual(result,
-                new SelectQuery()
+                new Select()
                     .SetKeyspace(Variables.keyspace)
                     .SetTableName(Tables.tableName)
-                    .GetString()
+                    .ToString()
                 )
             ;
 
             result = "SELECT v1 FROM ks.tb;";
             Assert.AreEqual(result,
-                new SelectQuery()
+                new Select()
                     .SetKeyspace(Variables.keyspace)
                     .SetTableName(Tables.tableName)
                     .SetColumns(Columns.columns1)
-                    .GetString()
+                    .ToString()
                 )
             ;
 
             result = "SELECT v1, v2 FROM ks.tb;";
             Assert.AreEqual(result,
-                new SelectQuery()
+                new Select()
                     .SetKeyspace(Variables.keyspace)
                     .SetTableName(Tables.tableName)
                     .SetColumns(Columns.columns1, Columns.columns2)
-                    .GetString()
+                    .ToString()
                 )
             ;
 
             result = "SELECT v1 FROM ks.tb WHERE v2 = ?;";
             Assert.AreEqual(result,
-                new SelectQuery()
+                new Select()
                     .SetKeyspace(Variables.keyspace)
                     .SetTableName(Tables.tableName)
                     .SetColumns(Columns.columns1)
                     .SetWhereColumns(Columns.columns2)
-                    .GetString()
+                    .ToString()
                 )
             ;
 
             result = "SELECT v1, v2 FROM ks.tb WHERE v3 = ?;";
             Assert.AreEqual(result,
-                new SelectQuery()
+                new Select()
                     .SetKeyspace(Variables.keyspace)
                     .SetTableName(Tables.tableName)
                     .SetColumns(Columns.columns1, Columns.columns2)
                     .SetWhereColumns(Columns.columns3)
-                    .GetString()
+                    .ToString()
                 )
             ;
 
             result = "SELECT v1 FROM ks.tb WHERE v2 = ? AND v3 = ?;";
             Assert.AreEqual(result,
-                new SelectQuery()
+                new Select()
                     .SetKeyspace(Variables.keyspace)
                     .SetTableName(Tables.tableName)
                     .SetColumns(Columns.columns1)
                     .SetWhereColumns(Columns.columns2, Columns.columns3)
-                    .GetString()
+                    .ToString()
                 )
             ;
 
             result = "SELECT v1, v2 FROM ks.tb WHERE v1 = ? AND v3 = ?;";
             Assert.AreEqual(result,
-                new SelectQuery()
+                new Select()
                     .SetKeyspace(Variables.keyspace)
                     .SetTableName(Tables.tableName)
                     .SetColumns(Columns.columns1, Columns.columns2)
                     .SetWhereColumns(Columns.columns1, Columns.columns3)
-                    .GetString()
+                    .ToString()
                 )
             ;
 
@@ -88,25 +88,25 @@ namespace CassandraQueryBuilder.Tests.UT
             
             result = "SELECT v1, v2 FROM ks.tb WHERE v1 = ? AND v3 = ? LIMIT 1;";
             Assert.AreEqual(result,
-                new SelectQuery()
+                new Select()
                     .SetKeyspace(Variables.keyspace)
                     .SetTableName(Tables.tableName)
                     .SetColumns(Columns.columns1, Columns.columns2)
                     .SetWhereColumns(Columns.columns1, Columns.columns3)
                     .SetLimit(1)
-                    .GetString()
+                    .ToString()
                 )
             ;
 
             result = "SELECT v1, v2 FROM ks.tb WHERE v1 = ? AND v3 = ? LIMIT ?;";
             Assert.AreEqual(result,
-                new SelectQuery()
+                new Select()
                     .SetKeyspace(Variables.keyspace)
                     .SetTableName(Tables.tableName)
                     .SetColumns(Columns.columns1, Columns.columns2)
                     .SetWhereColumns(Columns.columns1, Columns.columns3)
                     .SetLimit()
-                    .GetString()
+                    .ToString()
                 )
             ;
 
@@ -114,45 +114,45 @@ namespace CassandraQueryBuilder.Tests.UT
 
             result = "SELECT v1 FROM ks.tb WHERE v1 IN (?);";
             Assert.AreEqual(result,
-                new SelectQuery()
+                new Select()
                     .SetKeyspace(Variables.keyspace)
                     .SetTableName(Tables.tableName)
                     .SetColumns(Columns.columns1)
                     .SetInColumns(Columns.columns1, 1)
-                    .GetString()
+                    .ToString()
                 )
             ;
 
             result = "SELECT v1, v2 FROM ks.tb WHERE v1 IN (?);";
             Assert.AreEqual(result,
-                new SelectQuery()
+                new Select()
                     .SetKeyspace(Variables.keyspace)
                     .SetTableName(Tables.tableName)
                     .SetColumns(Columns.columns1, Columns.columns2)
                     .SetInColumns(Columns.columns1, 1)
-                    .GetString()
+                    .ToString()
                 )
             ;
 
             result = "SELECT v1 FROM ks.tb WHERE v1 IN (?, ?);";
             Assert.AreEqual(result,
-                new SelectQuery()
+                new Select()
                     .SetKeyspace(Variables.keyspace)
                     .SetTableName(Tables.tableName)
                     .SetColumns(Columns.columns1)
                     .SetInColumns(Columns.columns1, 2)
-                    .GetString()
+                    .ToString()
                 )
             ;
 
             result = "SELECT v1, v2 FROM ks.tb WHERE v1 IN (?, ?);";
             Assert.AreEqual(result,
-                new SelectQuery()
+                new Select()
                     .SetKeyspace(Variables.keyspace)
                     .SetTableName(Tables.tableName)
                     .SetColumns(Columns.columns1, Columns.columns2)
                     .SetInColumns(Columns.columns1, 2)
-                    .GetString()
+                    .ToString()
                 )
             ;
 
@@ -161,20 +161,20 @@ namespace CassandraQueryBuilder.Tests.UT
 
             result = "SELECT v1, v2 FROM ks.tb WHERE v1 = ? AND v3 = ? AND v1 IN (?, ?) LIMIT 1;";
             Assert.AreEqual(result,
-                new SelectQuery()
+                new Select()
                     .SetKeyspace(Variables.keyspace)
                     .SetTableName(Tables.tableName)
                     .SetColumns(Columns.columns1, Columns.columns2)
                     .SetWhereColumns(Columns.columns1, Columns.columns3)
                     .SetInColumns(Columns.columns1, 2)
                     .SetLimit(1)
-                    .GetString()
+                    .ToString()
                 )
             ;
 
             result = "SELECT v1, v2 FROM ks.tb WHERE v1 = ? AND v2 < ? AND v3 > ? AND v1 IN (?, ?) LIMIT 1;";
             Assert.AreEqual(result,
-                new SelectQuery()
+                new Select()
                     .SetKeyspace(Variables.keyspace)
                     .SetTableName(Tables.tableName)
                     .SetColumns(Columns.columns1, Columns.columns2)
@@ -182,36 +182,36 @@ namespace CassandraQueryBuilder.Tests.UT
                     .SetWhereSigns("=", "<", ">")
                     .SetInColumns(Columns.columns1, 2)
                     .SetLimit(1)
-                    .GetString()
+                    .ToString()
                 )
             ;
         }
 
         [TestMethod]
-        public void UT_SelectQuery_GetString_DataIsNullOrInvalid()
+        public void UT_Select_GetString_DataIsNullOrInvalid()
         {
             Assert.ThrowsException<NullReferenceException>(
                 () => {
-                    new SelectQuery()
-                        .GetString();
+                    new Select()
+                        .ToString();
                 }
             );
 
             Assert.ThrowsException<NullReferenceException>(
                 () => {
-                    new SelectQuery()
+                    new Select()
                         .SetKeyspace(Variables.keyspace)
-                        .GetString();
+                        .ToString();
                 }
             );
 
             Assert.ThrowsException<IndexOutOfRangeException>(
                 () => {
-                    new SelectQuery()
+                    new Select()
                         .SetKeyspace(Variables.keyspace).SetTableName(Tables.tableName)
                         .SetWhereColumns(Columns.columns1, Columns.columns2)
                         .SetWhereSigns("=")
-                        .GetString();
+                        .ToString();
                 }
             );
         }

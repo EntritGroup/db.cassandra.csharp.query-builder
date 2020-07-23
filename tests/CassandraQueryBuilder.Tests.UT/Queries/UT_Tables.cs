@@ -20,7 +20,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .SetTableName(Tables.tableName)
                     .SetPartitionKeys(Columns.partitionKey1)
                     .SetColumns(Columns.columns1, Columns.columns2, Columns.columns3)
-                    .GetString()
+                    .ToString()
             );
             
             result = "CREATE TABLE ks.tb (pk1 TEXT, pk2 TEXT, v1 TEXT, v2 TEXT, v3 TEXT, PRIMARY KEY (pk1, pk2));";
@@ -30,7 +30,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .SetTableName(Tables.tableName)
                     .SetPartitionKeys(Columns.partitionKey1, Columns.partitionKey2)
                     .SetColumns(Columns.columns1, Columns.columns2, Columns.columns3)
-                    .GetString()
+                    .ToString()
             );
 
             result = "CREATE TABLE ks.tb (pk1 TEXT, ck1 TEXT, v1 TEXT, v2 TEXT, v3 TEXT, PRIMARY KEY ((pk1), ck1));";
@@ -41,7 +41,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .SetPartitionKeys(Columns.partitionKey1)
                     .SetClusteringKeys(Columns.clusteringKey1)
                     .SetColumns(Columns.columns1, Columns.columns2, Columns.columns3)
-                    .GetString()
+                    .ToString()
             );
 
             result = "CREATE TABLE ks.tb (pk1 TEXT, pk2 TEXT, ck1 TEXT, v1 TEXT, v2 TEXT, v3 TEXT, PRIMARY KEY ((pk1, pk2), ck1));";
@@ -52,7 +52,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .SetPartitionKeys(Columns.partitionKey1, Columns.partitionKey2)
                     .SetClusteringKeys(Columns.clusteringKey1)
                     .SetColumns(Columns.columns1, Columns.columns2, Columns.columns3)
-                    .GetString()
+                    .ToString()
             );
 
             result = "CREATE TABLE ks.tb (pk1 TEXT, ck1 TEXT, v1 TEXT, v2 TEXT, v3 TEXT, PRIMARY KEY ((pk1), ck1)) WITH CLUSTERING ORDER BY (ck1 ASC);";
@@ -64,7 +64,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .SetClusteringKeys(Columns.clusteringKey1)
                     .SetClusteringKeysOrderByASC(true)
                     .SetColumns(Columns.columns1, Columns.columns2, Columns.columns3)
-                    .GetString()
+                    .ToString()
             );
 
             result = "CREATE TABLE ks.tb (pk1 TEXT, ck1 TEXT, ck2 TEXT, v1 TEXT, v2 TEXT, v3 TEXT, PRIMARY KEY ((pk1), ck1, ck2)) WITH CLUSTERING ORDER BY (ck1 DESC);";
@@ -76,7 +76,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .SetClusteringKeys(Columns.clusteringKey1, Columns.clusteringKey2)
                     .SetClusteringKeysOrderByASC(false)
                     .SetColumns(Columns.columns1, Columns.columns2, Columns.columns3)
-                    .GetString()
+                    .ToString()
             );
 
             result = "CREATE TABLE ks.tb (pk1 TEXT, ck1 TEXT, ck2 TEXT, v1 TEXT, v2 TEXT, v3 TEXT, PRIMARY KEY ((pk1), ck1, ck2)) WITH CLUSTERING ORDER BY (ck1 DESC, ck2 ASC);";
@@ -88,7 +88,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .SetClusteringKeys(Columns.clusteringKey1, Columns.clusteringKey2)
                     .SetClusteringKeysOrderByASC(false, true)
                     .SetColumns(Columns.columns1, Columns.columns2, Columns.columns3)
-                    .GetString()
+                    .ToString()
             );
 
             result = "CREATE TABLE ks.tb (pk1 TEXT, ck1 TEXT, ck2 TEXT, ck3 TEXT, v1 TEXT, v2 TEXT, v3 TEXT, PRIMARY KEY ((pk1), ck1, ck2, ck3)) WITH CLUSTERING ORDER BY (ck1 DESC);";
@@ -100,7 +100,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .SetClusteringKeys(Columns.clusteringKey1, Columns.clusteringKey2, Columns.clusteringKey3)
                     .SetClusteringKeysOrderByASC(false)
                     .SetColumns(Columns.columns1, Columns.columns2, Columns.columns3)
-                    .GetString()
+                    .ToString()
             );
 
             result = "CREATE TABLE ks.tb (pk1 TEXT, ck1 TEXT, ck2 TEXT, ck3 TEXT, v1 TEXT, v2 TEXT, v3 TEXT, PRIMARY KEY ((pk1), ck1, ck2, ck3)) WITH CLUSTERING ORDER BY (ck1 DESC, ck2 ASC, ck3 DESC);";
@@ -112,7 +112,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .SetClusteringKeys(Columns.clusteringKey1, Columns.clusteringKey2, Columns.clusteringKey3)
                     .SetClusteringKeysOrderByASC(false, true, false)
                     .SetColumns(Columns.columns1, Columns.columns2, Columns.columns3)
-                    .GetString()
+                    .ToString()
             );
 
             result = "CREATE TABLE ks.tb (pk1 TEXT, pk2 TEXT, ck1 TEXT, ck2 TEXT, ck3 TEXT, v1 TEXT, v2 TEXT, v3 TEXT, PRIMARY KEY ((pk1, pk2), ck1, ck2, ck3)) WITH CLUSTERING ORDER BY (ck1 DESC, ck2 ASC, ck3 DESC);";
@@ -124,7 +124,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .SetClusteringKeys(Columns.clusteringKey1, Columns.clusteringKey2, Columns.clusteringKey3)
                     .SetClusteringKeysOrderByASC(false, true, false)
                     .SetColumns(Columns.columns1, Columns.columns2, Columns.columns3)
-                    .GetString()
+                    .ToString()
             );
 
             result = "CREATE TABLE ks.tb (pk1 TEXT, pk2 TEXT, ck1 TEXT, ck2 TEXT, ck3 TEXT, v1 TEXT, v2 TEXT, v3 TEXT, v4 TEXT STATIC, PRIMARY KEY ((pk1, pk2), ck1, ck2, ck3)) WITH CLUSTERING ORDER BY (ck1 DESC, ck2 ASC, ck3 DESC);";
@@ -136,7 +136,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .SetClusteringKeys(Columns.clusteringKey1, Columns.clusteringKey2, Columns.clusteringKey3)
                     .SetClusteringKeysOrderByASC(false, true, false)
                     .SetColumns(Columns.columns1, Columns.columns2, Columns.columns3, Columns.columns4_STATIC)
-                    .GetString()
+                    .ToString()
             );
 
 
@@ -152,7 +152,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .SetClusteringKeys(Columns.clusteringKey1)
                     .SetColumns(Columns.columns1, Columns.columns2, Columns.columns3)
                     .SetCompactionStrategy(CompactionStrategy.SizeTieredCompactionStrategy)
-                    .GetString()
+                    .ToString()
             );
 
             result = "CREATE TABLE ks.tb (pk1 TEXT, pk2 TEXT, ck1 TEXT, ck2 TEXT, ck3 TEXT, v1 TEXT, v2 TEXT, v3 TEXT, v4 TEXT STATIC, PRIMARY KEY ((pk1, pk2), ck1, ck2, ck3)) WITH CLUSTERING ORDER BY (ck1 DESC, ck2 ASC, ck3 DESC) AND compaction = { 'class' : 'LeveledCompactionStrategy' };";
@@ -165,7 +165,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .SetClusteringKeysOrderByASC(false, true, false)
                     .SetColumns(Columns.columns1, Columns.columns2, Columns.columns3, Columns.columns4_STATIC)
                     .SetCompactionStrategy(CompactionStrategy.LeveledCompactionStrategy)
-                    .GetString()
+                    .ToString()
             );
 
 
@@ -179,7 +179,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .SetClusteringKeysOrderByASC(false, true, false)
                     .SetColumns(Columns.columns1, Columns.columns2, Columns.columns3, Columns.columns4_STATIC)
                     .SetCompactionStrategy(CompactionStrategy.DateTieredCompactionStrategy)
-                    .GetString()
+                    .ToString()
             );
 
 
@@ -196,7 +196,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .SetColumns(Columns.columns1, Columns.columns2, Columns.columns3)
                     .SetCompactionStrategy(CompactionStrategy.SizeTieredCompactionStrategy)
                     .SetGcGrace(864000)
-                    .GetString()
+                    .ToString()
             );
 
 
@@ -211,7 +211,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .SetPartitionKeys(Columns.partitionKey1, Columns.partitionKey2)
                     .SetClusteringKeys(Columns.clusteringKey1)
                     .SetColumns(Columns.columns1, Columns.columns_list1, Columns.columns3)
-                    .GetString()
+                    .ToString()
             );
 
         }
@@ -228,7 +228,7 @@ namespace CassandraQueryBuilder.Tests.UT
                         .SetClusteringKeys(Columns.clusteringKey1)
                         .SetClusteringKeysOrderByASC(false)
                         .SetClusteringKeysOrderByASC(false)
-                        .GetString();
+                        .ToString();
                 }
             );
 
@@ -241,7 +241,7 @@ namespace CassandraQueryBuilder.Tests.UT
                         .SetClusteringKeys(Columns.clusteringKey1)
                         .SetCompactionStrategy(CompactionStrategy.DateTieredCompactionStrategy)
                         .SetCompactionStrategy(CompactionStrategy.DateTieredCompactionStrategy)
-                        .GetString();
+                        .ToString();
                 }
             );
 
@@ -255,7 +255,7 @@ namespace CassandraQueryBuilder.Tests.UT
                         .SetClusteringKeys(Columns.clusteringKey1)
                         .SetGcGrace(10)
                         .SetGcGrace(10)
-                        .GetString();
+                        .ToString();
                 }
             );
 
@@ -271,7 +271,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .SetTableName(Tables.tableName)
                     .SetPartitionKeys(Columns.partitionKey1, Columns.partitionKey2)
                     .SetColumns(Columns.columnsCounter)
-                    .GetString()
+                    .ToString()
             );
         }
 
@@ -281,7 +281,7 @@ namespace CassandraQueryBuilder.Tests.UT
             Assert.ThrowsException<NullReferenceException>(
                 () => {
                     new CreateTable()
-                        .GetString();
+                        .ToString();
                 }
             );
 
@@ -289,7 +289,7 @@ namespace CassandraQueryBuilder.Tests.UT
                 () => {
                     new CreateTable()
                         .SetKeyspace(Variables.keyspace)
-                        .GetString();
+                        .ToString();
                 }
             );
 
@@ -298,7 +298,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     new CreateTable()
                         .SetKeyspace(Variables.keyspace)
                         .SetTableName(Tables.tableName)
-                        .GetString();
+                        .ToString();
                 }
             );
 
@@ -309,7 +309,7 @@ namespace CassandraQueryBuilder.Tests.UT
                         .SetTableName(Tables.tableName)
                         .SetPartitionKeys(Columns.partitionKey1)
                         .SetClusteringKeysOrderByASC(false)
-                        .GetString();
+                        .ToString();
                 }
             );
 
@@ -321,7 +321,7 @@ namespace CassandraQueryBuilder.Tests.UT
                         .SetPartitionKeys(Columns.partitionKey1)
                         .SetClusteringKeys(Columns.clusteringKey1)
                         .SetClusteringKeysOrderByASC(false, true)
-                        .GetString();
+                        .ToString();
                 }
             );
         }

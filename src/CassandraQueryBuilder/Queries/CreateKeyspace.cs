@@ -3,7 +3,7 @@ using System.Text;
 
 namespace CassandraQueryBuilder
 {
-    public class CreateKeyspace : IQuery
+    public class CreateKeyspace : Query
     {
         private String name;
         private ReplicationStrategy dbReplicationStrategy;
@@ -61,7 +61,7 @@ namespace CassandraQueryBuilder
 
         //Om man har ttl så ska den ligga sist i valuesVariables
         // return "CREATE KEYSPACE " + keyspace + @" WITH REPLICATION = { 'class' : 'NetworkTopologyStrategy', '" + StaticSettings.dbSettings.DataCenterName() + "' : " + StaticSettings.dbSettings.ReplicationFactor() + @" };";
-        public String GetString()
+        public override String ToString()
         {
             if (name == null)
                 throw new NullReferenceException("Name cannot be null");

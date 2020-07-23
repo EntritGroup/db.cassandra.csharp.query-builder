@@ -18,7 +18,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .SetToTableName(Tables.materializedViewName)
                     .SetFromTableName(Tables.tableName)
                     .SetPartitionKeys(Columns.partitionKey1, Columns.partitionKey2)
-                    .GetString()
+                    .ToString()
             );
 
             result = "CREATE MATERIALIZED VIEW ks.mv AS SELECT pk1, ck1, ck2, v1, v2 FROM ks.tb WHERE pk1 IS NOT NULL AND ck1 IS NOT NULL AND ck2 IS NOT NULL PRIMARY KEY ((pk1), ck1, ck2);";
@@ -30,7 +30,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .SetPartitionKeys(Columns.partitionKey1)
                     .SetClusteringKeys(Columns.clusteringKey1, Columns.clusteringKey2)
                     .SetColumns(Columns.columns1, Columns.columns2)
-                    .GetString()
+                    .ToString()
             );
         }
 
@@ -40,7 +40,7 @@ namespace CassandraQueryBuilder.Tests.UT
             Assert.ThrowsException<NullReferenceException>(
                 () => {
                     new CreateMaterializedView()
-                        .GetString();
+                        .ToString();
                 }
             );
 
@@ -48,7 +48,7 @@ namespace CassandraQueryBuilder.Tests.UT
                 () => {
                     new CreateMaterializedView()
                         .SetKeyspace(Variables.keyspace)
-                        .GetString();
+                        .ToString();
                 }
             );
 
@@ -57,7 +57,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     new CreateMaterializedView()
                         .SetKeyspace(Variables.keyspace)
                         .SetToTableName(Tables.materializedViewName)
-                        .GetString();
+                        .ToString();
                 }
             );
 
@@ -67,7 +67,7 @@ namespace CassandraQueryBuilder.Tests.UT
                         .SetKeyspace(Variables.keyspace)
                         .SetToTableName(Tables.materializedViewName)
                         .SetFromTableName(Tables.tableName)
-                        .GetString();
+                        .ToString();
                 }
             );
 
@@ -79,7 +79,7 @@ namespace CassandraQueryBuilder.Tests.UT
                         .SetFromTableName(Tables.tableName)
                         .SetPartitionKeys(Columns.partitionKey1)
                         .SetClusteringKeysOrderByASC(false)
-                        .GetString();
+                        .ToString();
                 }
             );
 
@@ -92,7 +92,7 @@ namespace CassandraQueryBuilder.Tests.UT
                         .SetPartitionKeys(Columns.partitionKey1)
                         .SetClusteringKeys(Columns.clusteringKey1)
                         .SetClusteringKeysOrderByASC(false, true)
-                        .GetString();
+                        .ToString();
                 }
             );
         }

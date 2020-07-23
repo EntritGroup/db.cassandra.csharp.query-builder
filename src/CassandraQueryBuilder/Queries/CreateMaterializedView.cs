@@ -6,7 +6,7 @@ using System.Text;
 //http://www.datastax.com/dev/blog/new-in-cassandra-3-0-materialized-views
 namespace CassandraQueryBuilder
 {
-    public class CreateMaterializedView : IQuery
+    public class CreateMaterializedView : Query
     {
         String keyspace;
         String toTableName; //ToMaterializedView(Name)
@@ -154,7 +154,7 @@ namespace CassandraQueryBuilder
             }
         }
 
-        public String GetString()
+        public override String ToString()
         {
             if (keyspace == null)
                 throw new NullReferenceException("Keyspace cannot be null");

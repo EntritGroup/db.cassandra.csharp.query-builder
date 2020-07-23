@@ -15,7 +15,7 @@ namespace CassandraQueryBuilder.Tests.UT
             Assert.AreEqual(result,
                 new DropKeyspace()
                     .SetName(Variables.keyspace)
-                    .GetString()
+                    .ToString()
                 )
             ;
         }
@@ -26,7 +26,7 @@ namespace CassandraQueryBuilder.Tests.UT
             Assert.ThrowsException<NullReferenceException>(
                 () => {
                     new DropKeyspace()
-                        .GetString()
+                        .ToString()
                     ;
                 }
             );

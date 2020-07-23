@@ -17,7 +17,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .SetName(Variables.keyspace)
                     .SetReplicationStrategy(ReplicationStrategy.SimpleStrategy)
                     .SetDataCenters(new DataCenter[] { new DataCenter(Variables.dataCenterName1, 3) })
-                    .GetString()
+                    .ToString()
                 )
             ;
 
@@ -27,7 +27,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .SetName(Variables.keyspace)
                     .SetReplicationStrategy(ReplicationStrategy.NetworkTopologyStrategy)
                     .SetDataCenters(new DataCenter[] { new DataCenter(Variables.dataCenterName1, 3) })
-                    .GetString()
+                    .ToString()
                 )
             ;
 
@@ -37,7 +37,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .SetName(Variables.keyspace)
                     .SetReplicationStrategy(ReplicationStrategy.NetworkTopologyStrategy)
                     .SetDataCenters(new DataCenter[] { new DataCenter(Variables.dataCenterName1, 3), new DataCenter(Variables.dataCenterName2, 2) })
-                    .GetString()
+                    .ToString()
                 )
             ;
         }
@@ -48,7 +48,7 @@ namespace CassandraQueryBuilder.Tests.UT
             Assert.ThrowsException<NullReferenceException>(
                 () => {
                     new CreateKeyspace()
-                        .GetString()
+                        .ToString()
                     ;
                 }
             );
@@ -57,7 +57,7 @@ namespace CassandraQueryBuilder.Tests.UT
                 () => {
                     new CreateKeyspace()
                         .SetName(Variables.keyspace)
-                        .GetString()
+                        .ToString()
                     ;
                 }
             );
@@ -68,7 +68,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     new CreateKeyspace()
                         .SetName(Variables.keyspace)
                         .SetReplicationStrategy(ReplicationStrategy.SimpleStrategy)
-                        .GetString()
+                        .ToString()
                     ;
                 }
             );
@@ -81,7 +81,7 @@ namespace CassandraQueryBuilder.Tests.UT
                         .SetName(Variables.keyspace)
                         .SetReplicationStrategy(ReplicationStrategy.SimpleStrategy)
                         .SetDataCenters(new DataCenter[0])
-                        .GetString()
+                        .ToString()
                     ;
                 }
             );
@@ -92,7 +92,7 @@ namespace CassandraQueryBuilder.Tests.UT
                         .SetName(Variables.keyspace)
                         .SetReplicationStrategy(ReplicationStrategy.SimpleStrategy)
                         .SetDataCenters(new DataCenter[2])
-                        .GetString()
+                        .ToString()
                     ;
                 }
             );
@@ -105,7 +105,7 @@ namespace CassandraQueryBuilder.Tests.UT
                         .SetName(Variables.keyspace)
                         .SetReplicationStrategy(ReplicationStrategy.NetworkTopologyStrategy)
                         .SetDataCenters(new DataCenter[0])
-                        .GetString()
+                        .ToString()
                     ;
                 }
             );

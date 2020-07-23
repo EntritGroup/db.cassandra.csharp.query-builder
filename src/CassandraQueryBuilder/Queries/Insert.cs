@@ -3,7 +3,7 @@ using System.Text;
 
 namespace CassandraQueryBuilder
 {
-    public class InsertQuery : IQuery// : IPreparedStatement
+    public class Insert : Query// : IPreparedStatement
     {
         private String keyspace;
         private String tableName;
@@ -16,27 +16,27 @@ namespace CassandraQueryBuilder
         //private PreparedStatement preparedStatement;
         // private ConsistencyLevel consistencyLevel;
 
-        public InsertQuery()
+        public Insert()
         {
 
         }
 
 
-        public InsertQuery SetKeyspace(String keyspace)
+        public Insert SetKeyspace(String keyspace)
         {
             this.keyspace = keyspace;
 
             return this;
         }
 
-        public InsertQuery SetTableName(String tableName)
+        public Insert SetTableName(String tableName)
         {
             this.tableName = tableName;
 
             return this;
         }
 
-        public InsertQuery SetColumns(params Column[] variables)
+        public Insert SetColumns(params Column[] variables)
         {
             this.variables = variables;
 
@@ -44,21 +44,21 @@ namespace CassandraQueryBuilder
         }
 
         //Om man har ttl så ska den ligga sist i valuesVariables
-        public InsertQuery SetTTL()
+        public Insert SetTTL()
         {
             this.ttl = true;
 
             return this;
         }
 
-        public InsertQuery SetIfNotExists()
+        public Insert SetIfNotExists()
         {
             this.ifNotExists = true;
 
             return this;
         }
 
-        public InsertQuery SetTimestamp()
+        public Insert SetTimestamp()
         {
             this.setTimestamp = true;
 
@@ -89,7 +89,7 @@ namespace CassandraQueryBuilder
         
         //Om man har ttl så ska den ligga sist i valuesVariables
         //INSERT INTO ks.tb (v1, v2) VALUES (?, ?) IF NOT EXISTS USING TTL ?;
-        public String GetString()
+        public override String ToString()
         {
             if (keyspace == null)
                 throw new NullReferenceException("Keyspace cannot be null");
@@ -145,37 +145,6 @@ namespace CassandraQueryBuilder
 
             return sb.ToString();
         }
-
-
-        /*public async Task<PreparedStatement> GetPreparedStatement()
-        {
-            if (preparedStatement != null)
-                return preparedStatement;
-
-            await Task.Run(() => PrepareStatement());
-
-            return preparedStatement;
-        }
-
-        private void PrepareStatement()
-        {
-            lock (preparedStatmentLock)
-            {
-                //To make sure that if multiple threads are calling this at the same time. If two have passed the if statement above, then the second one getting into this will just return the prepared statement and not create another one
-                if (preparedStatement != null)
-                    return;
-
-                //Using the p below since in the GetPraparedStatement, the preparedStatement should not be set before by first setting it and then afterwards setting the consistency level
-                PreparedStatement p = DB.CreatePreparedStatement(GetString());
-
-                if (consistencyLevel != null)
-                    p.SetConsistencyLevel(consistencyLevel.Value);
-
-                preparedStatement = p;
-
-            }
-        }*/
-
 
     }
 }

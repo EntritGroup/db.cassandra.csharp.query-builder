@@ -3,7 +3,7 @@ using System.Text;
 
 namespace CassandraQueryBuilder
 {
-    public class SelectQuery : IQuery// : IPreparedStatement
+    public class Select : Query// : IPreparedStatement
     {
         private String keyspace;
         private String tableName;
@@ -18,34 +18,34 @@ namespace CassandraQueryBuilder
         //private PreparedStatement preparedStatement;
         // private ConsistencyLevel consistencyLevel;
 
-        public SelectQuery()
+        public Select()
         {
 
         }
 
 
-        public SelectQuery SetKeyspace(String keyspace)
+        public Select SetKeyspace(String keyspace)
         {
             this.keyspace = keyspace;
 
             return this;
         }
 
-        public SelectQuery SetTableName(String tableName)
+        public Select SetTableName(String tableName)
         {
             this.tableName = tableName;
 
             return this;
         }
 
-        public SelectQuery SetColumns(params Column[] columns)
+        public Select SetColumns(params Column[] columns)
         {
             this.columns = columns;
 
             return this;
         }
 
-        public SelectQuery SetWhereColumns(params Column[] whereColumns)
+        public Select SetWhereColumns(params Column[] whereColumns)
         {
             this.whereColumns = whereColumns;
 
@@ -53,7 +53,7 @@ namespace CassandraQueryBuilder
         }
 
         //"=", ">", "<" etc
-        public SelectQuery SetWhereSigns(params String[] whereSigns)
+        public Select SetWhereSigns(params String[] whereSigns)
         {
             this.whereSigns = whereSigns;
 
@@ -61,7 +61,7 @@ namespace CassandraQueryBuilder
         }
 
         //if limit = null here, then it will be "?", otherwise, it will be 1,2,3, or whatever you set
-        public SelectQuery SetLimit(int? limit = null)
+        public Select SetLimit(int? limit = null)
         {
             if (limit == null)
                 this.limit = 0;
@@ -72,7 +72,7 @@ namespace CassandraQueryBuilder
         }
 
         //if limit = null here, then it will be "?", otherwise, it will be 1,2,3, or whatever you set
-        public SelectQuery SetInColumns(Column inColumn, int inLength)
+        public Select SetInColumns(Column inColumn, int inLength)
         {
             this.inColumn = inColumn;
             this.inLength = inLength;
@@ -121,7 +121,7 @@ namespace CassandraQueryBuilder
         
         //Om man har ttl så ska den ligga sist i valuesVariables
         //SELECT v1, v2 FROM ks.tb WHERE v1 = ? AND v2 = ?;
-        public String GetString()
+        public override String ToString()
         {
             if (keyspace == null)
                 throw new NullReferenceException("Keyspace cannot be null");
@@ -183,37 +183,6 @@ namespace CassandraQueryBuilder
 
             return sb.ToString();
         }
-
-
-        /*public async Task<PreparedStatement> GetPreparedStatement()
-        {
-            if (preparedStatement != null)
-                return preparedStatement;
-
-            await Task.Run(() => PrepareStatement());
-
-            return preparedStatement;
-        }
-
-        private void PrepareStatement()
-        {
-            lock (preparedStatmentLock)
-            {
-                //To make sure that if multiple threads are calling this at the same time. If two have passed the if statement above, then the second one getting into this will just return the prepared statement and not create another one
-                if (preparedStatement != null)
-                    return;
-
-                //Using the p below since in the GetPraparedStatement, the preparedStatement should not be set before by first setting it and then afterwards setting the consistency level
-                PreparedStatement p = DB.CreatePreparedStatement(GetString());
-
-                if (consistencyLevel != null)
-                    p.SetConsistencyLevel(consistencyLevel.Value);
-
-                preparedStatement = p;
-
-            }
-        }*/
-
 
     }
 }

@@ -13,7 +13,7 @@ namespace CassandraQueryBuilder
 
 
 
-        public static readonly String ALL = "All"; //Is used for when counting api calls for "All" calls (the total number of calls)
+        //public static readonly String ALL = "All"; //Is used for when counting api calls for "All" calls (the total number of calls)
 
         
     }
