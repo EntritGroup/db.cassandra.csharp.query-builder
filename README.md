@@ -46,17 +46,13 @@ To create query strings use the following code.
 Note: Important that the order of the .SetWhereVariables is the same as the order of the columns in the table.
 
 #### Create keyspace query
----
 ```
-String NAME_OF_QUERY_STRING = new Insert()
-    .SetKeyspace(STRING_VARIABLE_WITH_KEYSPACE_NAME)
-    .SetTableName(STRING_VARIABLE_WITH_TABLE_NAME)
-    .SetColumns(
-        USER_ID,
-        NAME
-    )
-    .ToString())
-    ;
+String NAME_OF_QUERY_STRING = new CreateKeyspace()
+    .SetName(STRING_VARIABLE_WITH_KEYSPACE_NAME)
+    .SetReplicationStrategy(STRING_VARIABLE_WITH_REPLICATION_STRATEGY)
+    .SetDataCenters(STRING_VARIABLE_WITH_DATA_CENTERS)
+    .ToString()
+;
 ```
 
 #### Drop keyspace query
@@ -110,7 +106,7 @@ String NAME_OF_QUERY_STRING = new Insert()
         USER_ID,
         NAME
     )
-    .ToString())
+    .ToString()
 ;
 ```
 
@@ -128,7 +124,7 @@ String NAME_OF_QUERY_STRING = new Select()
         USER_ID
     )
     .SetLimit() //Here you can specify the limit as a varaible in the query
-    .ToString())
+    .ToString()
 ;
 ```
 
@@ -145,7 +141,7 @@ String NAME_OF_QUERY_STRING = new Select()
         USER_ID
     )
     .SetLimit() //Here you need to specify the limit as a varaible in the query during runtime.
-    .ToString())
+    .ToString()
 ;
 ```
 
@@ -163,7 +159,7 @@ String NAME_OF_QUERY_STRING = new Select()
         USER_ID
     )
     .SetLimit(10) //Will return up to 10 rows in the response
-    .ToString())
+    .ToString()
 ;
 ```
 
@@ -178,7 +174,7 @@ String NAME_OF_QUERY_STRING = new Update()
         USER_ID,
         ...
     )
-    .ToString())
+    .ToString()
 ;
 
 ```
@@ -192,7 +188,7 @@ String NAME_OF_QUERY_STRING = new Delete()
         USER_ID,
         ...
     )
-    .ToString())
+    .ToString()
 ;
 ```
 
@@ -206,7 +202,7 @@ String NAME_OF_QUERY_STRING = new UpdateCounter()
     .SetWhereVariables(
         USER_ID,
     )
-    .ToString())
+    .ToString()
 ;
 ```
 
