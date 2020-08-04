@@ -31,7 +31,7 @@ namespace CassandraQueryBuilder
 
         public static ColumnType LIST(ColumnType dbColumnType) { return new ColumnType("LIST<" + dbColumnType.Value + ">", true); } //e.g. LIST<TEXT>
 
-        //http://datastax.github.io/csharp-driver/features/datatypes/
+        //https://cassandra.apache.org/doc/latest/cql/types.html
         //CQL3 data type    C# type
         //ascii             string
         //bigint            long
