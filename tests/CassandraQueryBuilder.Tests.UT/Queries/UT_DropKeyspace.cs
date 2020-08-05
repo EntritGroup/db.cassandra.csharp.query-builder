@@ -16,8 +16,7 @@ namespace CassandraQueryBuilder.Tests.UT
                 new DropKeyspace()
                     .Keyspace(Variables.keyspace)
                     .ToString()
-                )
-            ;
+            );
         }
 
         [TestMethod]

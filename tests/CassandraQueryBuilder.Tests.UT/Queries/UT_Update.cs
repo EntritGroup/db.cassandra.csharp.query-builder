@@ -19,8 +19,8 @@ namespace CassandraQueryBuilder.Tests.UT
                     .UpdateColumns(Columns.columns1)
                     .WhereColumns(Columns.columns2)
                     .ToString()
-                )
-            ;
+            );
+
             result = "UPDATE ks.tb SET v1 = ? WHERE v2 = ? IF EXISTS;";
             Assert.AreEqual(result,
                 new Update()
@@ -30,8 +30,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .WhereColumns(Columns.columns2)
                     .IfExists()
                     .ToString()
-                )
-            ;
+            );
             
             result = "UPDATE ks.tb SET v1 = ?, v2 = ? WHERE v1 = ? AND v3 = ?;";
             Assert.AreEqual(result,
@@ -41,8 +40,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .UpdateColumns(Columns.columns1, Columns.columns2)
                     .WhereColumns(Columns.columns1, Columns.columns3)
                     .ToString()
-                )
-            ;
+            );
 
             result = "UPDATE ks.tb SET v1 = ?, v2 = ? WHERE v1 = ? AND v3 = ? IF EXISTS;";
             Assert.AreEqual(result,
@@ -53,8 +51,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .WhereColumns(Columns.columns1, Columns.columns3)
                     .IfExists()
                     .ToString()
-                )
-            ;
+            );
 
             result = "UPDATE ks.tb USING TTL ? SET v1 = ?, v2 = ? WHERE v1 = ? AND v3 = ? IF EXISTS;";
             Assert.AreEqual(result,
@@ -66,8 +63,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .IfExists()
                     .TTL()
                     .ToString()
-                )
-            ;
+            );
 
             result = "UPDATE ks.tb USING TIMESTAMP ? SET v1 = ?, v2 = ? WHERE v1 = ? AND v3 = ? IF EXISTS;";
             Assert.AreEqual(result,
@@ -79,8 +75,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .IfExists()
                     .Timestamp()
                     .ToString()
-                )
-            ;
+            );
 
             result = "UPDATE ks.tb USING TIMESTAMP ? AND TTL ? SET v1 = ?, v2 = ? WHERE v1 = ? AND v3 = ? IF EXISTS;";
             Assert.AreEqual(result,
@@ -93,8 +88,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .Timestamp()
                     .TTL()
                     .ToString()
-                )
-            ;
+            );
 
             result = "UPDATE ks.tb SET v1 = ?, v2 = ?, vl1 = ? + vl1 WHERE v1 = ? AND v3 = ?;";
             Assert.AreEqual(result,
@@ -105,8 +99,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .WhereColumns(Columns.columns1, Columns.columns3)
                     .ListUpdateType(ListUpdateType.PREPEND)
                     .ToString()
-                )
-            ;
+            );
 
             result = "UPDATE ks.tb SET v1 = ?, v2 = ?, vl1 = vl1 + ? WHERE v1 = ? AND v3 = ?;";
             Assert.AreEqual(result,
@@ -117,8 +110,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .WhereColumns(Columns.columns1, Columns.columns3)
                     .ListUpdateType(ListUpdateType.APPEND)
                     .ToString()
-                )
-            ;
+            );
 
             result = "UPDATE ks.tb SET v1 = ?, v2 = ?, vl1 = ? WHERE v1 = ? AND v3 = ?;";
             Assert.AreEqual(result,
@@ -129,8 +121,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .WhereColumns(Columns.columns1, Columns.columns3)
                     .ListUpdateType(ListUpdateType.REPLACE_ALL)
                     .ToString()
-                )
-            ;
+            );
 
             result = "UPDATE ks.tb SET v1 = ?, v2 = ?, vl1[?] = ? WHERE v1 = ? AND v3 = ?;";
             Assert.AreEqual(result,
@@ -141,8 +132,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .WhereColumns(Columns.columns1, Columns.columns3)
                     .ListUpdateType(ListUpdateType.SPECIFY_INDEX_TO_OVERWRITE)
                     .ToString()
-                )
-            ;
+            );
         }
 
         [TestMethod]

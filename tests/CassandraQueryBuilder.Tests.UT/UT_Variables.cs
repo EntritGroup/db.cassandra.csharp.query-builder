@@ -12,9 +12,6 @@ namespace CassandraQueryBuilder.Tests.UT
     {
         private static readonly Column variable = new Column ("v1", ColumnType.TEXT, true);
 
-
-
-
         [TestMethod]
         public void UT_Utils_GetVariablesName()
         {

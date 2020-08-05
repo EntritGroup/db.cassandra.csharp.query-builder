@@ -20,8 +20,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .WhereColumns(Columns.partitionKey1)
                     .IncreaseBy(1)
                     .ToString()
-                )
-            ;
+            );
 
             result = "UPDATE ks.tb SET counter_column_name = counter_column_name + 1 WHERE pk1 = ? AND pk2 = ?;";
             Assert.AreEqual(result,
@@ -32,8 +31,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .WhereColumns(Columns.partitionKey1, Columns.partitionKey2)
                     .IncreaseBy(1)
                     .ToString()
-                )
-            ;
+            );
 
             result = "UPDATE ks.tb SET counter_column_name = counter_column_name + -1 WHERE pk1 = ? AND pk2 = ?;";
             Assert.AreEqual(result,
@@ -44,8 +42,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .WhereColumns(Columns.partitionKey1, Columns.partitionKey2)
                     .IncreaseBy(-1)
                     .ToString()
-                )
-            ;
+            );
 
             result = "UPDATE ks.tb SET counter_column_name = counter_column_name + ? WHERE pk1 = ? AND pk2 = ?;";
             Assert.AreEqual(result,
@@ -55,8 +52,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .UpdateColumn(Columns.columnsCounter)
                     .WhereColumns(Columns.partitionKey1, Columns.partitionKey2)
                     .ToString()
-                )
-            ;
+            );
 
         }
 

@@ -8,7 +8,7 @@ namespace CassandraQueryBuilder.Tests.UT
 {
     public class Tables
     {
-        public static readonly String tableName = "tb";
-        public static readonly String materializedViewName = "mv";
+        internal static readonly String tableName = "tb";
+        internal static readonly String materializedViewName = "mv";
     }
 }

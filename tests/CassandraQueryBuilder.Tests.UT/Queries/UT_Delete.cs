@@ -19,8 +19,8 @@ namespace CassandraQueryBuilder.Tests.UT
                     .Table(Tables.tableName)
                     .WhereColumns(Columns.columns1)
                     .ToString()
-                )
-            ;
+            );
+
             result = "DELETE FROM ks.tb WHERE v1 = ? IF EXISTS;";
             Assert.AreEqual(result,
                 new Delete()
@@ -29,8 +29,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .WhereColumns(Columns.columns1)
                     .IfExists()
                     .ToString()
-                )
-            ;
+            );
 
             result = "DELETE v1 FROM ks.tb WHERE v2 = ?;";
             Assert.AreEqual(result,
@@ -40,8 +39,8 @@ namespace CassandraQueryBuilder.Tests.UT
                     .DeleteColumns(Columns.columns1)
                     .WhereColumns(Columns.columns2)
                     .ToString()
-                )
-            ;
+            );
+
             result = "DELETE v1 FROM ks.tb WHERE v2 = ? IF EXISTS;";
             Assert.AreEqual(result,
                 new Delete()
@@ -51,8 +50,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .WhereColumns(Columns.columns2)
                     .IfExists()
                     .ToString()
-                )
-            ;
+            );
 
             result = "DELETE v1, v2 FROM ks.tb WHERE v1 = ? AND v3 = ?;";
             Assert.AreEqual(result,
@@ -62,8 +60,8 @@ namespace CassandraQueryBuilder.Tests.UT
                     .DeleteColumns(Columns.columns1, Columns.columns2)
                     .WhereColumns(Columns.columns1, Columns.columns3)
                     .ToString()
-                )
-            ;
+            );
+
             result = "DELETE v1, v2 FROM ks.tb WHERE v1 = ? AND v3 = ? IF EXISTS;";
             Assert.AreEqual(result,
                 new Delete()
@@ -73,8 +71,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .WhereColumns(Columns.columns1, Columns.columns3)
                     .IfExists()
                     .ToString()
-                )
-            ;
+            );
             
             result = "DELETE v1, v2 FROM ks.tb USING TIMESTAMP ? WHERE v1 = ? AND v3 = ? IF EXISTS;";
             Assert.AreEqual(result,
@@ -86,8 +83,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .IfExists()
                     .Timestamp()
                     .ToString()
-                )
-            ;
+            );
 
             result = "DELETE vl1[?], v2 FROM ks.tb WHERE v1 = ? AND v3 = ?;";
             Assert.AreEqual(result,
@@ -98,8 +94,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .WhereColumns(Columns.columns1, Columns.columns3)
                     .ListDeleteType(ListDeleteType.SELECTED)
                     .ToString()
-                )
-            ;
+            );
 
             result = "DELETE vl1, v2 FROM ks.tb WHERE v1 = ? AND v3 = ?;";
             Assert.AreEqual(result,
@@ -110,8 +105,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .WhereColumns(Columns.columns1, Columns.columns3)
                     .ListDeleteType(ListDeleteType.ALL)
                     .ToString()
-                )
-            ;
+            );
         }
 
         [TestMethod]

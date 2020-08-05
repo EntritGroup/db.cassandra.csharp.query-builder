@@ -18,8 +18,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .Table(Tables.tableName)
                     .InsertColumns(Columns.columns1)
                     .ToString()
-                )
-            ;
+            );
 
             result = "INSERT INTO ks.tb (v1) VALUES (?) IF NOT EXISTS;";
             Assert.AreEqual(result,
@@ -29,8 +28,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .InsertColumns(Columns.columns1)
                     .IfNotExists()
                     .ToString()
-                )
-            ;
+            );
 
             result = "INSERT INTO ks.tb (v1, v2) VALUES (?, ?);";
             Assert.AreEqual(result,
@@ -39,8 +37,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .Table(Tables.tableName)
                     .InsertColumns(Columns.columns1, Columns.columns2)
                     .ToString()
-                )
-            ;
+            );
 
             result = "INSERT INTO ks.tb (v1, v2) VALUES (?, ?) IF NOT EXISTS;";
             Assert.AreEqual(result,
@@ -50,8 +47,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .InsertColumns(Columns.columns1, Columns.columns2)
                     .IfNotExists()
                     .ToString()
-                )
-            ;
+            );
 
             result = "INSERT INTO ks.tb (v1, v2) VALUES (?, ?) IF NOT EXISTS USING TTL ?;";
             Assert.AreEqual(result,
@@ -62,8 +58,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .TTL()
                     .IfNotExists()
                     .ToString()
-                )
-            ;
+            );
 
             result = "INSERT INTO ks.tb (v1, v2) VALUES (?, ?) IF NOT EXISTS USING TIMESTAMP ?;";
             Assert.AreEqual(result,
@@ -74,8 +69,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .IfNotExists()
                     .Timestamp()
                     .ToString()
-                )
-            ;
+            );
 
             result = "INSERT INTO ks.tb (v1, v2) VALUES (?, ?) IF NOT EXISTS USING TIMESTAMP ? AND TTL ?;";
             Assert.AreEqual(result,
@@ -87,8 +81,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .IfNotExists()
                     .Timestamp()
                     .ToString()
-                )
-            ;
+            );
         }
 
         [TestMethod]

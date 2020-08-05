@@ -18,8 +18,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .ReplicationStrategy(ReplicationStrategy.SimpleStrategy)
                     .DataCenters(new DataCenter[] { new DataCenter(Variables.dataCenterName1, 3) })
                     .ToString()
-                )
-            ;
+            );
 
             result = "CREATE KEYSPACE ks WITH REPLICATION = { 'class' : 'NetworkTopologyStrategy', 'dc1' : 3 };";
             Assert.AreEqual(result,
@@ -28,8 +27,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .ReplicationStrategy(ReplicationStrategy.NetworkTopologyStrategy)
                     .DataCenters(new DataCenter[] { new DataCenter(Variables.dataCenterName1, 3) })
                     .ToString()
-                )
-            ;
+            );
 
             result = "CREATE KEYSPACE ks WITH REPLICATION = { 'class' : 'NetworkTopologyStrategy', 'dc1' : 3, 'dc2' : 2 };";
             Assert.AreEqual(result,
@@ -38,8 +36,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .ReplicationStrategy(ReplicationStrategy.NetworkTopologyStrategy)
                     .DataCenters(new DataCenter[] { new DataCenter(Variables.dataCenterName1, 3), new DataCenter(Variables.dataCenterName2, 2) })
                     .ToString()
-                )
-            ;
+            );
         }
 
         [TestMethod]
