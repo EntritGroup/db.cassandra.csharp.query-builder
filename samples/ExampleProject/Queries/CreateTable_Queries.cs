@@ -11,13 +11,13 @@ namespace ExampleProject.Queries
         internal static readonly String USER_TABLE = new CreateTable()
             .Keyspace(DBVariables.KEYSPACE)
             .Table(DBTables.USERS)
-            .PartitionKeys(Columns.USER_ID)
+            .PartitionKeys(DBColumns.USER_ID)
             .Columns(
-                Columns.NAME,
-                Columns.EMAIL,
-                Columns.PRIVACY,
-                Columns.ACTIVE,
-                Columns.CREATION_DATE_TIMESTAMP
+                DBColumns.NAME,
+                DBColumns.EMAIL,
+                DBColumns.PRIVACY,
+                DBColumns.ACTIVE,
+                DBColumns.CREATION_DATE_TIMESTAMP
             )
             .CompactionStrategy(CompactionStrategy.LeveledCompactionStrategy)
             .ToString();
@@ -27,8 +27,8 @@ namespace ExampleProject.Queries
         internal static readonly String COUNT_USERS_TABLE = new CreateTable()
             .Keyspace(DBVariables.KEYSPACE)
             .Table(DBTables.COUNT_USERS)
-            .PartitionKeys(Columns.USERS_COUNTER)
-            .Columns(Columns.COUNT)
+            .PartitionKeys(DBColumns.USERS_COUNTER)
+            .Columns(DBColumns.COUNT)
             .CompactionStrategy(CompactionStrategy.LeveledCompactionStrategy)
             .ToString();        
 

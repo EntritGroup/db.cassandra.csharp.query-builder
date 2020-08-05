@@ -9,7 +9,7 @@ namespace ExampleProject.Queries
         internal static readonly String DELETE_USER = new Delete()
             .Keyspace(DBVariables.KEYSPACE)
             .Table(DBTables.USERS)
-            .WhereColumns(Columns.USER_ID)
+            .WhereColumns(DBColumns.USER_ID)
             .ToString();
     }
 }

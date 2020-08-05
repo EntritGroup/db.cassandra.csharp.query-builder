@@ -11,7 +11,7 @@ namespace ExampleProject.Queries
         internal static readonly String GET_ALL_USER_INFO = new Select()
             .Keyspace(DBVariables.KEYSPACE)
             .Table(DBTables.USERS)
-            .WhereColumns(Columns.USER_ID)
+            .WhereColumns(DBColumns.USER_ID)
             .ToString();
 
         //"SELECT user_id, name FROM my_keyspace.users WHERE user_id = ?;"
@@ -19,10 +19,10 @@ namespace ExampleProject.Queries
             .Keyspace(DBVariables.KEYSPACE)
             .Table(DBTables.USERS)
             .SelectColumns(
-                Columns.USER_ID,
-                Columns.NAME
+                DBColumns.USER_ID,
+                DBColumns.NAME
             )
-            .WhereColumns(Columns.USER_ID)
+            .WhereColumns(DBColumns.USER_ID)
             .ToString();
 
     }

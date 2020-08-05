@@ -10,12 +10,12 @@ namespace ExampleProject.Queries
             .Keyspace(DBVariables.KEYSPACE)
             .Table(DBTables.USERS)
             .InsertColumns(
-                Columns.USER_ID,
-                Columns.NAME,
-                Columns.EMAIL,
-                Columns.PRIVACY,
-                Columns.ACTIVE,
-                Columns.CREATION_DATE_TIMESTAMP
+                DBColumns.USER_ID,
+                DBColumns.NAME,
+                DBColumns.EMAIL,
+                DBColumns.PRIVACY,
+                DBColumns.ACTIVE,
+                DBColumns.CREATION_DATE_TIMESTAMP
             )
             .ToString();
 

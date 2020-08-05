@@ -32,13 +32,9 @@ As per the documentation for respective type: [https://cassandra.apache.org/doc/
 
 
 #### Examples
-```
-Column USER_ID = new Column("user_id", ColumnType.TEXT);
+- [Sample project](samples/ExampleProject/DBColumns.cs)
+- [Test project](tests/CassandraQueryBuilder.Tests.UT/Columns.cs)
 
-Column NAME = new Column("name", ColumnType.TEXT);
-
-Column NAME_STATIC = new Column("name_s", ColumnType.TEXT, true); //true in the end indicates a static column
-```        
 
 ### Query Strings
 To create query strings use the following code.
@@ -46,165 +42,41 @@ To create query strings use the following code.
 Note: Important that the order of the .SetWhereVariables is the same as the order of the columns in the table.
 
 #### Create keyspace query
-```
-String NAME_OF_QUERY_STRING = new CreateKeyspace()
-    .SetName(STRING_VARIABLE_WITH_KEYSPACE_NAME)
-    .SetReplicationStrategy(STRING_VARIABLE_WITH_REPLICATION_STRATEGY)
-    .SetDataCenters(STRING_VARIABLE_WITH_DATA_CENTERS)
-    .ToString()
-;
-```
+
+- [Sample project](samples/ExampleProject/Queries/CreateKeyspace_Queries.cs)
+- [Test project](tests/CassandraQueryBuilder.Tests.UT/Queries/UT_CreateKeyspace.cs)
 
 #### Drop keyspace query
-```
-String NAME_OF_QUERY_STRING = new DropKeyspace()
-    .SetName(STRING_VARIABLE_WITH_KEYSPACE_NAME)
-    .ToString()
-;
-```
+- [Sample project](samples/ExampleProject/Queries/DropKeyspace_Queries.cs)
+- [Test project](tests/CassandraQueryBuilder.Tests.UT/Queries/UT_DropKeyspace.cs)
 
 #### Create table query
-```
- String NAME_OF_QUERY_STRING = new CreateTable()
-    .SetKeyspace(STRING_VARIABLE_WITH_KEYSPACE_NAME)
-    .SetTableName(STRING_VARIABLE_WITH_TABLE_NAME)
-    .SetPartitionKeys(
-        USER_ID
-    )
-    .SetClusteringKeys(
-        ...
-    )
-    .SetColumns(
-        NAME, //The name of the user
-    )
-    .SetCompactionStrategy(CompactionStrategy.LeveledCompactionStrategy)
-    .ToString()
-;
-
-```
+- [Sample project](samples/ExampleProject/Queries/CreateTable_Queries.cs)
+- [Test project](tests/CassandraQueryBuilder.Tests.UT/Queries/UT_Tables.cs)
 
 #### Create materalized view query
-```
-String NAME_OF_QUERY_STRING = CreateMaterializedView()
-    .SetKeyspace(STRING_VARIABLE_WITH_KEYSPACE_NAME)
-    .SetToTableName(STRING_VARIABLE_WITH_MATERIALIZED_VIEW_TABLE_NAME)
-    .SetFromTableName(STRING_VARIABLE_WITH_THE_ORIGINAL_TABLE_NAME)
-    .SetPartitionKeys(NAME)
-    .SetClusteringKeys(USER_ID)
-    .SetCompactionStrategy(CompactionStrategy.LeveledCompactionStrategy),
-    .SetVariables(...)
-    .ToString()
-;
-```
+- [Sample project](samples/ExampleProject/Queries/CreateMaterializedView_Queries.cs)
+- [Test project](tests/CassandraQueryBuilder.Tests.UT/Queries/UT_MaterializedViews.cs)
 
 #### Insert query
-```
-String NAME_OF_QUERY_STRING = new Insert()
-    .SetKeyspace(STRING_VARIABLE_WITH_KEYSPACE_NAME)
-    .SetTableName(STRING_VARIABLE_WITH_TABLE_NAME)
-    .SetColumns(
-        USER_ID,
-        NAME
-    )
-    .ToString()
-;
-```
+- [Sample project](samples/ExampleProject/Queries/Insert_Queries.cs)
+- [Test project](tests/CassandraQueryBuilder.Tests.UT/Queries/UT_Insert.cs)
 
-#### Get/Select query
-No limit on responses
-```
-String NAME_OF_QUERY_STRING = new Select()
-    .SetKeyspace(STRING_VARIABLE_WITH_KEYSPACE_NAME)
-    .SetTableName(STRING_VARIABLE_WITH_TABLE_NAME)
-    .SetColumns(
-        USER_ID,
-        NAME
-    )
-    .SetWhereColumns(
-        USER_ID
-    )
-    .SetLimit() //Here you can specify the limit as a varaible in the query
-    .ToString()
-;
-```
-
-Changeable limit on responses
-```
-String NAME_OF_QUERY_STRING = new Select()
-    .SetKeyspace(STRING_VARIABLE_WITH_KEYSPACE_NAME)
-    .SetTableName(STRING_VARIABLE_WITH_TABLE_NAME)
-    .SetColumns(
-        USER_ID,
-        NAME
-    )
-    .SetWhereColumns(
-        USER_ID
-    )
-    .SetLimit() //Here you need to specify the limit as a varaible in the query during runtime.
-    .ToString()
-;
-```
-
-
-Fixed limit on responses
-```
-String NAME_OF_QUERY_STRING = new Select()
-    .SetKeyspace(STRING_VARIABLE_WITH_KEYSPACE_NAME)
-    .SetTableName(STRING_VARIABLE_WITH_TABLE_NAME)
-    .SetColumns(
-        USER_ID,
-        NAME
-    )
-    .SetWhereColumns(
-        USER_ID
-    )
-    .SetLimit(10) //Will return up to 10 rows in the response
-    .ToString()
-;
-```
-
+#### Select query
+- [Sample project](samples/ExampleProject/Queries/Select_Queries.cs)
+- [Test project](tests/CassandraQueryBuilder.Tests.UT/Queries/UT_Select.cs)
 
 #### Update query
-```
-String NAME_OF_QUERY_STRING = new Update()
-    .SetKeyspace(STRING_VARIABLE_WITH_KEYSPACE_NAME)
-    .SetTableName(STRING_VARIABLE_WITH_TABLE_NAME)
-    .SetVariables(NAME) //Column variable of what to be updated 
-    .SetWhereVariables(
-        USER_ID,
-        ...
-    )
-    .ToString()
-;
-
-```
+- [Sample project](samples/ExampleProject/Queries/Update_Queries.cs)
+- [Test project](tests/CassandraQueryBuilder.Tests.UT/Queries/UT_Update.cs)
 
 #### Delete query
-```
-String NAME_OF_QUERY_STRING = new Delete()
-    .SetKeyspace(STRING_VARIABLE_WITH_KEYSPACE_NAME)
-    .SetTableName(STRING_VARIABLE_WITH_TABLE_NAME)
-    .SetWhereVariables(
-        USER_ID,
-        ...
-    )
-    .ToString()
-;
-```
+- [Sample project](samples/ExampleProject/Queries/Delete_Queries.cs)
+- [Test project](tests/CassandraQueryBuilder.Tests.UT/Queries/UT_Delete.cs)
 
 #### Counter query
-```
-String NAME_OF_QUERY_STRING = new UpdateCounter()
-    .SetKeyspace(STRING_VARIABLE_WITH_KEYSPACE_NAME)
-    .SetTableName(STRING_VARIABLE_WITH_TABLE_NAME)
-    .SetVariables(NAME) //Column variable of what to be updated 
-    .SetIncreaseBy(1) //You can also set -1 here to decrease
-    .SetWhereVariables(
-        USER_ID,
-    )
-    .ToString()
-;
-```
+- [Sample project](samples/ExampleProject/Queries/Counter_Queries.cs)
+- [Test project](tests/CassandraQueryBuilder.Tests.UT/Queries/UT_UpdateCounter.cs)
 
 
 ## How do I get set up? ###

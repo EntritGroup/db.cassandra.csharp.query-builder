@@ -2,7 +2,7 @@
 
 namespace ExampleProject
 {
-    public class Columns
+    public class DBColumns
     {
         internal static readonly Column USER_ID = new Column("user_id", ColumnType.UUID);
 
@@ -21,6 +21,7 @@ namespace ExampleProject
         internal static readonly Column PRIVACY = new Column("privacy", ColumnType.TEXT);
         
         internal static readonly Column USERS_COUNTER = new Column("users_counter", ColumnType.TEXT);
+        
         internal static readonly Column COUNT = new Column("count", ColumnType.COUNTER);
 
     }

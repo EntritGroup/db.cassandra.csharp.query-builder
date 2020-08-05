@@ -10,8 +10,8 @@ namespace ExampleProject.Queries
         internal static readonly String UPDATE_USER_NAME = new Update()
             .Keyspace(DBVariables.KEYSPACE)
             .Table(DBTables.USERS)
-            .UpdateColumns(Columns.NAME)
-            .WhereColumns(Columns.USER_ID)
+            .UpdateColumns(DBColumns.NAME)
+            .WhereColumns(DBColumns.USER_ID)
             .ToString();
 
     }

@@ -9,6 +9,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{F17800B4
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CassandraQueryBuilder.Tests.UT", "tests\CassandraQueryBuilder.Tests.UT\CassandraQueryBuilder.Tests.UT.csproj", "{01CE12BD-299C-4641-8B30-53DAB3C202AB}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{B857B0BF-033E-4346-8D0D-F456E39DBEAE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleProject", "samples\ExampleProject\ExampleProject.csproj", "{EDC8FE11-E85B-48F5-9159-579883732205}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,8 +50,21 @@ Global
 		{01CE12BD-299C-4641-8B30-53DAB3C202AB}.Release|x64.Build.0 = Release|Any CPU
 		{01CE12BD-299C-4641-8B30-53DAB3C202AB}.Release|x86.ActiveCfg = Release|Any CPU
 		{01CE12BD-299C-4641-8B30-53DAB3C202AB}.Release|x86.Build.0 = Release|Any CPU
+		{EDC8FE11-E85B-48F5-9159-579883732205}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDC8FE11-E85B-48F5-9159-579883732205}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDC8FE11-E85B-48F5-9159-579883732205}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{EDC8FE11-E85B-48F5-9159-579883732205}.Debug|x64.Build.0 = Debug|Any CPU
+		{EDC8FE11-E85B-48F5-9159-579883732205}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{EDC8FE11-E85B-48F5-9159-579883732205}.Debug|x86.Build.0 = Debug|Any CPU
+		{EDC8FE11-E85B-48F5-9159-579883732205}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDC8FE11-E85B-48F5-9159-579883732205}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDC8FE11-E85B-48F5-9159-579883732205}.Release|x64.ActiveCfg = Release|Any CPU
+		{EDC8FE11-E85B-48F5-9159-579883732205}.Release|x64.Build.0 = Release|Any CPU
+		{EDC8FE11-E85B-48F5-9159-579883732205}.Release|x86.ActiveCfg = Release|Any CPU
+		{EDC8FE11-E85B-48F5-9159-579883732205}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{01CE12BD-299C-4641-8B30-53DAB3C202AB} = {F17800B4-1640-4737-B6E3-B5E4F0A48302}
+		{EDC8FE11-E85B-48F5-9159-579883732205} = {B857B0BF-033E-4346-8D0D-F456E39DBEAE}
 	EndGlobalSection
 EndGlobal
