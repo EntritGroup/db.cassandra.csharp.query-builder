@@ -14,7 +14,7 @@ namespace CassandraQueryBuilder.Tests.UT
             String result = "DROP KEYSPACE IF EXISTS ks;";
             Assert.AreEqual(result,
                 new DropKeyspace()
-                    .SetName(Variables.keyspace)
+                    .Keyspace(Variables.keyspace)
                     .ToString()
                 )
             ;

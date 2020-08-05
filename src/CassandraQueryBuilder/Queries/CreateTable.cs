@@ -7,7 +7,7 @@ namespace CassandraQueryBuilder
     public class CreateTable : Query
     {
         private String keyspace;
-        private String tableName;
+        private String table;
         private Column[] partitionKeys;
         private Column[] clusteringKeys;
         private Column[] colums;
@@ -25,35 +25,35 @@ namespace CassandraQueryBuilder
 
         }
 
-        public CreateTable SetKeyspace(String keyspace)
+        public CreateTable Keyspace(String keyspace)
         {
             this.keyspace = keyspace;
 
             return this;
         }
 
-        public CreateTable SetTableName(String tableName)
+        public CreateTable Table(String table)
         {
-            this.tableName = tableName;
+            this.table = table;
 
             return this;
         }
 
-        public CreateTable SetPartitionKeys(params Column[] partitionKeys)
+        public CreateTable PartitionKeys(params Column[] partitionKeys)
         {
             this.partitionKeys = partitionKeys;
 
             return this;
         }
 
-        public CreateTable SetClusteringKeys(params Column[] clusteringKeys)
+        public CreateTable ClusteringKeys(params Column[] clusteringKeys)
         {
             this.clusteringKeys = clusteringKeys;
 
             return this;
         }
 
-        public CreateTable SetClusteringKeysOrderByASC(params Boolean[] clusteringKeysOrderByASC)
+        public CreateTable ClusteringKeysOrderByASC(params Boolean[] clusteringKeysOrderByASC)
         {
             if (isClusteringKeysOrderByAscSet)
                 throw new Exception("SetClusteringKeysOrderByASC already set");
@@ -73,14 +73,14 @@ namespace CassandraQueryBuilder
             return this;
         }
 
-        public CreateTable SetColumns(params Column[] columns)
+        public CreateTable Columns(params Column[] columns)
         {
             this.colums = columns;
 
             return this;
         }
 
-        public CreateTable SetCompactionStrategy(CompactionStrategy dbCompactionStrategy)
+        public CreateTable CompactionStrategy(CompactionStrategy dbCompactionStrategy)
         {
             if (isDbCompactionStrategySet)
                 throw new Exception("SetCompactionStrategy already set");
@@ -92,7 +92,7 @@ namespace CassandraQueryBuilder
             return this;
         }
 
-        public CreateTable SetGcGrace(int gcGraceSeconds)
+        public CreateTable GcGrace(int gcGraceSeconds)
         {
             if (isGcGraceSecondsSet)
                 throw new Exception("SetGcGrace already set");
@@ -166,7 +166,7 @@ namespace CassandraQueryBuilder
         {
             if (keyspace == null)
                 throw new NullReferenceException("Keyspace cannot be null");
-            if (tableName == null)
+            if (table == null)
                 throw new NullReferenceException("TableName cannot be null");
             if (partitionKeys == null)
                 throw new NullReferenceException("PartitionKeys cannot be null");
@@ -175,7 +175,7 @@ namespace CassandraQueryBuilder
 
             StringBuilder sb = new StringBuilder();
 
-            sb.Append("CREATE TABLE " + keyspace + "." + tableName + " (");
+            sb.Append("CREATE TABLE " + keyspace + "." + table + " (");
 
 
             AppendColumnRows(sb, partitionKeys);

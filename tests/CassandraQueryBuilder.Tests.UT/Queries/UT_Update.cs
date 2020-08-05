@@ -14,21 +14,21 @@ namespace CassandraQueryBuilder.Tests.UT
             String result = "UPDATE ks.tb SET v1 = ? WHERE v2 = ?;";
             Assert.AreEqual(result,
                 new Update()
-                    .SetKeyspace(Variables.keyspace)
-                    .SetTableName(Tables.tableName)
-                    .SetVariables(Columns.columns1)
-                    .SetWhereVariables(Columns.columns2)
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .UpdateColumns(Columns.columns1)
+                    .WhereColumns(Columns.columns2)
                     .ToString()
                 )
             ;
             result = "UPDATE ks.tb SET v1 = ? WHERE v2 = ? IF EXISTS;";
             Assert.AreEqual(result,
                 new Update()
-                    .SetKeyspace(Variables.keyspace)
-                    .SetTableName(Tables.tableName)
-                    .SetVariables(Columns.columns1)
-                    .SetWhereVariables(Columns.columns2)
-                    .SetIfExists()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .UpdateColumns(Columns.columns1)
+                    .WhereColumns(Columns.columns2)
+                    .IfExists()
                     .ToString()
                 )
             ;
@@ -36,10 +36,10 @@ namespace CassandraQueryBuilder.Tests.UT
             result = "UPDATE ks.tb SET v1 = ?, v2 = ? WHERE v1 = ? AND v3 = ?;";
             Assert.AreEqual(result,
                 new Update()
-                    .SetKeyspace(Variables.keyspace)
-                    .SetTableName(Tables.tableName)
-                    .SetVariables(Columns.columns1, Columns.columns2)
-                    .SetWhereVariables(Columns.columns1, Columns.columns3)
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .UpdateColumns(Columns.columns1, Columns.columns2)
+                    .WhereColumns(Columns.columns1, Columns.columns3)
                     .ToString()
                 )
             ;
@@ -47,11 +47,11 @@ namespace CassandraQueryBuilder.Tests.UT
             result = "UPDATE ks.tb SET v1 = ?, v2 = ? WHERE v1 = ? AND v3 = ? IF EXISTS;";
             Assert.AreEqual(result,
                 new Update()
-                    .SetKeyspace(Variables.keyspace)
-                    .SetTableName(Tables.tableName)
-                    .SetVariables(Columns.columns1, Columns.columns2)
-                    .SetWhereVariables(Columns.columns1, Columns.columns3)
-                    .SetIfExists()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .UpdateColumns(Columns.columns1, Columns.columns2)
+                    .WhereColumns(Columns.columns1, Columns.columns3)
+                    .IfExists()
                     .ToString()
                 )
             ;
@@ -59,12 +59,12 @@ namespace CassandraQueryBuilder.Tests.UT
             result = "UPDATE ks.tb USING TTL ? SET v1 = ?, v2 = ? WHERE v1 = ? AND v3 = ? IF EXISTS;";
             Assert.AreEqual(result,
                 new Update()
-                    .SetKeyspace(Variables.keyspace)
-                    .SetTableName(Tables.tableName)
-                    .SetVariables(Columns.columns1, Columns.columns2)
-                    .SetWhereVariables(Columns.columns1, Columns.columns3)
-                    .SetIfExists()
-                    .SetTTL()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .UpdateColumns(Columns.columns1, Columns.columns2)
+                    .WhereColumns(Columns.columns1, Columns.columns3)
+                    .IfExists()
+                    .TTL()
                     .ToString()
                 )
             ;
@@ -72,12 +72,12 @@ namespace CassandraQueryBuilder.Tests.UT
             result = "UPDATE ks.tb USING TIMESTAMP ? SET v1 = ?, v2 = ? WHERE v1 = ? AND v3 = ? IF EXISTS;";
             Assert.AreEqual(result,
                 new Update()
-                    .SetKeyspace(Variables.keyspace)
-                    .SetTableName(Tables.tableName)
-                    .SetVariables(Columns.columns1, Columns.columns2)
-                    .SetWhereVariables(Columns.columns1, Columns.columns3)
-                    .SetIfExists()
-                    .SetTimestamp()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .UpdateColumns(Columns.columns1, Columns.columns2)
+                    .WhereColumns(Columns.columns1, Columns.columns3)
+                    .IfExists()
+                    .Timestamp()
                     .ToString()
                 )
             ;
@@ -85,13 +85,13 @@ namespace CassandraQueryBuilder.Tests.UT
             result = "UPDATE ks.tb USING TIMESTAMP ? AND TTL ? SET v1 = ?, v2 = ? WHERE v1 = ? AND v3 = ? IF EXISTS;";
             Assert.AreEqual(result,
                 new Update()
-                    .SetKeyspace(Variables.keyspace)
-                    .SetTableName(Tables.tableName)
-                    .SetVariables(Columns.columns1, Columns.columns2)
-                    .SetWhereVariables(Columns.columns1, Columns.columns3)
-                    .SetIfExists()
-                    .SetTimestamp()
-                    .SetTTL()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .UpdateColumns(Columns.columns1, Columns.columns2)
+                    .WhereColumns(Columns.columns1, Columns.columns3)
+                    .IfExists()
+                    .Timestamp()
+                    .TTL()
                     .ToString()
                 )
             ;
@@ -99,11 +99,11 @@ namespace CassandraQueryBuilder.Tests.UT
             result = "UPDATE ks.tb SET v1 = ?, v2 = ?, vl1 = ? + vl1 WHERE v1 = ? AND v3 = ?;";
             Assert.AreEqual(result,
                 new Update()
-                    .SetKeyspace(Variables.keyspace)
-                    .SetTableName(Tables.tableName)
-                    .SetVariables(Columns.columns1, Columns.columns2, Columns.columns_list1)
-                    .SetWhereVariables(Columns.columns1, Columns.columns3)
-                    .SetListUpdateType(ListUpdateType.PREPEND)
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .UpdateColumns(Columns.columns1, Columns.columns2, Columns.columns_list1)
+                    .WhereColumns(Columns.columns1, Columns.columns3)
+                    .ListUpdateType(ListUpdateType.PREPEND)
                     .ToString()
                 )
             ;
@@ -111,11 +111,11 @@ namespace CassandraQueryBuilder.Tests.UT
             result = "UPDATE ks.tb SET v1 = ?, v2 = ?, vl1 = vl1 + ? WHERE v1 = ? AND v3 = ?;";
             Assert.AreEqual(result,
                 new Update()
-                    .SetKeyspace(Variables.keyspace)
-                    .SetTableName(Tables.tableName)
-                    .SetVariables(Columns.columns1, Columns.columns2, Columns.columns_list1)
-                    .SetWhereVariables(Columns.columns1, Columns.columns3)
-                    .SetListUpdateType(ListUpdateType.APPEND)
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .UpdateColumns(Columns.columns1, Columns.columns2, Columns.columns_list1)
+                    .WhereColumns(Columns.columns1, Columns.columns3)
+                    .ListUpdateType(ListUpdateType.APPEND)
                     .ToString()
                 )
             ;
@@ -123,11 +123,11 @@ namespace CassandraQueryBuilder.Tests.UT
             result = "UPDATE ks.tb SET v1 = ?, v2 = ?, vl1 = ? WHERE v1 = ? AND v3 = ?;";
             Assert.AreEqual(result,
                 new Update()
-                    .SetKeyspace(Variables.keyspace)
-                    .SetTableName(Tables.tableName)
-                    .SetVariables(Columns.columns1, Columns.columns2, Columns.columns_list1)
-                    .SetWhereVariables(Columns.columns1, Columns.columns3)
-                    .SetListUpdateType(ListUpdateType.REPLACE_ALL)
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .UpdateColumns(Columns.columns1, Columns.columns2, Columns.columns_list1)
+                    .WhereColumns(Columns.columns1, Columns.columns3)
+                    .ListUpdateType(ListUpdateType.REPLACE_ALL)
                     .ToString()
                 )
             ;
@@ -135,11 +135,11 @@ namespace CassandraQueryBuilder.Tests.UT
             result = "UPDATE ks.tb SET v1 = ?, v2 = ?, vl1[?] = ? WHERE v1 = ? AND v3 = ?;";
             Assert.AreEqual(result,
                 new Update()
-                    .SetKeyspace(Variables.keyspace)
-                    .SetTableName(Tables.tableName)
-                    .SetVariables(Columns.columns1, Columns.columns2, Columns.columns_list1)
-                    .SetWhereVariables(Columns.columns1, Columns.columns3)
-                    .SetListUpdateType(ListUpdateType.SPECIFY_INDEX_TO_OVERWRITE)
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .UpdateColumns(Columns.columns1, Columns.columns2, Columns.columns_list1)
+                    .WhereColumns(Columns.columns1, Columns.columns3)
+                    .ListUpdateType(ListUpdateType.SPECIFY_INDEX_TO_OVERWRITE)
                     .ToString()
                 )
             ;
@@ -158,7 +158,7 @@ namespace CassandraQueryBuilder.Tests.UT
             Assert.ThrowsException<NullReferenceException>(
                 () => {
                     new Update()
-                        .SetKeyspace(Variables.keyspace)
+                        .Keyspace(Variables.keyspace)
                         .ToString();
                 }
             );
@@ -166,8 +166,8 @@ namespace CassandraQueryBuilder.Tests.UT
             Assert.ThrowsException<NullReferenceException>(
 (Action)(() => {
                     new Update()
-                        .SetKeyspace(Variables.keyspace)
-                        .SetTableName(Tables.tableName)
+                        .Keyspace(Variables.keyspace)
+                        .Table(Tables.tableName)
                         .ToString();
                 })
             );
@@ -175,9 +175,9 @@ namespace CassandraQueryBuilder.Tests.UT
             Assert.ThrowsException<NullReferenceException>(
 (Action)(() => {
                     new Update()
-                        .SetKeyspace(Variables.keyspace)
-                        .SetTableName(Tables.tableName)
-                        .SetVariables(Columns.columns1)
+                        .Keyspace(Variables.keyspace)
+                        .Table(Tables.tableName)
+                        .UpdateColumns(Columns.columns1)
                         .ToString();
                 })
             );

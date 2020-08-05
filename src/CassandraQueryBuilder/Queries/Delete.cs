@@ -6,9 +6,9 @@ namespace CassandraQueryBuilder
     public class Delete : Query// : IPreparedStatement
     {
         private String keyspace;
-        private String tableName;
-        private Column[] variables;
-        private Column[] whereVariables;
+        private String table;
+        private Column[] deleteColumns;
+        private Column[] whereColumns;
         private Boolean ifExists = false;
         private Boolean setTimestamp = false;
 
@@ -24,49 +24,49 @@ namespace CassandraQueryBuilder
         }
 
 
-        public Delete SetKeyspace(String keyspace)
+        public Delete Keyspace(String keyspace)
         {
             this.keyspace = keyspace;
 
             return this;
         }
 
-        public Delete SetTableName(String tableName)
+        public Delete Table(String table)
         {
-            this.tableName = tableName;
+            this.table = table;
 
             return this;
         }
 
-        public Delete SetVariables(params Column[] variables)
+        public Delete DeleteColumns(params Column[] deleteColumns)
         {
-            this.variables = variables;
+            this.deleteColumns = deleteColumns;
 
             return this;
         }
 
-        public Delete SetWhereVariables(params Column[] whereVariables)
+        public Delete WhereColumns(params Column[] whereColumns)
         {
-            this.whereVariables = whereVariables;
+            this.whereColumns = whereColumns;
 
             return this;
         }
 
-        public Delete SetIfExists()
+        public Delete IfExists()
         {
             this.ifExists = true;
 
             return this;
         }
 
-        public Delete SetTimestamp()
+        public Delete Timestamp()
         {
             this.setTimestamp= true;
 
             return this;
         }
 
-        public Delete SetListDeleteType(ListDeleteType listDeleteType)
+        public Delete ListDeleteType(ListDeleteType listDeleteType)
         {
             this.listDeleteType = listDeleteType;
 
@@ -80,7 +80,7 @@ namespace CassandraQueryBuilder
         {
             if (variable.GetColumnType().StartsWith("LIST<"))
             {
-                if (listDeleteType == ListDeleteType.ALL)
+                if (listDeleteType == CassandraQueryBuilder.ListDeleteType.ALL)
                     sb.Append(variable.GetName() + suffix);
                 else
                     sb.Append(variable.GetName() + "[?]" + suffix);
@@ -110,9 +110,9 @@ namespace CassandraQueryBuilder
         {
             if (keyspace == null)
                 throw new NullReferenceException("Keyspace cannot be null");
-            if (tableName == null)
+            if (table == null)
                 throw new NullReferenceException("TableName cannot be null");
-            if (whereVariables == null)
+            if (whereColumns == null)
                 throw new NullReferenceException("WhereVariables cannot be null");
 
 
@@ -122,21 +122,21 @@ namespace CassandraQueryBuilder
             sb.Append("DELETE ");
 
 
-            if (variables != null)
+            if (deleteColumns != null)
             {
-                AppendVariableRows(sb, variables, ",", "");
+                AppendVariableRows(sb, deleteColumns, ",", "");
                 sb.Append(" ");
             }
 
 
-            sb.Append("FROM " + keyspace + "." + tableName);
+            sb.Append("FROM " + keyspace + "." + table);
 
             if (setTimestamp)
                 sb.Append(" USING TIMESTAMP ?");
 
             sb.Append(" WHERE ");
 
-            AppendVariableRows(sb, whereVariables, " AND", " = ?");
+            AppendVariableRows(sb, whereColumns, " AND", " = ?");
 
 
             if (ifExists)

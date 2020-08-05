@@ -14,9 +14,9 @@ namespace CassandraQueryBuilder.Tests.UT
             String result = "CREATE KEYSPACE ks WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 3 };";
             Assert.AreEqual(result,
                 new CreateKeyspace()
-                    .SetName(Variables.keyspace)
-                    .SetReplicationStrategy(ReplicationStrategy.SimpleStrategy)
-                    .SetDataCenters(new DataCenter[] { new DataCenter(Variables.dataCenterName1, 3) })
+                    .Keyspace(Variables.keyspace)
+                    .ReplicationStrategy(ReplicationStrategy.SimpleStrategy)
+                    .DataCenters(new DataCenter[] { new DataCenter(Variables.dataCenterName1, 3) })
                     .ToString()
                 )
             ;
@@ -24,9 +24,9 @@ namespace CassandraQueryBuilder.Tests.UT
             result = "CREATE KEYSPACE ks WITH REPLICATION = { 'class' : 'NetworkTopologyStrategy', 'dc1' : 3 };";
             Assert.AreEqual(result,
                 new CreateKeyspace()
-                    .SetName(Variables.keyspace)
-                    .SetReplicationStrategy(ReplicationStrategy.NetworkTopologyStrategy)
-                    .SetDataCenters(new DataCenter[] { new DataCenter(Variables.dataCenterName1, 3) })
+                    .Keyspace(Variables.keyspace)
+                    .ReplicationStrategy(ReplicationStrategy.NetworkTopologyStrategy)
+                    .DataCenters(new DataCenter[] { new DataCenter(Variables.dataCenterName1, 3) })
                     .ToString()
                 )
             ;
@@ -34,9 +34,9 @@ namespace CassandraQueryBuilder.Tests.UT
             result = "CREATE KEYSPACE ks WITH REPLICATION = { 'class' : 'NetworkTopologyStrategy', 'dc1' : 3, 'dc2' : 2 };";
             Assert.AreEqual(result,
                 new CreateKeyspace()
-                    .SetName(Variables.keyspace)
-                    .SetReplicationStrategy(ReplicationStrategy.NetworkTopologyStrategy)
-                    .SetDataCenters(new DataCenter[] { new DataCenter(Variables.dataCenterName1, 3), new DataCenter(Variables.dataCenterName2, 2) })
+                    .Keyspace(Variables.keyspace)
+                    .ReplicationStrategy(ReplicationStrategy.NetworkTopologyStrategy)
+                    .DataCenters(new DataCenter[] { new DataCenter(Variables.dataCenterName1, 3), new DataCenter(Variables.dataCenterName2, 2) })
                     .ToString()
                 )
             ;
@@ -56,7 +56,7 @@ namespace CassandraQueryBuilder.Tests.UT
             Assert.ThrowsException<NullReferenceException>(
                 () => {
                     new CreateKeyspace()
-                        .SetName(Variables.keyspace)
+                        .Keyspace(Variables.keyspace)
                         .ToString()
                     ;
                 }
@@ -66,8 +66,8 @@ namespace CassandraQueryBuilder.Tests.UT
             Assert.ThrowsException<NullReferenceException>(
                 () => {
                     new CreateKeyspace()
-                        .SetName(Variables.keyspace)
-                        .SetReplicationStrategy(ReplicationStrategy.SimpleStrategy)
+                        .Keyspace(Variables.keyspace)
+                        .ReplicationStrategy(ReplicationStrategy.SimpleStrategy)
                         .ToString()
                     ;
                 }
@@ -78,9 +78,9 @@ namespace CassandraQueryBuilder.Tests.UT
             Assert.ThrowsException<Exception>(
                 () => {
                     new CreateKeyspace()
-                        .SetName(Variables.keyspace)
-                        .SetReplicationStrategy(ReplicationStrategy.SimpleStrategy)
-                        .SetDataCenters(new DataCenter[0])
+                        .Keyspace(Variables.keyspace)
+                        .ReplicationStrategy(ReplicationStrategy.SimpleStrategy)
+                        .DataCenters(new DataCenter[0])
                         .ToString()
                     ;
                 }
@@ -89,9 +89,9 @@ namespace CassandraQueryBuilder.Tests.UT
             Assert.ThrowsException<Exception>(
                 () => {
                     new CreateKeyspace()
-                        .SetName(Variables.keyspace)
-                        .SetReplicationStrategy(ReplicationStrategy.SimpleStrategy)
-                        .SetDataCenters(new DataCenter[2])
+                        .Keyspace(Variables.keyspace)
+                        .ReplicationStrategy(ReplicationStrategy.SimpleStrategy)
+                        .DataCenters(new DataCenter[2])
                         .ToString()
                     ;
                 }
@@ -102,9 +102,9 @@ namespace CassandraQueryBuilder.Tests.UT
             Assert.ThrowsException<Exception>(
                 () => {
                     new CreateKeyspace()
-                        .SetName(Variables.keyspace)
-                        .SetReplicationStrategy(ReplicationStrategy.NetworkTopologyStrategy)
-                        .SetDataCenters(new DataCenter[0])
+                        .Keyspace(Variables.keyspace)
+                        .ReplicationStrategy(ReplicationStrategy.NetworkTopologyStrategy)
+                        .DataCenters(new DataCenter[0])
                         .ToString()
                     ;
                 }

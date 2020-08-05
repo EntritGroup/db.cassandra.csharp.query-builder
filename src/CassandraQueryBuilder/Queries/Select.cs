@@ -6,8 +6,8 @@ namespace CassandraQueryBuilder
     public class Select : Query// : IPreparedStatement
     {
         private String keyspace;
-        private String tableName;
-        private Column[] columns;
+        private String table;
+        private Column[] selectColumns;
         private Column[] whereColumns;
         private String[] whereSigns;
         private int? limit;
@@ -24,28 +24,28 @@ namespace CassandraQueryBuilder
         }
 
 
-        public Select SetKeyspace(String keyspace)
+        public Select Keyspace(String keyspace)
         {
             this.keyspace = keyspace;
 
             return this;
         }
 
-        public Select SetTableName(String tableName)
+        public Select Table(String table)
         {
-            this.tableName = tableName;
+            this.table = table;
 
             return this;
         }
 
-        public Select SetColumns(params Column[] columns)
+        public Select SelectColumns(params Column[] columns)
         {
-            this.columns = columns;
+            this.selectColumns = columns;
 
             return this;
         }
 
-        public Select SetWhereColumns(params Column[] whereColumns)
+        public Select WhereColumns(params Column[] whereColumns)
         {
             this.whereColumns = whereColumns;
 
@@ -53,7 +53,7 @@ namespace CassandraQueryBuilder
         }
 
         //"=", ">", "<" etc
-        public Select SetWhereSigns(params String[] whereSigns)
+        public Select WhereSigns(params String[] whereSigns)
         {
             this.whereSigns = whereSigns;
 
@@ -61,7 +61,7 @@ namespace CassandraQueryBuilder
         }
 
         //if limit = null here, then it will be "?", otherwise, it will be 1,2,3, or whatever you set
-        public Select SetLimit(int? limit = null)
+        public Select Limit(int? limit = null)
         {
             if (limit == null)
                 this.limit = 0;
@@ -72,7 +72,7 @@ namespace CassandraQueryBuilder
         }
 
         //if limit = null here, then it will be "?", otherwise, it will be 1,2,3, or whatever you set
-        public Select SetInColumns(Column inColumn, int inLength)
+        public Select InColumns(Column inColumn, int inLength)
         {
             this.inColumn = inColumn;
             this.inLength = inLength;
@@ -125,7 +125,7 @@ namespace CassandraQueryBuilder
         {
             if (keyspace == null)
                 throw new NullReferenceException("Keyspace cannot be null");
-            if (tableName == null)
+            if (table == null)
                 throw new NullReferenceException("TableName cannot be null");
             if (whereColumns != null && whereSigns != null && whereSigns.Length != whereSigns.Length)
                 throw new IndexOutOfRangeException("whereColumns and whereSigns must be same length if whereSigns is not null");
@@ -136,13 +136,13 @@ namespace CassandraQueryBuilder
 
             sb.Append("SELECT ");
 
-            if (columns == null)
+            if (selectColumns == null)
                 sb.Append("*");
             else
-                AppendColumnRows(sb, columns, ",", "");
+                AppendColumnRows(sb, selectColumns, ",", "");
             
 
-            sb.Append(" FROM " + keyspace + "." + tableName);
+            sb.Append(" FROM " + keyspace + "." + table);
 
             if (whereColumns != null && whereColumns.Length > 0)
             {

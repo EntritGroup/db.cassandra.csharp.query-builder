@@ -6,9 +6,9 @@ namespace CassandraQueryBuilder
     public class Update : Query// : IPreparedStatement
     {
         private String keyspace;
-        private String tableName;
-        private Column[] variables;
-        private Column[] whereVariables;
+        private String table;
+        private Column[] updateColumns;
+        private Column[] whereColumns;
         private Boolean ttl = false; //Om man har ttl så ska den ligga sist i valuesVariables;
         private Boolean ifExists = false;
         private Boolean setTimestamp = false;
@@ -25,57 +25,57 @@ namespace CassandraQueryBuilder
         }
 
 
-        public Update SetKeyspace(String keyspace)
+        public Update Keyspace(String keyspace)
         {
             this.keyspace = keyspace;
 
             return this;
         }
 
-        public Update SetTableName(String tableName)
+        public Update Table(String table)
         {
-            this.tableName = tableName;
+            this.table = table;
 
             return this;
         }
 
-        public Update SetVariables(params Column[] variables)
+        public Update UpdateColumns(params Column[] updateColumns)
         {
-            this.variables = variables;
+            this.updateColumns = updateColumns;
 
             return this;
         }
 
-        public Update SetWhereVariables(params Column[] whereVariables)
+        public Update WhereColumns(params Column[] whereColumns)
         {
-            this.whereVariables = whereVariables;
+            this.whereColumns = whereColumns;
 
             return this;
         }
 
         //Om man har ttl så ska den ligga sist i valuesVariables
-        public Update SetTTL()
+        public Update TTL()
         {
             this.ttl = true;
 
             return this;
         }
 
-        public Update SetIfExists()
+        public Update IfExists()
         {
             this.ifExists = true;
 
             return this;
         }
 
-        public Update SetTimestamp()
+        public Update Timestamp()
         {
             this.setTimestamp = true;
 
             return this;
         }
 
-        public Update SetListUpdateType(ListUpdateType listUpdateType)
+        public Update ListUpdateType(ListUpdateType listUpdateType)
         {
             this.listUpdateType = listUpdateType;
 
@@ -91,11 +91,11 @@ namespace CassandraQueryBuilder
         {
             if(variable.GetColumnType().StartsWith("LIST<"))
             {
-                if (listUpdateType == ListUpdateType.PREPEND)
+                if (listUpdateType == CassandraQueryBuilder.ListUpdateType.PREPEND)
                     sb.Append(variable.GetName() + " = ? + " + variable.GetName());
-                else if (listUpdateType == ListUpdateType.APPEND)
+                else if (listUpdateType == CassandraQueryBuilder.ListUpdateType.APPEND)
                     sb.Append(variable.GetName() + " = " + variable.GetName() + " + ?");
-                else if (listUpdateType == ListUpdateType.REPLACE_ALL)
+                else if (listUpdateType == CassandraQueryBuilder.ListUpdateType.REPLACE_ALL)
                     sb.Append(variable.GetName() + " = ?");
                 else
                     sb.Append(variable.GetName()+ "[?] = ?");
@@ -125,18 +125,18 @@ namespace CassandraQueryBuilder
         {
             if (keyspace == null)
                 throw new NullReferenceException("Keyspace cannot be null");
-            if (tableName == null)
+            if (table == null)
                 throw new NullReferenceException("TableName cannot be null");
-            if (variables == null)
+            if (updateColumns == null)
                 throw new NullReferenceException("Variables cannot be null");
-            if (whereVariables == null)
+            if (whereColumns == null)
                 throw new NullReferenceException("WhereVariables cannot be null");
 
 
 
             StringBuilder sb = new StringBuilder();
 
-            sb.Append("UPDATE " + keyspace + "." + tableName);
+            sb.Append("UPDATE " + keyspace + "." + table);
 
             if (setTimestamp || ttl)
             {
@@ -154,13 +154,13 @@ namespace CassandraQueryBuilder
 
             sb.Append(" SET ");
 
-            AppendVariableRows(sb, variables, ",");
+            AppendVariableRows(sb, updateColumns, ",");
 
 
             sb.Append(" WHERE ");
 
 
-            AppendVariableRows(sb, whereVariables, " AND");
+            AppendVariableRows(sb, whereColumns, " AND");
             
 
             if (ifExists)

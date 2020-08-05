@@ -14,9 +14,9 @@ namespace CassandraQueryBuilder.Tests.UT
             String result = "INSERT INTO ks.tb (v1) VALUES (?);";
             Assert.AreEqual(result,
                 new Insert()
-                    .SetKeyspace(Variables.keyspace)
-                    .SetTableName(Tables.tableName)
-                    .SetColumns(Columns.columns1)
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .InsertColumns(Columns.columns1)
                     .ToString()
                 )
             ;
@@ -24,10 +24,10 @@ namespace CassandraQueryBuilder.Tests.UT
             result = "INSERT INTO ks.tb (v1) VALUES (?) IF NOT EXISTS;";
             Assert.AreEqual(result,
                 new Insert()
-                    .SetKeyspace(Variables.keyspace)
-                    .SetTableName(Tables.tableName)
-                    .SetColumns(Columns.columns1)
-                    .SetIfNotExists()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .InsertColumns(Columns.columns1)
+                    .IfNotExists()
                     .ToString()
                 )
             ;
@@ -35,9 +35,9 @@ namespace CassandraQueryBuilder.Tests.UT
             result = "INSERT INTO ks.tb (v1, v2) VALUES (?, ?);";
             Assert.AreEqual(result,
                 new Insert()
-                    .SetKeyspace(Variables.keyspace)
-                    .SetTableName(Tables.tableName)
-                    .SetColumns(Columns.columns1, Columns.columns2)
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .InsertColumns(Columns.columns1, Columns.columns2)
                     .ToString()
                 )
             ;
@@ -45,10 +45,10 @@ namespace CassandraQueryBuilder.Tests.UT
             result = "INSERT INTO ks.tb (v1, v2) VALUES (?, ?) IF NOT EXISTS;";
             Assert.AreEqual(result,
                 new Insert()
-                    .SetKeyspace(Variables.keyspace)
-                    .SetTableName(Tables.tableName)
-                    .SetColumns(Columns.columns1, Columns.columns2)
-                    .SetIfNotExists()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .InsertColumns(Columns.columns1, Columns.columns2)
+                    .IfNotExists()
                     .ToString()
                 )
             ;
@@ -56,11 +56,11 @@ namespace CassandraQueryBuilder.Tests.UT
             result = "INSERT INTO ks.tb (v1, v2) VALUES (?, ?) IF NOT EXISTS USING TTL ?;";
             Assert.AreEqual(result,
                 new Insert()
-                    .SetKeyspace(Variables.keyspace)
-                    .SetTableName(Tables.tableName)
-                    .SetColumns(Columns.columns1, Columns.columns2)
-                    .SetTTL()
-                    .SetIfNotExists()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .InsertColumns(Columns.columns1, Columns.columns2)
+                    .TTL()
+                    .IfNotExists()
                     .ToString()
                 )
             ;
@@ -68,11 +68,11 @@ namespace CassandraQueryBuilder.Tests.UT
             result = "INSERT INTO ks.tb (v1, v2) VALUES (?, ?) IF NOT EXISTS USING TIMESTAMP ?;";
             Assert.AreEqual(result,
                 new Insert()
-                    .SetKeyspace(Variables.keyspace)
-                    .SetTableName(Tables.tableName)
-                    .SetColumns(Columns.columns1, Columns.columns2)
-                    .SetIfNotExists()
-                    .SetTimestamp()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .InsertColumns(Columns.columns1, Columns.columns2)
+                    .IfNotExists()
+                    .Timestamp()
                     .ToString()
                 )
             ;
@@ -80,12 +80,12 @@ namespace CassandraQueryBuilder.Tests.UT
             result = "INSERT INTO ks.tb (v1, v2) VALUES (?, ?) IF NOT EXISTS USING TIMESTAMP ? AND TTL ?;";
             Assert.AreEqual(result,
                 new Insert()
-                    .SetKeyspace(Variables.keyspace)
-                    .SetTableName(Tables.tableName)
-                    .SetColumns(Columns.columns1, Columns.columns2)
-                    .SetTTL()
-                    .SetIfNotExists()
-                    .SetTimestamp()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .InsertColumns(Columns.columns1, Columns.columns2)
+                    .TTL()
+                    .IfNotExists()
+                    .Timestamp()
                     .ToString()
                 )
             ;
@@ -104,7 +104,7 @@ namespace CassandraQueryBuilder.Tests.UT
             Assert.ThrowsException<NullReferenceException>(
                 () => {
                     new Insert()
-                        .SetKeyspace(Variables.keyspace)
+                        .Keyspace(Variables.keyspace)
                         .ToString();
                 }
             );
@@ -112,8 +112,8 @@ namespace CassandraQueryBuilder.Tests.UT
             Assert.ThrowsException<NullReferenceException>(
 (Action)(() => {
                     new Insert()
-                        .SetKeyspace(Variables.keyspace)
-                        .SetTableName(Tables.tableName)
+                        .Keyspace(Variables.keyspace)
+                        .Table(Tables.tableName)
                         .ToString();
                 })
             );

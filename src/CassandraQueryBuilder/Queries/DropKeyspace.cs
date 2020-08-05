@@ -13,7 +13,7 @@ namespace CassandraQueryBuilder
         }
 
 
-        public DropKeyspace SetName(String keyspace)
+        public DropKeyspace Keyspace(String keyspace)
         {
             this.name = keyspace;
 

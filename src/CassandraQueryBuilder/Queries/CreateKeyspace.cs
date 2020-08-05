@@ -5,7 +5,7 @@ namespace CassandraQueryBuilder
 {
     public class CreateKeyspace : Query
     {
-        private String name;
+        private String keyspace;
         private ReplicationStrategy dbReplicationStrategy;
 
         //For SimpleStrategy
@@ -17,21 +17,21 @@ namespace CassandraQueryBuilder
         }
 
 
-        public CreateKeyspace SetName(String keyspace)
+        public CreateKeyspace Keyspace(String keyspace)
         {
-            this.name = keyspace;
+            this.keyspace = keyspace;
 
             return this;
         }
 
-        public CreateKeyspace SetReplicationStrategy(ReplicationStrategy dbReplicationStrategy)
+        public CreateKeyspace ReplicationStrategy(ReplicationStrategy dbReplicationStrategy)
         {
             this.dbReplicationStrategy = dbReplicationStrategy;
 
             return this;
         }
         
-        public CreateKeyspace SetDataCenters(DataCenter[] dbDataCenters)
+        public CreateKeyspace DataCenters(DataCenter[] dbDataCenters)
         {
             this.dbDataCenters = dbDataCenters;
 
@@ -63,7 +63,7 @@ namespace CassandraQueryBuilder
         // return "CREATE KEYSPACE " + keyspace + @" WITH REPLICATION = { 'class' : 'NetworkTopologyStrategy', '" + StaticSettings.dbSettings.DataCenterName() + "' : " + StaticSettings.dbSettings.ReplicationFactor() + @" };";
         public override String ToString()
         {
-            if (name == null)
+            if (keyspace == null)
                 throw new NullReferenceException("Name cannot be null");
             if (dbReplicationStrategy == null)
                 throw new NullReferenceException("ReplicationStrategy cannot be null");
@@ -73,16 +73,16 @@ namespace CassandraQueryBuilder
 
             StringBuilder sb = new StringBuilder();
 
-            sb.Append("CREATE KEYSPACE " + name + " WITH REPLICATION = { 'class' : '" + dbReplicationStrategy.Value + "'");
+            sb.Append("CREATE KEYSPACE " + keyspace + " WITH REPLICATION = { 'class' : '" + dbReplicationStrategy.Value + "'");
 
-            if (Utils.CompareStrings(dbReplicationStrategy.Value, ReplicationStrategy.SimpleStrategy.Value))
+            if (Utils.CompareStrings(dbReplicationStrategy.Value, CassandraQueryBuilder.ReplicationStrategy.SimpleStrategy.Value))
             {
                 if (dbDataCenters.Length != 1)
                     throw new Exception("DataCenters must contain exactly one object for SimpleStrategy");
 
                 sb.Append(", 'replication_factor' : " + dbDataCenters[0].GetReplicationFactor()); //dbDataCenters[1].GetReplicationFactor() throws error if replication factor is not set
             }
-            else if (Utils.CompareStrings(dbReplicationStrategy.Value, ReplicationStrategy.NetworkTopologyStrategy.Value))
+            else if (Utils.CompareStrings(dbReplicationStrategy.Value, CassandraQueryBuilder.ReplicationStrategy.NetworkTopologyStrategy.Value))
             {
                 if (dbDataCenters.Length == 0)
                     throw new Exception("DataCenters must contain at least one object for NetworkTopotogyStrategy");
@@ -103,10 +103,10 @@ namespace CassandraQueryBuilder
 
         public String GetDropString()
         {
-            if (name == null)
+            if (keyspace == null)
                 throw new NullReferenceException("Name cannot be null");
 
-            return "DROP KEYSPACE IF EXISTS " + name + ";";
+            return "DROP KEYSPACE IF EXISTS " + keyspace + ";";
         }
 
     }

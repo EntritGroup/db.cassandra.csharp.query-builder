@@ -6,8 +6,8 @@ namespace CassandraQueryBuilder
     public class Insert : Query// : IPreparedStatement
     {
         private String keyspace;
-        private String tableName;
-        private Column[] variables;
+        private String table;
+        private Column[] insertColumns;
         private Boolean ttl = false; //Om man har ttl så ska den ligga sist i valuesVariables
         private Boolean ifNotExists = false;
         private Boolean setTimestamp = false;
@@ -22,43 +22,43 @@ namespace CassandraQueryBuilder
         }
 
 
-        public Insert SetKeyspace(String keyspace)
+        public Insert Keyspace(String keyspace)
         {
             this.keyspace = keyspace;
 
             return this;
         }
 
-        public Insert SetTableName(String tableName)
+        public Insert Table(String table)
         {
-            this.tableName = tableName;
+            this.table = table;
 
             return this;
         }
 
-        public Insert SetColumns(params Column[] variables)
+        public Insert InsertColumns(params Column[] variables)
         {
-            this.variables = variables;
+            this.insertColumns = variables;
 
             return this;
         }
 
         //Om man har ttl så ska den ligga sist i valuesVariables
-        public Insert SetTTL()
+        public Insert TTL()
         {
             this.ttl = true;
 
             return this;
         }
 
-        public Insert SetIfNotExists()
+        public Insert IfNotExists()
         {
             this.ifNotExists = true;
 
             return this;
         }
 
-        public Insert SetTimestamp()
+        public Insert Timestamp()
         {
             this.setTimestamp = true;
 
@@ -93,25 +93,25 @@ namespace CassandraQueryBuilder
         {
             if (keyspace == null)
                 throw new NullReferenceException("Keyspace cannot be null");
-            if (tableName == null)
+            if (table == null)
                 throw new NullReferenceException("TableName cannot be null");
-            if (variables == null)
+            if (insertColumns == null)
                 throw new NullReferenceException("Variables cannot be null");
 
 
 
             StringBuilder sb = new StringBuilder();
 
-            sb.Append("INSERT INTO " + keyspace + "." + tableName + " (");
+            sb.Append("INSERT INTO " + keyspace + "." + table + " (");
 
             
-            AppendVariableRows(sb, variables);
+            AppendVariableRows(sb, insertColumns);
 
 
             sb.Append(") VALUES (");
 
 
-            for (int i = 0; i < variables.Length; i++)
+            for (int i = 0; i < insertColumns.Length; i++)
             {
                 if (i > 0)
                     sb.Append(", ");

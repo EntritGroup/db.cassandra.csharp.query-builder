@@ -6,9 +6,9 @@ namespace CassandraQueryBuilder
     public class UpdateCounter : Query// : IPreparedStatement
     {
         private String keyspace;
-        private String tableName;
-        private Column variable;
-        private Column[] whereVariables;
+        private String table;
+        private Column column;
+        private Column[] whereColumns;
         private int? increaseBy; //increaseBy = Increase or decrease by (e.g. 1, 2, -1, -5)
 
         //private Object preparedStatmentLock = new Object();
@@ -21,36 +21,36 @@ namespace CassandraQueryBuilder
         }
 
 
-        public UpdateCounter SetKeyspace(String keyspace)
+        public UpdateCounter Keyspace(String keyspace)
         {
             this.keyspace = keyspace;
 
             return this;
         }
 
-        public UpdateCounter SetTableName(String tableName)
+        public UpdateCounter Table(String table)
         {
-            this.tableName = tableName;
+            this.table = table;
 
             return this;
         }
 
-        public UpdateCounter SetVariables(Column variable)
+        public UpdateCounter UpdateColumn(Column column)
         {
-            this.variable = variable;
+            this.column = column;
 
             return this;
         }
 
-        public UpdateCounter SetWhereVariables(params Column[] whereVariables)
+        public UpdateCounter WhereColumns(params Column[] whereColumns)
         {
-            this.whereVariables = whereVariables;
+            this.whereColumns = whereColumns;
 
             return this;
         }
 
         //increaseBy = Increase or decrease by (e.g. 1, 2, -1, -5)
-        public UpdateCounter SetIncreaseBy(int increaseBy)
+        public UpdateCounter IncreaseBy(int increaseBy)
         {
             this.increaseBy = increaseBy;
 
@@ -85,28 +85,28 @@ namespace CassandraQueryBuilder
         {
             if (keyspace == null)
                 throw new NullReferenceException("Keyspace cannot be null");
-            if (tableName == null)
+            if (table == null)
                 throw new NullReferenceException("TableName cannot be null");
-            if (variable == null)
+            if (column == null)
                 throw new NullReferenceException("Variables cannot be null");
-            if (whereVariables == null)
+            if (whereColumns == null)
                 throw new NullReferenceException("WhereVariables cannot be null");
 
 
 
             StringBuilder sb = new StringBuilder();
 
-            sb.Append("UPDATE " + keyspace + "." + tableName + " SET ");
+            sb.Append("UPDATE " + keyspace + "." + table + " SET ");
 
 
             
-            sb.Append(variable.GetName() + " = " + variable.GetName() + " + " + (increaseBy == null ? "?" : increaseBy.ToString()));
+            sb.Append(column.GetName() + " = " + column.GetName() + " + " + (increaseBy == null ? "?" : increaseBy.ToString()));
 
 
             sb.Append(" WHERE ");
 
 
-            AppendVariableRows(sb, whereVariables, " AND");
+            AppendVariableRows(sb, whereColumns, " AND");
             
             
             sb.Append(";");

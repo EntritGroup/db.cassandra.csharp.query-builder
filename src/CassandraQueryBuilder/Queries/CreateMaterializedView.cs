@@ -9,8 +9,8 @@ namespace CassandraQueryBuilder
     public class CreateMaterializedView : Query
     {
         String keyspace;
-        String toTableName; //ToMaterializedView(Name)
-        String fromTableName;
+        String toTable; //ToMaterializedView(Name)
+        String fromTable;
         Column[] partitionKeys;
         Column[] clusteringKeys;
         Boolean[] clusteringKeysOrderByASC;
@@ -22,56 +22,56 @@ namespace CassandraQueryBuilder
 
         }
 
-        public CreateMaterializedView SetKeyspace(String keyspace)
+        public CreateMaterializedView Keyspace(String keyspace)
         {
             this.keyspace = keyspace;
 
             return this;
         }
 
-        public CreateMaterializedView SetToTableName(String toTableName)
+        public CreateMaterializedView ToTable(String toTable)
         {
-            this.toTableName = toTableName;
+            this.toTable = toTable;
 
             return this;
         }
 
-        public CreateMaterializedView SetFromTableName(String fromTableName)
+        public CreateMaterializedView FromTable(String fromTable)
         {
-            this.fromTableName = fromTableName;
+            this.fromTable = fromTable;
 
             return this;
         }
 
-        public CreateMaterializedView SetPartitionKeys(params Column[] partitionKeys)
+        public CreateMaterializedView PartitionKeys(params Column[] partitionKeys)
         {
             this.partitionKeys = partitionKeys;
 
             return this;
         }
         
-        public CreateMaterializedView SetClusteringKeys(params Column[] clusteringKeys)
+        public CreateMaterializedView ClusteringKeys(params Column[] clusteringKeys)
         {
             this.clusteringKeys = clusteringKeys;
 
             return this;
         }
 
-        public CreateMaterializedView SetClusteringKeysOrderByASC(params Boolean[] clusteringKeysOrderByASC)
+        public CreateMaterializedView ClusteringKeysOrderByASC(params Boolean[] clusteringKeysOrderByASC)
         {
             this.clusteringKeysOrderByASC = clusteringKeysOrderByASC;
 
             return this;
         }
 
-        public CreateMaterializedView SetColumns(params Column[] columns)
+        public CreateMaterializedView Columns(params Column[] columns)
         {
             this.columns = columns;
 
             return this;
         }
 
-        public CreateMaterializedView SetCompactionStrategy(CompactionStrategy dbCompactionStrategy)
+        public CreateMaterializedView CompactionStrategy(CompactionStrategy dbCompactionStrategy)
         {
             this.dbCompactionStrategy = dbCompactionStrategy;
 
@@ -158,9 +158,9 @@ namespace CassandraQueryBuilder
         {
             if (keyspace == null)
                 throw new NullReferenceException("Keyspace cannot be null");
-            if (toTableName == null)
+            if (toTable == null)
                 throw new NullReferenceException("MaterializedViewName cannot be null");
-            if (fromTableName == null)
+            if (fromTable == null)
                 throw new NullReferenceException("FromTableName cannot be null");
             if (partitionKeys == null)
                 throw new NullReferenceException("PartitionKeys cannot be null");
@@ -173,7 +173,7 @@ namespace CassandraQueryBuilder
 
             StringBuilder sb = new StringBuilder();
 
-            sb.Append("CREATE MATERIALIZED VIEW " + keyspace + "." + toTableName + " AS SELECT ");
+            sb.Append("CREATE MATERIALIZED VIEW " + keyspace + "." + toTable + " AS SELECT ");
 
 
             AppendColumnRows(sb, partitionKeys);
@@ -184,7 +184,7 @@ namespace CassandraQueryBuilder
                 sb.Append(", ");
             AppendColumnRows(sb, columns);
 
-            sb.Append(" FROM " + keyspace + "." + fromTableName + " WHERE ");
+            sb.Append(" FROM " + keyspace + "." + fromTable + " WHERE ");
 
 
 

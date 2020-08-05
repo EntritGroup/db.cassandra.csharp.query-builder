@@ -14,22 +14,22 @@ namespace CassandraQueryBuilder.Tests.UT
             String result = "CREATE MATERIALIZED VIEW ks.mv AS SELECT pk1, pk2 FROM ks.tb WHERE pk1 IS NOT NULL AND pk2 IS NOT NULL PRIMARY KEY (pk1, pk2);";
             Assert.AreEqual(result,
                 new CreateMaterializedView()
-                    .SetKeyspace(Variables.keyspace)
-                    .SetToTableName(Tables.materializedViewName)
-                    .SetFromTableName(Tables.tableName)
-                    .SetPartitionKeys(Columns.partitionKey1, Columns.partitionKey2)
+                    .Keyspace(Variables.keyspace)
+                    .ToTable(Tables.materializedViewName)
+                    .FromTable(Tables.tableName)
+                    .PartitionKeys(Columns.partitionKey1, Columns.partitionKey2)
                     .ToString()
             );
 
             result = "CREATE MATERIALIZED VIEW ks.mv AS SELECT pk1, ck1, ck2, v1, v2 FROM ks.tb WHERE pk1 IS NOT NULL AND ck1 IS NOT NULL AND ck2 IS NOT NULL PRIMARY KEY ((pk1), ck1, ck2);";
             Assert.AreEqual(result,
                 new CreateMaterializedView()
-                    .SetKeyspace(Variables.keyspace)
-                    .SetToTableName(Tables.materializedViewName)
-                    .SetFromTableName(Tables.tableName)
-                    .SetPartitionKeys(Columns.partitionKey1)
-                    .SetClusteringKeys(Columns.clusteringKey1, Columns.clusteringKey2)
-                    .SetColumns(Columns.columns1, Columns.columns2)
+                    .Keyspace(Variables.keyspace)
+                    .ToTable(Tables.materializedViewName)
+                    .FromTable(Tables.tableName)
+                    .PartitionKeys(Columns.partitionKey1)
+                    .ClusteringKeys(Columns.clusteringKey1, Columns.clusteringKey2)
+                    .Columns(Columns.columns1, Columns.columns2)
                     .ToString()
             );
         }
@@ -47,7 +47,7 @@ namespace CassandraQueryBuilder.Tests.UT
             Assert.ThrowsException<NullReferenceException>(
                 () => {
                     new CreateMaterializedView()
-                        .SetKeyspace(Variables.keyspace)
+                        .Keyspace(Variables.keyspace)
                         .ToString();
                 }
             );
@@ -55,8 +55,8 @@ namespace CassandraQueryBuilder.Tests.UT
             Assert.ThrowsException<NullReferenceException>(
                 () => {
                     new CreateMaterializedView()
-                        .SetKeyspace(Variables.keyspace)
-                        .SetToTableName(Tables.materializedViewName)
+                        .Keyspace(Variables.keyspace)
+                        .ToTable(Tables.materializedViewName)
                         .ToString();
                 }
             );
@@ -64,9 +64,9 @@ namespace CassandraQueryBuilder.Tests.UT
             Assert.ThrowsException<NullReferenceException>(
                 () => {
                     new CreateMaterializedView()
-                        .SetKeyspace(Variables.keyspace)
-                        .SetToTableName(Tables.materializedViewName)
-                        .SetFromTableName(Tables.tableName)
+                        .Keyspace(Variables.keyspace)
+                        .ToTable(Tables.materializedViewName)
+                        .FromTable(Tables.tableName)
                         .ToString();
                 }
             );
@@ -74,11 +74,11 @@ namespace CassandraQueryBuilder.Tests.UT
             Assert.ThrowsException<NullReferenceException>(
                 () => {
                     new CreateMaterializedView()
-                        .SetKeyspace(Variables.keyspace)
-                        .SetToTableName(Tables.materializedViewName)
-                        .SetFromTableName(Tables.tableName)
-                        .SetPartitionKeys(Columns.partitionKey1)
-                        .SetClusteringKeysOrderByASC(false)
+                        .Keyspace(Variables.keyspace)
+                        .ToTable(Tables.materializedViewName)
+                        .FromTable(Tables.tableName)
+                        .PartitionKeys(Columns.partitionKey1)
+                        .ClusteringKeysOrderByASC(false)
                         .ToString();
                 }
             );
@@ -86,12 +86,12 @@ namespace CassandraQueryBuilder.Tests.UT
             Assert.ThrowsException<Exception>(
                 () => {
                     new CreateMaterializedView()
-                        .SetKeyspace(Variables.keyspace)
-                        .SetToTableName(Tables.materializedViewName)
-                        .SetFromTableName(Tables.tableName)
-                        .SetPartitionKeys(Columns.partitionKey1)
-                        .SetClusteringKeys(Columns.clusteringKey1)
-                        .SetClusteringKeysOrderByASC(false, true)
+                        .Keyspace(Variables.keyspace)
+                        .ToTable(Tables.materializedViewName)
+                        .FromTable(Tables.tableName)
+                        .PartitionKeys(Columns.partitionKey1)
+                        .ClusteringKeys(Columns.clusteringKey1)
+                        .ClusteringKeysOrderByASC(false, true)
                         .ToString();
                 }
             );

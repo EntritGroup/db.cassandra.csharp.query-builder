@@ -15,19 +15,19 @@ namespace CassandraQueryBuilder.Tests.UT
             String result = "DELETE FROM ks.tb WHERE v1 = ?;";
             Assert.AreEqual(result,
                 new Delete()
-                    .SetKeyspace(Variables.keyspace)
-                    .SetTableName(Tables.tableName)
-                    .SetWhereVariables(Columns.columns1)
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .WhereColumns(Columns.columns1)
                     .ToString()
                 )
             ;
             result = "DELETE FROM ks.tb WHERE v1 = ? IF EXISTS;";
             Assert.AreEqual(result,
                 new Delete()
-                    .SetKeyspace(Variables.keyspace)
-                    .SetTableName(Tables.tableName)
-                    .SetWhereVariables(Columns.columns1)
-                    .SetIfExists()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .WhereColumns(Columns.columns1)
+                    .IfExists()
                     .ToString()
                 )
             ;
@@ -35,21 +35,21 @@ namespace CassandraQueryBuilder.Tests.UT
             result = "DELETE v1 FROM ks.tb WHERE v2 = ?;";
             Assert.AreEqual(result,
                 new Delete()
-                    .SetKeyspace(Variables.keyspace)
-                    .SetTableName(Tables.tableName)
-                    .SetVariables(Columns.columns1)
-                    .SetWhereVariables(Columns.columns2)
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .DeleteColumns(Columns.columns1)
+                    .WhereColumns(Columns.columns2)
                     .ToString()
                 )
             ;
             result = "DELETE v1 FROM ks.tb WHERE v2 = ? IF EXISTS;";
             Assert.AreEqual(result,
                 new Delete()
-                    .SetKeyspace(Variables.keyspace)
-                    .SetTableName(Tables.tableName)
-                    .SetVariables(Columns.columns1)
-                    .SetWhereVariables(Columns.columns2)
-                    .SetIfExists()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .DeleteColumns(Columns.columns1)
+                    .WhereColumns(Columns.columns2)
+                    .IfExists()
                     .ToString()
                 )
             ;
@@ -57,21 +57,21 @@ namespace CassandraQueryBuilder.Tests.UT
             result = "DELETE v1, v2 FROM ks.tb WHERE v1 = ? AND v3 = ?;";
             Assert.AreEqual(result,
                 new Delete()
-                    .SetKeyspace(Variables.keyspace)
-                    .SetTableName(Tables.tableName)
-                    .SetVariables(Columns.columns1, Columns.columns2)
-                    .SetWhereVariables(Columns.columns1, Columns.columns3)
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .DeleteColumns(Columns.columns1, Columns.columns2)
+                    .WhereColumns(Columns.columns1, Columns.columns3)
                     .ToString()
                 )
             ;
             result = "DELETE v1, v2 FROM ks.tb WHERE v1 = ? AND v3 = ? IF EXISTS;";
             Assert.AreEqual(result,
                 new Delete()
-                    .SetKeyspace(Variables.keyspace)
-                    .SetTableName(Tables.tableName)
-                    .SetVariables(Columns.columns1, Columns.columns2)
-                    .SetWhereVariables(Columns.columns1, Columns.columns3)
-                    .SetIfExists()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .DeleteColumns(Columns.columns1, Columns.columns2)
+                    .WhereColumns(Columns.columns1, Columns.columns3)
+                    .IfExists()
                     .ToString()
                 )
             ;
@@ -79,12 +79,12 @@ namespace CassandraQueryBuilder.Tests.UT
             result = "DELETE v1, v2 FROM ks.tb USING TIMESTAMP ? WHERE v1 = ? AND v3 = ? IF EXISTS;";
             Assert.AreEqual(result,
                 new Delete()
-                    .SetKeyspace(Variables.keyspace)
-                    .SetTableName(Tables.tableName)
-                    .SetVariables(Columns.columns1, Columns.columns2)
-                    .SetWhereVariables(Columns.columns1, Columns.columns3)
-                    .SetIfExists()
-                    .SetTimestamp()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .DeleteColumns(Columns.columns1, Columns.columns2)
+                    .WhereColumns(Columns.columns1, Columns.columns3)
+                    .IfExists()
+                    .Timestamp()
                     .ToString()
                 )
             ;
@@ -92,11 +92,11 @@ namespace CassandraQueryBuilder.Tests.UT
             result = "DELETE vl1[?], v2 FROM ks.tb WHERE v1 = ? AND v3 = ?;";
             Assert.AreEqual(result,
                 new Delete()
-                    .SetKeyspace(Variables.keyspace)
-                    .SetTableName(Tables.tableName)
-                    .SetVariables(Columns.columns_list1, Columns.columns2)
-                    .SetWhereVariables(Columns.columns1, Columns.columns3)
-                    .SetListDeleteType(ListDeleteType.SELECTED)
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .DeleteColumns(Columns.columns_list1, Columns.columns2)
+                    .WhereColumns(Columns.columns1, Columns.columns3)
+                    .ListDeleteType(ListDeleteType.SELECTED)
                     .ToString()
                 )
             ;
@@ -104,11 +104,11 @@ namespace CassandraQueryBuilder.Tests.UT
             result = "DELETE vl1, v2 FROM ks.tb WHERE v1 = ? AND v3 = ?;";
             Assert.AreEqual(result,
                 new Delete()
-                    .SetKeyspace(Variables.keyspace)
-                    .SetTableName(Tables.tableName)
-                    .SetVariables(Columns.columns_list1, Columns.columns2)
-                    .SetWhereVariables(Columns.columns1, Columns.columns3)
-                    .SetListDeleteType(ListDeleteType.ALL)
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .DeleteColumns(Columns.columns_list1, Columns.columns2)
+                    .WhereColumns(Columns.columns1, Columns.columns3)
+                    .ListDeleteType(ListDeleteType.ALL)
                     .ToString()
                 )
             ;
@@ -127,7 +127,7 @@ namespace CassandraQueryBuilder.Tests.UT
             Assert.ThrowsException<NullReferenceException>(
                 () => {
                     new Delete()
-                        .SetKeyspace(Variables.keyspace)
+                        .Keyspace(Variables.keyspace)
                         .ToString();
                 }
             );
@@ -135,8 +135,8 @@ namespace CassandraQueryBuilder.Tests.UT
             Assert.ThrowsException<NullReferenceException>(
 (Action)(() => {
                     new Delete()
-                        .SetKeyspace(Variables.keyspace)
-                        .SetTableName(Tables.tableName)
+                        .Keyspace(Variables.keyspace)
+                        .Table(Tables.tableName)
                         .ToString();
                 })
             );

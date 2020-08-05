@@ -14,11 +14,11 @@ namespace CassandraQueryBuilder.Tests.UT
             String result = "UPDATE ks.tb SET counter_column_name = counter_column_name + 1 WHERE pk1 = ?;";
             Assert.AreEqual(result,
                 new UpdateCounter()
-                    .SetKeyspace(Variables.keyspace)
-                    .SetTableName(Tables.tableName)
-                    .SetVariables(Columns.columnsCounter)
-                    .SetWhereVariables(Columns.partitionKey1)
-                    .SetIncreaseBy(1)
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .UpdateColumn(Columns.columnsCounter)
+                    .WhereColumns(Columns.partitionKey1)
+                    .IncreaseBy(1)
                     .ToString()
                 )
             ;
@@ -26,11 +26,11 @@ namespace CassandraQueryBuilder.Tests.UT
             result = "UPDATE ks.tb SET counter_column_name = counter_column_name + 1 WHERE pk1 = ? AND pk2 = ?;";
             Assert.AreEqual(result,
                 new UpdateCounter()
-                    .SetKeyspace(Variables.keyspace)
-                    .SetTableName(Tables.tableName)
-                    .SetVariables(Columns.columnsCounter)
-                    .SetWhereVariables(Columns.partitionKey1, Columns.partitionKey2)
-                    .SetIncreaseBy(1)
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .UpdateColumn(Columns.columnsCounter)
+                    .WhereColumns(Columns.partitionKey1, Columns.partitionKey2)
+                    .IncreaseBy(1)
                     .ToString()
                 )
             ;
@@ -38,11 +38,11 @@ namespace CassandraQueryBuilder.Tests.UT
             result = "UPDATE ks.tb SET counter_column_name = counter_column_name + -1 WHERE pk1 = ? AND pk2 = ?;";
             Assert.AreEqual(result,
                 new UpdateCounter()
-                    .SetKeyspace(Variables.keyspace)
-                    .SetTableName(Tables.tableName)
-                    .SetVariables(Columns.columnsCounter)
-                    .SetWhereVariables(Columns.partitionKey1, Columns.partitionKey2)
-                    .SetIncreaseBy(-1)
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .UpdateColumn(Columns.columnsCounter)
+                    .WhereColumns(Columns.partitionKey1, Columns.partitionKey2)
+                    .IncreaseBy(-1)
                     .ToString()
                 )
             ;
@@ -50,10 +50,10 @@ namespace CassandraQueryBuilder.Tests.UT
             result = "UPDATE ks.tb SET counter_column_name = counter_column_name + ? WHERE pk1 = ? AND pk2 = ?;";
             Assert.AreEqual(result,
                 new UpdateCounter()
-                    .SetKeyspace(Variables.keyspace)
-                    .SetTableName(Tables.tableName)
-                    .SetVariables(Columns.columnsCounter)
-                    .SetWhereVariables(Columns.partitionKey1, Columns.partitionKey2)
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .UpdateColumn(Columns.columnsCounter)
+                    .WhereColumns(Columns.partitionKey1, Columns.partitionKey2)
                     .ToString()
                 )
             ;
@@ -73,7 +73,7 @@ namespace CassandraQueryBuilder.Tests.UT
             Assert.ThrowsException<NullReferenceException>(
                 () => {
                     new UpdateCounter()
-                        .SetKeyspace(Variables.keyspace)
+                        .Keyspace(Variables.keyspace)
                         .ToString();
                 }
             );
@@ -81,8 +81,8 @@ namespace CassandraQueryBuilder.Tests.UT
             Assert.ThrowsException<NullReferenceException>(
 (Action)(() => {
                     new UpdateCounter()
-                        .SetKeyspace(Variables.keyspace)
-                        .SetTableName(Tables.tableName)
+                        .Keyspace(Variables.keyspace)
+                        .Table(Tables.tableName)
                         .ToString();
                 })
             );
@@ -90,9 +90,9 @@ namespace CassandraQueryBuilder.Tests.UT
             Assert.ThrowsException<NullReferenceException>(
 (Action)(() => {
                     new UpdateCounter()
-                        .SetKeyspace(Variables.keyspace)
-                        .SetTableName(Tables.tableName)
-                        .SetVariables(Columns.columns1)
+                        .Keyspace(Variables.keyspace)
+                        .Table(Tables.tableName)
+                        .UpdateColumn(Columns.columns1)
                         .ToString();
                 })
             );
