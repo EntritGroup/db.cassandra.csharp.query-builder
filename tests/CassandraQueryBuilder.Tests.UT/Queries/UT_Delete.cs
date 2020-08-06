@@ -84,8 +84,51 @@ namespace CassandraQueryBuilder.Tests.UT
                     .Timestamp()
                     .ToString()
             );
+        }
 
-            result = "DELETE vl1[?], v2 FROM ks.tb WHERE v1 = ? AND v3 = ?;";
+        [TestMethod]
+        public void UT_Delete_Map_GetString()
+        {
+
+            String result = "DELETE vm1[?], v2 FROM ks.tb WHERE v1 = ? AND v3 = ?;";
+            Assert.AreEqual(result,
+                new Delete()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .DeleteColumns(Columns.columns_map1, Columns.columns2)
+                    .WhereColumns(Columns.columns1, Columns.columns3)
+                    .MapDeleteType(MapDeleteType.SELECTED)
+                    .ToString()
+            );
+
+            result = "DELETE vm1, v2 FROM ks.tb WHERE v1 = ? AND v3 = ?;";
+            Assert.AreEqual(result,
+                new Delete()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .DeleteColumns(Columns.columns_map1, Columns.columns2)
+                    .WhereColumns(Columns.columns1, Columns.columns3)
+                    .MapDeleteType(MapDeleteType.ALL)
+                    .ToString()
+            );
+
+            result = "DELETE vm1[?], vm2, v2 FROM ks.tb WHERE v1 = ? AND v3 = ?;";
+            Assert.AreEqual(result,
+                new Delete()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .DeleteColumns(Columns.columns_map1, Columns.columns_map2, Columns.columns2)
+                    .WhereColumns(Columns.columns1, Columns.columns3)
+                    .MapDeleteType(MapDeleteType.SELECTED, MapDeleteType.ALL)
+                    .ToString()
+            );
+        }
+        
+        [TestMethod]
+        public void UT_Delete_List_GetString()
+        {
+
+            String result = "DELETE vl1[?], v2 FROM ks.tb WHERE v1 = ? AND v3 = ?;";
             Assert.AreEqual(result,
                 new Delete()
                     .Keyspace(Variables.keyspace)
@@ -104,6 +147,17 @@ namespace CassandraQueryBuilder.Tests.UT
                     .DeleteColumns(Columns.columns_list1, Columns.columns2)
                     .WhereColumns(Columns.columns1, Columns.columns3)
                     .ListDeleteType(ListDeleteType.ALL)
+                    .ToString()
+            );
+
+            result = "DELETE vl1[?], vl2, v2 FROM ks.tb WHERE v1 = ? AND v3 = ?;";
+            Assert.AreEqual(result,
+                new Delete()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .DeleteColumns(Columns.columns_list1, Columns.columns_list2, Columns.columns2)
+                    .WhereColumns(Columns.columns1, Columns.columns3)
+                    .ListDeleteType(ListDeleteType.SELECTED, ListDeleteType.ALL)
                     .ToString()
             );
         }

@@ -200,6 +200,36 @@ namespace CassandraQueryBuilder.Tests.UT
             );
 
 
+            //---- Test MAP<T, U>
+
+
+            result = "CREATE TABLE ks.tb (pk1 TEXT, pk2 TEXT, ck1 TEXT, v1 TEXT, vm1 MAP<TEXT, TEXT>, v3 TEXT, PRIMARY KEY ((pk1, pk2), ck1));";
+            Assert.AreEqual(result,
+                new CreateTable()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .PartitionKeys(Columns.partitionKey1, Columns.partitionKey2)
+                    .ClusteringKeys(Columns.clusteringKey1)
+                    .Columns(Columns.columns1, Columns.columns_map1, Columns.columns3)
+                    .ToString()
+            );
+
+
+            //---- Test SET<T>
+
+
+            result = "CREATE TABLE ks.tb (pk1 TEXT, pk2 TEXT, ck1 TEXT, v1 TEXT, vs1 SET<TEXT>, v3 TEXT, PRIMARY KEY ((pk1, pk2), ck1));";
+            Assert.AreEqual(result,
+                new CreateTable()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .PartitionKeys(Columns.partitionKey1, Columns.partitionKey2)
+                    .ClusteringKeys(Columns.clusteringKey1)
+                    .Columns(Columns.columns1, Columns.columns_set1, Columns.columns3)
+                    .ToString()
+            );
+
+
             //---- Test list<T>
 
 

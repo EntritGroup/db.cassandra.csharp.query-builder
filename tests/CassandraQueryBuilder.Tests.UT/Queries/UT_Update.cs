@@ -89,8 +89,86 @@ namespace CassandraQueryBuilder.Tests.UT
                     .TTL()
                     .ToString()
             );
+        }
 
-            result = "UPDATE ks.tb SET v1 = ?, v2 = ?, vl1 = ? + vl1 WHERE v1 = ? AND v3 = ?;";
+        [TestMethod]
+        public void UT_Update_Map_GetString()
+        {
+            String result = "UPDATE ks.tb SET v1 = ?, v2 = ?, vm1 = vm1 + ? WHERE v1 = ? AND v3 = ?;";
+            Assert.AreEqual(result,
+                new Update()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .UpdateColumns(Columns.columns1, Columns.columns2, Columns.columns_map1)
+                    .WhereColumns(Columns.columns1, Columns.columns3)
+                    .MapUpdateType(MapUpdateType.ADD)
+                    .ToString()
+            );
+
+            result = "UPDATE ks.tb SET v1 = ?, v2 = ?, vm1 = vm1 - ? WHERE v1 = ? AND v3 = ?;";
+            Assert.AreEqual(result,
+                new Update()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .UpdateColumns(Columns.columns1, Columns.columns2, Columns.columns_map1)
+                    .WhereColumns(Columns.columns1, Columns.columns3)
+                    .MapUpdateType(MapUpdateType.REMOVE)
+                    .ToString()
+            );
+            
+            result = "UPDATE ks.tb SET v1 = ?, v2 = ?, vm1 = vm1 + ?, vm2 = vm2 - ? WHERE v1 = ? AND v3 = ?;";
+            Assert.AreEqual(result,
+                new Update()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .UpdateColumns(Columns.columns1, Columns.columns2, Columns.columns_map1, Columns.columns_map2)
+                    .WhereColumns(Columns.columns1, Columns.columns3)
+                    .MapUpdateType(MapUpdateType.ADD, MapUpdateType.REMOVE)
+                    .ToString()
+            );
+        }
+
+        [TestMethod]
+        public void UT_Update_Set_GetString()
+        {
+            String result = "UPDATE ks.tb SET v1 = ?, v2 = ?, vs1 = vs1 + ? WHERE v1 = ? AND v3 = ?;";
+            Assert.AreEqual(result,
+                new Update()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .UpdateColumns(Columns.columns1, Columns.columns2, Columns.columns_set1)
+                    .WhereColumns(Columns.columns1, Columns.columns3)
+                    .SetUpdateType(SetUpdateType.ADD)
+                    .ToString()
+            );
+
+            result = "UPDATE ks.tb SET v1 = ?, v2 = ?, vs1 = vs1 - ? WHERE v1 = ? AND v3 = ?;";
+            Assert.AreEqual(result,
+                new Update()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .UpdateColumns(Columns.columns1, Columns.columns2, Columns.columns_set1)
+                    .WhereColumns(Columns.columns1, Columns.columns3)
+                    .SetUpdateType(SetUpdateType.REMOVE)
+                    .ToString()
+            );
+
+            result = "UPDATE ks.tb SET v1 = ?, v2 = ?, vs1 = vs1 + ?, vs2 = vs2 - ? WHERE v1 = ? AND v3 = ?;";
+            Assert.AreEqual(result,
+                new Update()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .UpdateColumns(Columns.columns1, Columns.columns2, Columns.columns_set1, Columns.columns_set2)
+                    .WhereColumns(Columns.columns1, Columns.columns3)
+                    .SetUpdateType(SetUpdateType.ADD, SetUpdateType.REMOVE)
+                    .ToString()
+            );
+        }
+        
+        [TestMethod]
+        public void UT_Update_List_GetString()
+        {
+            String result = "UPDATE ks.tb SET v1 = ?, v2 = ?, vl1 = ? + vl1 WHERE v1 = ? AND v3 = ?;";
             Assert.AreEqual(result,
                 new Update()
                     .Keyspace(Variables.keyspace)
@@ -133,6 +211,18 @@ namespace CassandraQueryBuilder.Tests.UT
                     .ListUpdateType(ListUpdateType.SPECIFY_INDEX_TO_OVERWRITE)
                     .ToString()
             );
+
+            result = "UPDATE ks.tb SET v1 = ?, v2 = ?, vl1 = ? + vl1, vl2 = vl2 + ? WHERE v1 = ? AND v3 = ?;";
+            Assert.AreEqual(result,
+                new Update()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .UpdateColumns(Columns.columns1, Columns.columns2, Columns.columns_list1, Columns.columns_list2)
+                    .WhereColumns(Columns.columns1, Columns.columns3)
+                    .ListUpdateType(ListUpdateType.PREPEND, ListUpdateType.APPEND)
+                    .ToString()
+            );
+
         }
 
         [TestMethod]

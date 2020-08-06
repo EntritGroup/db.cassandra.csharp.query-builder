@@ -16,7 +16,12 @@ namespace CassandraQueryBuilder
         //private PreparedStatement preparedStatement;
         // private ConsistencyLevel consistencyLevel;
 
-        private ListDeleteType listDeleteType;
+        private MapDeleteType[] mapDeleteTypes;
+        private ListDeleteType[] listDeleteTypes;
+
+        private int mapUpdateTypesCounter = 0;
+        private int listUpdateTypesCounter = 0;
+
 
         public Delete()
         {
@@ -66,9 +71,16 @@ namespace CassandraQueryBuilder
             return this;
         }
 
-        public Delete ListDeleteType(ListDeleteType listDeleteType)
+        public Delete ListDeleteType(params ListDeleteType[] listDeleteTypes)
         {
-            this.listDeleteType = listDeleteType;
+            this.listDeleteTypes = listDeleteTypes;
+
+            return this;
+        }
+        
+        public Delete MapDeleteType(params MapDeleteType[] mapDeleteTypes)
+        {
+            this.mapDeleteTypes = mapDeleteTypes;
 
             return this;
         }
@@ -76,14 +88,26 @@ namespace CassandraQueryBuilder
 
 
         //Returns e.g. "name text, " or "name text static, "
+        //https://docs.datastax.com/en/dse/6.7/cql/cql/cql_reference/cql_commands/cqlDelete.html
         private void AppendVariableRow(StringBuilder sb, Column variable, String suffix)
         {
-            if (variable.GetColumnType().StartsWith("LIST<"))
+            if (variable.GetColumnType().StartsWith("MAP<"))
             {
-                if (listDeleteType == CassandraQueryBuilder.ListDeleteType.ALL)
+                if (mapDeleteTypes[mapUpdateTypesCounter] == CassandraQueryBuilder.MapDeleteType.ALL)
                     sb.Append(variable.GetName() + suffix);
-                else
+                else //MapDeleteType.SELECTED
                     sb.Append(variable.GetName() + "[?]" + suffix);
+
+                mapUpdateTypesCounter++;
+            }
+            else if (variable.GetColumnType().StartsWith("LIST<"))
+            {
+                if (listDeleteTypes[listUpdateTypesCounter] == CassandraQueryBuilder.ListDeleteType.ALL)
+                    sb.Append(variable.GetName() + suffix);
+                else //ListDeleteType.SELECTED
+                    sb.Append(variable.GetName() + "[?]" + suffix);
+
+                listUpdateTypesCounter++;
             }
             else
                 sb.Append(variable.GetName() + suffix);

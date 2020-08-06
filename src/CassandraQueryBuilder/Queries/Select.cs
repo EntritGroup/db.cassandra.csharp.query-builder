@@ -81,20 +81,26 @@ namespace CassandraQueryBuilder
         }
 
         //Returns e.g. "name text, " or "name text static, "
+        private void AppendColumnRow(StringBuilder sb, Column column)
+        {
+            sb.Append(column.GetName());
+        }
+
+        //Returns e.g. "name text, " or "name text static, "
         private void AppendColumnRow(StringBuilder sb, Column column, String suffix)
         {
             sb.Append(column.GetName() + suffix);
         }
 
         //Returns e.g. "name text, address text, " or "" if null
-        private void AppendColumnRows(StringBuilder sb, Column[] columns, String delimiter, String suffix)
+        private void AppendColumnRows(StringBuilder sb, Column[] columns, String delimiter)
         {
             if (columns == null)
                 return;
 
             for (int i = 0; i < columns.Length; i++)
             {
-                AppendColumnRow(sb, columns[i], suffix);
+                AppendColumnRow(sb, columns[i]);
 
                 if (i < columns.Length - 1)
                     sb.Append(delimiter + " ");
@@ -102,17 +108,17 @@ namespace CassandraQueryBuilder
         }
 
         //Returns e.g. "name text, address text, " or "" if null
-        private void AppendColumnRows(StringBuilder sb, Column[] columns, String delimiter, String[] suffix)
+        private void AppendColumnRows(StringBuilder sb, Column[] columns, String delimiter, String[] whereSigns)
         {
             if (columns == null)
                 return;
 
             for (int i = 0; i < columns.Length; i++)
             {
-                if (suffix == null || suffix.Length == 0)
+                if (whereSigns == null || whereSigns.Length == 0)
                     AppendColumnRow(sb, columns[i], " = ?");
                 else
-                    AppendColumnRow(sb, columns[i], " " + suffix[i] + " ?");
+                    AppendColumnRow(sb, columns[i], " " + whereSigns[i] + " ?");
 
                 if (i < columns.Length - 1)
                     sb.Append(delimiter + " ");
@@ -139,7 +145,7 @@ namespace CassandraQueryBuilder
             if (selectColumns == null)
                 sb.Append("*");
             else
-                AppendColumnRows(sb, selectColumns, ",", "");
+                AppendColumnRows(sb, selectColumns, ",");
             
 
             sb.Append(" FROM " + keyspace + "." + table);

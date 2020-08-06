@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using System.Collections.Generic;
 
 namespace CassandraQueryBuilder
 {
@@ -17,7 +18,13 @@ namespace CassandraQueryBuilder
         //private PreparedStatement preparedStatement;
         // private ConsistencyLevel consistencyLevel;
 
-        private ListUpdateType listUpdateType;
+        private MapUpdateType[] mapUpdateTypes;
+        private SetUpdateType[] setUpdateTypes;
+        private ListUpdateType[] listUpdateTypes;
+
+        private int mapUpdateTypesCounter = 0;
+        private int setUpdateTypesCounter = 0;
+        private int listUpdateTypesCounter = 0;
 
         public Update()
         {
@@ -75,9 +82,23 @@ namespace CassandraQueryBuilder
             return this;
         }
 
-        public Update ListUpdateType(ListUpdateType listUpdateType)
+        public Update MapUpdateType(params MapUpdateType[] mapUpdateTypes)
         {
-            this.listUpdateType = listUpdateType;
+            this.mapUpdateTypes = mapUpdateTypes;
+
+            return this;
+        }
+        
+        public Update SetUpdateType(params SetUpdateType[] setUpdateTypes)
+        {
+            this.setUpdateTypes = setUpdateTypes;
+
+            return this;
+        }
+        
+        public Update ListUpdateType(params ListUpdateType[] listUpdateTypes)
+        {
+            this.listUpdateTypes = listUpdateTypes;
 
             return this;
         }
@@ -89,16 +110,36 @@ namespace CassandraQueryBuilder
         //Returns e.g. "name text, " or "name text static, "
         private void AppendVariableRow(StringBuilder sb, Column variable)
         {
-            if(variable.GetColumnType().StartsWith("LIST<"))
+            if(variable.GetColumnType().StartsWith("MAP<"))
             {
-                if (listUpdateType == CassandraQueryBuilder.ListUpdateType.PREPEND)
-                    sb.Append(variable.GetName() + " = ? + " + variable.GetName());
-                else if (listUpdateType == CassandraQueryBuilder.ListUpdateType.APPEND)
+                if (mapUpdateTypes[mapUpdateTypesCounter] == CassandraQueryBuilder.MapUpdateType.ADD)
                     sb.Append(variable.GetName() + " = " + variable.GetName() + " + ?");
-                else if (listUpdateType == CassandraQueryBuilder.ListUpdateType.REPLACE_ALL)
+                else //SetUpdateType.Remove
+                    sb.Append(variable.GetName() + " = " + variable.GetName() + " - ?");
+                
+                mapUpdateTypesCounter++;
+            }
+            else if(variable.GetColumnType().StartsWith("SET<"))
+            {
+                if (setUpdateTypes[setUpdateTypesCounter] == CassandraQueryBuilder.SetUpdateType.ADD)
+                    sb.Append(variable.GetName() + " = " + variable.GetName() + " + ?");
+                else //SetUpdateType.Remove
+                    sb.Append(variable.GetName() + " = " + variable.GetName() + " - ?");
+
+                setUpdateTypesCounter++;
+            }
+            else if(variable.GetColumnType().StartsWith("LIST<"))
+            {
+                if (listUpdateTypes[listUpdateTypesCounter] == CassandraQueryBuilder.ListUpdateType.PREPEND)
+                    sb.Append(variable.GetName() + " = ? + " + variable.GetName());
+                else if (listUpdateTypes[listUpdateTypesCounter] == CassandraQueryBuilder.ListUpdateType.APPEND)
+                    sb.Append(variable.GetName() + " = " + variable.GetName() + " + ?");
+                else if (listUpdateTypes[listUpdateTypesCounter] == CassandraQueryBuilder.ListUpdateType.REPLACE_ALL)
                     sb.Append(variable.GetName() + " = ?");
-                else
+                else //ListUpdateType.SPECIFY_INDEX_TO_OVERWRITE
                     sb.Append(variable.GetName()+ "[?] = ?");
+
+                listUpdateTypesCounter++;
             }
             else
                 sb.Append(variable.GetName() + " = ?");

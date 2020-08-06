@@ -5,9 +5,10 @@ using System.Threading.Tasks;
 
 namespace CassandraQueryBuilder
 {
-    public enum ListDeleteType
+    //For the MAP<...> Collection
+    public enum MapUpdateType
     {
-        SELECTED,
-        ALL
+        ADD,
+        REMOVE
     }
 }
