@@ -1,5 +1,4 @@
-# db.cassandra.csharp.query-builder
-# CassandraQueryBuilder
+# Entrit C# Query Builder for Apache Cassandra
 Query builder for the Cassandra database
 
 
@@ -7,12 +6,12 @@ Query builder for the Cassandra database
 ## What is this repository for? ###
 
 ### Quick summary
-This library makes it easy for developers to create CQL queries in code to be used for prepared statements for the Cassandra database. The advantages with this is for developers to easily change names in tables, columns etc. during development time using refactor as well as creating a good overview of all names, variables etc used.
+This library makes it easy for developers to create CQL queries in code to be used for prepared statements for the Cassandra database. Perfect to use together with the Datastaxt CassandraCSharpDriver for prepared statements and batch statements. The advantages with this is for developers to easily change names in tables, columns etc. during development time using refactor as well as creating a good overview of all names, variables etc used.
 ### Version 1.0.0
 ### Licence
 
 ### Installing the library
-Nuget.....
+Nuget..... CassandraCSharpQueryBuilder
 
 ## Using the library
 

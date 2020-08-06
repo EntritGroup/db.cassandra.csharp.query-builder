@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace CassandraQueryBuilder
+﻿namespace CassandraQueryBuilder
 {
     //http://stackoverflow.com/questions/630803/associating-enums-with-strings-in-c-sharp
 

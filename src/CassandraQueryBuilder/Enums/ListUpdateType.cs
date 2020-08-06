@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace CassandraQueryBuilder
+﻿namespace CassandraQueryBuilder
 {
     //For the LIST<...> Collection
     public enum ListUpdateType
