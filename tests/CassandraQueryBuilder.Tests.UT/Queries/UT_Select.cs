@@ -164,7 +164,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .Table(Tables.tableName)
                     .SelectColumns(Columns.columns1, Columns.columns2)
                     .WhereColumns(Columns.columns1, Columns.columns2, Columns.columns3)
-                    .WhereOperators(WhereOperator.EqualTo, WhereOperator.SmallerThan, WhereOperator.LargerThan)
+                    .WhereOperators(null, WhereOperator.SmallerThan, WhereOperator.LargerThan) // =, <, > (null is same as =)
                     .InColumns(Columns.columns1, 2)
                     .Limit(1)
                     .ToString()

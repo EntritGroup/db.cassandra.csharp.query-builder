@@ -115,7 +115,7 @@ namespace CassandraQueryBuilder
 
             for (int i = 0; i < columns.Length; i++)
             {
-                if (whereOperators == null || whereOperators.Length == 0)
+                if (whereOperators == null || whereOperators[i] == null || whereOperators.Length == 0 || whereOperators[i] == null)
                     AppendColumnRow(sb, columns[i], " = ?");
                 else
                     AppendColumnRow(sb, columns[i], " " + whereOperators[i].Value + " ?");

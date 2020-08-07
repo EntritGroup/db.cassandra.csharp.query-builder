@@ -170,7 +170,7 @@ namespace CassandraQueryBuilder
             if (updateColumns == null)
                 throw new NullReferenceException("Variables cannot be null");
             if (whereColumns == null)
-                throw new NullReferenceException("WhereVariables cannot be null");
+                throw new NullReferenceException("WhereColumns cannot be null");
 
 
 
