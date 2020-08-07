@@ -134,7 +134,7 @@ namespace CassandraQueryBuilder
             if (table == null)
                 throw new NullReferenceException("TableName cannot be null");
             if (whereColumns != null && whereOperators != null && whereOperators.Length != whereOperators.Length)
-                throw new IndexOutOfRangeException("whereColumns and whereSigns must be same length if whereSigns is not null");
+                throw new IndexOutOfRangeException("WhereColumns and WhereOperators must be same length if WhereOperators is not null");
 
 
 
