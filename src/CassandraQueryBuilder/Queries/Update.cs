@@ -107,41 +107,41 @@ namespace CassandraQueryBuilder
 
 
         //Returns e.g. "name text, " or "name text static, "
-        private void AppendVariableRow(StringBuilder sb, Column variable)
+        private void AppendVariableRow(StringBuilder sb, Column column)
         {
-            if(variable.GetColumnType().StartsWith("MAP<"))
+            if(column.ColumnType().StartsWith("MAP<"))
             {
                 if (mapUpdateTypes[mapUpdateTypesCounter] == CassandraQueryBuilder.MapUpdateType.ADD)
-                    sb.Append(variable.GetName() + " = " + variable.GetName() + " + ?");
+                    sb.Append(column.Name() + " = " + column.Name() + " + ?");
                 else //SetUpdateType.Remove
-                    sb.Append(variable.GetName() + " = " + variable.GetName() + " - ?");
+                    sb.Append(column.Name() + " = " + column.Name() + " - ?");
                 
                 mapUpdateTypesCounter++;
             }
-            else if(variable.GetColumnType().StartsWith("SET<"))
+            else if(column.ColumnType().StartsWith("SET<"))
             {
                 if (setUpdateTypes[setUpdateTypesCounter] == CassandraQueryBuilder.SetUpdateType.ADD)
-                    sb.Append(variable.GetName() + " = " + variable.GetName() + " + ?");
+                    sb.Append(column.Name() + " = " + column.Name() + " + ?");
                 else //SetUpdateType.Remove
-                    sb.Append(variable.GetName() + " = " + variable.GetName() + " - ?");
+                    sb.Append(column.Name() + " = " + column.Name() + " - ?");
 
                 setUpdateTypesCounter++;
             }
-            else if(variable.GetColumnType().StartsWith("LIST<"))
+            else if(column.ColumnType().StartsWith("LIST<"))
             {
                 if (listUpdateTypes[listUpdateTypesCounter] == CassandraQueryBuilder.ListUpdateType.PREPEND)
-                    sb.Append(variable.GetName() + " = ? + " + variable.GetName());
+                    sb.Append(column.Name() + " = ? + " + column.Name());
                 else if (listUpdateTypes[listUpdateTypesCounter] == CassandraQueryBuilder.ListUpdateType.APPEND)
-                    sb.Append(variable.GetName() + " = " + variable.GetName() + " + ?");
+                    sb.Append(column.Name() + " = " + column.Name() + " + ?");
                 else if (listUpdateTypes[listUpdateTypesCounter] == CassandraQueryBuilder.ListUpdateType.REPLACE_ALL)
-                    sb.Append(variable.GetName() + " = ?");
+                    sb.Append(column.Name() + " = ?");
                 else //ListUpdateType.SPECIFY_INDEX_TO_OVERWRITE
-                    sb.Append(variable.GetName()+ "[?] = ?");
+                    sb.Append(column.Name()+ "[?] = ?");
 
                 listUpdateTypesCounter++;
             }
             else
-                sb.Append(variable.GetName() + " = ?");
+                sb.Append(column.Name() + " = ?");
         }
 
         //Returns e.g. "name text, address text, " or "" if null

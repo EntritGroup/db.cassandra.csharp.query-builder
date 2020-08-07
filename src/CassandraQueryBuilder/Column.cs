@@ -5,24 +5,24 @@ namespace CassandraQueryBuilder
     public class Column
     {
         String name;
-        ColumnType dbVariableType;
+        ColumnType columnType;
         bool isStatic;
 
-        public Column(String name, ColumnType dbColumnType, bool isStatic = false)
+        public Column(String name, ColumnType columnType, bool isStatic = false)
         {
             this.name = name;
-            this.dbVariableType = dbColumnType;
+            this.columnType = columnType;
             this.isStatic = isStatic;
         }
 
-        public String GetName()
+        public String Name()
         {
             return name;
         }
 
-        public String GetColumnType()
+        public String ColumnType()
         {
-            return dbVariableType.Value;
+            return columnType.Value;
         }
 
         public bool IsStatic()

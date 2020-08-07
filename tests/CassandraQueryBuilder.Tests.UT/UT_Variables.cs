@@ -10,13 +10,13 @@ namespace CassandraQueryBuilder.Tests.UT
         [TestMethod]
         public void UT_Utils_GetVariablesName()
         {
-            Assert.AreEqual("v1", variable.GetName());
+            Assert.AreEqual("v1", variable.Name());
         }
 
         [TestMethod]
         public void UT_Utils_GetVariablesType()
         {
-            Assert.AreEqual("TEXT", variable.GetColumnType());
+            Assert.AreEqual("TEXT", variable.ColumnType());
         }
 
         [TestMethod]

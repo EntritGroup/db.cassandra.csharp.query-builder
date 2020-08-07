@@ -83,13 +83,13 @@ namespace CassandraQueryBuilder
         //Returns e.g. "name text, " or "name text static, "
         private void AppendColumnRow(StringBuilder sb, Column column)
         {
-            sb.Append(column.GetName());
+            sb.Append(column.Name());
         }
 
         //Returns e.g. "name text, " or "name text static, "
         private void AppendColumnRow(StringBuilder sb, Column column, String suffix)
         {
-            sb.Append(column.GetName() + suffix);
+            sb.Append(column.Name() + suffix);
         }
 
         //Returns e.g. "name text, address text, " or "" if null
@@ -165,7 +165,7 @@ namespace CassandraQueryBuilder
                 else
                     sb.Append(" AND ");
 
-                sb.Append(inColumn.GetName() + " IN (");
+                sb.Append(inColumn.Name() + " IN (");
 
                 for (int i = 0; i < inLength; i++)
                 {

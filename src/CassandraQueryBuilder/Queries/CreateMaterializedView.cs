@@ -88,7 +88,7 @@ namespace CassandraQueryBuilder
         //Returns e.g. "name text, " or "name text static, "
         private void AppendColumnRow(StringBuilder sb, Column column)
         {
-            sb.Append(column.GetName());
+            sb.Append(column.Name());
         }
 
         //Returns e.g. "name text, address text, " or "" if null
@@ -115,7 +115,7 @@ namespace CassandraQueryBuilder
                 {
                     if (i > 0)
                         sb.Append(", ");
-                    sb.Append(column[i].GetName());
+                    sb.Append(column[i].Name());
                 }
             }
         }
@@ -129,7 +129,7 @@ namespace CassandraQueryBuilder
                 {
                     if (i > 0)
                         sb.Append("AND ");
-                    sb.Append(columns[i].GetName() + " IS NOT NULL ");
+                    sb.Append(columns[i].Name() + " IS NOT NULL ");
                 }
             }
         }
@@ -148,7 +148,7 @@ namespace CassandraQueryBuilder
                 {
                     if (i > 0)
                         sb.Append(", ");
-                    sb.Append(clusteringKeys[i].GetName() + " " + (clusteringKeysOrderByASC[i] ? Variables.ASCENDING : Variables.DESCENDING));
+                    sb.Append(clusteringKeys[i].Name() + " " + (clusteringKeysOrderByASC[i] ? Variables.ASCENDING : Variables.DESCENDING));
                 }
                 sb.Append(")");
             }

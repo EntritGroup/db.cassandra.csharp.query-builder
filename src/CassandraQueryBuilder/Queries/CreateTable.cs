@@ -115,7 +115,7 @@ namespace CassandraQueryBuilder
             if (column.IsStatic())
                 static_ = " STATIC";
 
-            sb.Append(column.GetName() + " " + column.GetColumnType() + static_ + ", ");
+            sb.Append(column.Name() + " " + column.ColumnType() + static_ + ", ");
         }
 
         //Returns e.g. "name text, address text, " or "" if null
@@ -137,7 +137,7 @@ namespace CassandraQueryBuilder
                 {
                     if (i > 0)
                         sb.Append(", ");
-                    sb.Append(column[i].GetName());
+                    sb.Append(column[i].Name());
                 }
             }
         }
@@ -156,7 +156,7 @@ namespace CassandraQueryBuilder
                 {
                     if (i > 0)
                         sb.Append(", ");
-                    sb.Append(clusteringKeys[i].GetName() + " " + (clusteringKeysOrderByASC[i] ? Variables.ASCENDING : Variables.DESCENDING));
+                    sb.Append(clusteringKeys[i].Name() + " " + (clusteringKeysOrderByASC[i] ? Variables.ASCENDING : Variables.DESCENDING));
                 }
                 sb.Append(")");
             }

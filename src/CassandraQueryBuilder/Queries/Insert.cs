@@ -69,7 +69,7 @@ namespace CassandraQueryBuilder
         //Returns e.g. "name text, " or "name text static, "
         private void AppendVariableRow(StringBuilder sb, Column variable)
         {
-            sb.Append(variable.GetName());
+            sb.Append(variable.Name());
         }
 
         //Returns e.g. "name text, address text, " or "" if null

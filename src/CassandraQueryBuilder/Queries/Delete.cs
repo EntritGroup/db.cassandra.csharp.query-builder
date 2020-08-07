@@ -89,28 +89,28 @@ namespace CassandraQueryBuilder
 
         //Returns e.g. "name text, " or "name text static, "
         //https://docs.datastax.com/en/dse/6.7/cql/cql/cql_reference/cql_commands/cqlDelete.html
-        private void AppendVariableRow(StringBuilder sb, Column variable, String suffix)
+        private void AppendVariableRow(StringBuilder sb, Column column, String suffix)
         {
-            if (variable.GetColumnType().StartsWith("MAP<"))
+            if (column.ColumnType().StartsWith("MAP<"))
             {
                 if (mapDeleteTypes[mapUpdateTypesCounter] == CassandraQueryBuilder.MapDeleteType.ALL)
-                    sb.Append(variable.GetName() + suffix);
+                    sb.Append(column.Name() + suffix);
                 else //MapDeleteType.SELECTED
-                    sb.Append(variable.GetName() + "[?]" + suffix);
+                    sb.Append(column.Name() + "[?]" + suffix);
 
                 mapUpdateTypesCounter++;
             }
-            else if (variable.GetColumnType().StartsWith("LIST<"))
+            else if (column.ColumnType().StartsWith("LIST<"))
             {
                 if (listDeleteTypes[listUpdateTypesCounter] == CassandraQueryBuilder.ListDeleteType.ALL)
-                    sb.Append(variable.GetName() + suffix);
+                    sb.Append(column.Name() + suffix);
                 else //ListDeleteType.SELECTED
-                    sb.Append(variable.GetName() + "[?]" + suffix);
+                    sb.Append(column.Name() + "[?]" + suffix);
 
                 listUpdateTypesCounter++;
             }
             else
-                sb.Append(variable.GetName() + suffix);
+                sb.Append(column.Name() + suffix);
         }
 
         //Returns e.g. "name text, address text, " or "" if null
