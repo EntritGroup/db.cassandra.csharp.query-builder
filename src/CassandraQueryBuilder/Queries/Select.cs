@@ -9,7 +9,7 @@ namespace CassandraQueryBuilder
         private String table;
         private Column[] selectColumns;
         private Column[] whereColumns;
-        private String[] whereSigns;
+        private WhereOperator[] whereOperators;
         private int? limit;
         private Column inColumn;
         private int inLength;
@@ -52,10 +52,10 @@ namespace CassandraQueryBuilder
             return this;
         }
 
-        //"=", ">", "<" etc
-        public Select WhereSigns(params String[] whereSigns)
+        //= | < | > | <= | >= | CONTAINS | CONTAINS KEY
+        public Select WhereOperators(params WhereOperator[] whereOperators)
         {
-            this.whereSigns = whereSigns;
+            this.whereOperators = whereOperators;
 
             return this;
         }
@@ -108,17 +108,17 @@ namespace CassandraQueryBuilder
         }
 
         //Returns e.g. "name text, address text, " or "" if null
-        private void AppendColumnRows(StringBuilder sb, Column[] columns, String delimiter, String[] whereSigns)
+        private void AppendColumnRows(StringBuilder sb, Column[] columns, String delimiter, WhereOperator[] whereOperators)
         {
             if (columns == null)
                 return;
 
             for (int i = 0; i < columns.Length; i++)
             {
-                if (whereSigns == null || whereSigns.Length == 0)
+                if (whereOperators == null || whereOperators.Length == 0)
                     AppendColumnRow(sb, columns[i], " = ?");
                 else
-                    AppendColumnRow(sb, columns[i], " " + whereSigns[i] + " ?");
+                    AppendColumnRow(sb, columns[i], " " + whereOperators[i].Value + " ?");
 
                 if (i < columns.Length - 1)
                     sb.Append(delimiter + " ");
@@ -133,7 +133,7 @@ namespace CassandraQueryBuilder
                 throw new NullReferenceException("Keyspace cannot be null");
             if (table == null)
                 throw new NullReferenceException("TableName cannot be null");
-            if (whereColumns != null && whereSigns != null && whereSigns.Length != whereSigns.Length)
+            if (whereColumns != null && whereOperators != null && whereOperators.Length != whereOperators.Length)
                 throw new IndexOutOfRangeException("whereColumns and whereSigns must be same length if whereSigns is not null");
 
 
@@ -154,7 +154,7 @@ namespace CassandraQueryBuilder
             {
                 sb.Append(" WHERE ");
 
-                AppendColumnRows(sb, whereColumns, " AND", whereSigns);
+                AppendColumnRows(sb, whereColumns, " AND", whereOperators);
             }
 
 

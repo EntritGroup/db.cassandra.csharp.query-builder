@@ -164,7 +164,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .Table(Tables.tableName)
                     .SelectColumns(Columns.columns1, Columns.columns2)
                     .WhereColumns(Columns.columns1, Columns.columns2, Columns.columns3)
-                    .WhereSigns("=", "<", ">")
+                    .WhereOperators(WhereOperator.EqualTo, WhereOperator.SmallerThan, WhereOperator.LargerThan)
                     .InColumns(Columns.columns1, 2)
                     .Limit(1)
                     .ToString()
@@ -194,7 +194,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     new Select()
                         .Keyspace(Variables.keyspace).Table(Tables.tableName)
                         .WhereColumns(Columns.columns1, Columns.columns2)
-                        .WhereSigns("=")
+                        .WhereOperators(WhereOperator.EqualTo)
                         .ToString();
                 }
             );
