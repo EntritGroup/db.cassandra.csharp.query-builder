@@ -8,7 +8,7 @@ namespace CassandraQueryBuilder.Tests.UT
     public class UT_Select
     {
         [TestMethod]
-        public void UT_Select_GetString()
+        public void UT_Select_ToString()
         {
             String result = "SELECT * FROM ks.tb;";
             Assert.AreEqual(result,
@@ -171,6 +171,61 @@ namespace CassandraQueryBuilder.Tests.UT
             );
         }
 
+
+        [TestMethod]
+        public void UT_Select_Aggregates_ToString()
+        {
+            String result = "SELECT COUNT(*) FROM ks.tb;";
+            Assert.AreEqual(result,
+                new Select()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .SelectAggregates(SelectAggregate.COUNT)
+                    .ToString()
+            );
+
+            result = "SELECT COUNT(v1) FROM ks.tb;";
+            Assert.AreEqual(result,
+                new Select()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .SelectColumns(Columns.columns1)
+                    .SelectAggregates(SelectAggregate.COUNT)
+                    .ToString()
+            );
+
+            result = "SELECT AVG(v1), MIN(v2) FROM ks.tb;";
+            Assert.AreEqual(result,
+                new Select()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .SelectColumns(Columns.columns1, Columns.columns2)
+                    .SelectAggregates(SelectAggregate.AVG, SelectAggregate.MIN)
+                    .ToString()
+            );
+
+            result = "SELECT v1, MIN(v2) FROM ks.tb;";
+            Assert.AreEqual(result,
+                new Select()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .SelectColumns(Columns.columns1, Columns.columns2)
+                    .SelectAggregates(null, SelectAggregate.MIN)
+                    .ToString()
+            );
+
+            result = "SELECT AVG(v1), v2 FROM ks.tb;";
+            Assert.AreEqual(result,
+                new Select()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .SelectColumns(Columns.columns1, Columns.columns2)
+                    .SelectAggregates(SelectAggregate.AVG, null)
+                    .ToString()
+            );
+
+        }
+
         [TestMethod]
         public void UT_Select_GetString_DataIsNullOrInvalid()
         {
@@ -189,6 +244,16 @@ namespace CassandraQueryBuilder.Tests.UT
                 }
             );
 
+            Assert.ThrowsException<IndexOutOfRangeException>(
+                () => {
+                    new Select()
+                        .Keyspace(Variables.keyspace).Table(Tables.tableName)
+                        .SelectColumns(Columns.columns1, Columns.columns2)
+                        .SelectAggregates(SelectAggregate.COUNT)
+                        .ToString();
+                }
+            );
+            
             Assert.ThrowsException<IndexOutOfRangeException>(
                 () => {
                     new Select()
