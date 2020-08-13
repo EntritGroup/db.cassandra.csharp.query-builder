@@ -96,11 +96,6 @@ As per the documentation for respective type: [https://cassandra.apache.org/doc/
 - [Test project](tests/CassandraQueryBuilder.Tests.UT/Queries/UT_UpdateCounter.cs)
 
 
-## How do I get set up?
-
-### Dependencies
-- Dotnet Core SDK
-
 ## Contribution guidelines ###
 There are many ways in which you can participate in the project, for example:
 
