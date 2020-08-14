@@ -12,8 +12,7 @@ namespace CassandraQueryBuilder
         private Column[] whereColumns;
         private WhereOperator[] whereOperators;
         private int? limit;
-        private Column inColumn;
-        private int inLength;
+        private int?[] inLength;
 
         //private Object preparedStatmentLock = new Object();
         //private PreparedStatement preparedStatement;
@@ -80,10 +79,9 @@ namespace CassandraQueryBuilder
             return this;
         }
 
-        //if limit = null here, then it will be "?", otherwise, it will be 1,2,3, or whatever you set
-        public Select InColumns(Column inColumn, int inLength)
+        //for the In clause (where X in Y)
+        public Select InColumns(params int?[] inLength)
         {
-            this.inColumn = inColumn;
             this.inLength = inLength;
 
             return this;
@@ -108,7 +106,7 @@ namespace CassandraQueryBuilder
         }
 
         //Returns e.g. "name text, address text, " or "" if null
-        private void AppendColumnRows(StringBuilder sb, Column[] columns, String delimiter, SelectAggregate[] selectAggregates)
+        private void AppendSelectColumnRows(StringBuilder sb, Column[] columns, String delimiter, SelectAggregate[] selectAggregates)
         {
             if (columns == null)
                 columns = new Column[] {new Column("*", null)};
@@ -126,14 +124,27 @@ namespace CassandraQueryBuilder
         }
 
         //Returns e.g. "name text, address text, " or "" if null
-        private void AppendColumnRows(StringBuilder sb, Column[] columns, String delimiter, WhereOperator[] whereOperators)
+        private void AppendWhereColumnRows(StringBuilder sb, Column[] columns, String delimiter, WhereOperator[] whereOperators)
         {
             if (columns == null)
                 return;
 
             for (int i = 0; i < columns.Length; i++)
             {
-                if (whereOperators == null || whereOperators[i] == null || whereOperators.Length == 0 || whereOperators[i] == null)
+                if(inLength != null && inLength[i] != null && inLength[i] != 0)
+                {
+                    sb.Append(columns[i].Name() + " IN (");
+
+                    for (int j = 0; j < inLength[i]; j++)
+                    {
+                        if (j > 0)
+                            sb.Append(", ");
+                        sb.Append("?");
+                    }
+
+                    sb.Append(")");
+                }
+                else if (whereOperators == null || whereOperators[i] == null || whereOperators.Length == 0 || whereOperators[i] == null)
                     AppendColumnRow(sb, columns[i], " = ?");
                 else
                     AppendColumnRow(sb, columns[i], " " + whereOperators[i].Value + " ?");
@@ -162,7 +173,7 @@ namespace CassandraQueryBuilder
 
             sb.Append("SELECT ");
 
-            AppendColumnRows(sb, selectColumns, ",", selectAggregates);
+            AppendSelectColumnRows(sb, selectColumns, ",", selectAggregates);
             
 
             sb.Append(" FROM " + keyspace + "." + table);
@@ -171,27 +182,7 @@ namespace CassandraQueryBuilder
             {
                 sb.Append(" WHERE ");
 
-                AppendColumnRows(sb, whereColumns, " AND", whereOperators);
-            }
-
-
-            if(inColumn != null && inLength > 0)
-            {
-                if (whereColumns == null)
-                    sb.Append(" WHERE ");
-                else
-                    sb.Append(" AND ");
-
-                sb.Append(inColumn.Name() + " IN (");
-
-                for (int i = 0; i < inLength; i++)
-                {
-                    if (i > 0)
-                        sb.Append(", ");
-                    sb.Append("?");
-                }
-
-                sb.Append(")");
+                AppendWhereColumnRows(sb, whereColumns, " AND", whereOperators);
             }
 
 
