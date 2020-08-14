@@ -14,23 +14,6 @@ namespace CassandraQueryBuilder
             this.replicationFactor = replicationFactor;
         }
 
-
-        //public DataCenter SetName(String name)
-        //{
-        //    this.name = name;
-
-        //    return this;
-        //}
-        
-        //public DataCenter SetReplicationFactor(int replicationFactor)
-        //{
-        //    this.replicationFactor = replicationFactor;
-
-        //    return this;
-        //}
-
-
-
         public String GetName()
         {
             return name;
