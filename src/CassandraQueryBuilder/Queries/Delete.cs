@@ -3,7 +3,7 @@ using System.Text;
 
 namespace CassandraQueryBuilder
 {
-    public class Delete : Query// : IPreparedStatement
+    public class Delete : Query
     {
         private String keyspace;
         private String table;
@@ -12,23 +12,26 @@ namespace CassandraQueryBuilder
         private Boolean ifExists = false;
         private Boolean setTimestamp = false;
 
-        //private Object preparedStatmentLock = new Object();
-        //private PreparedStatement preparedStatement;
-        // private ConsistencyLevel consistencyLevel;
-
         private MapDeleteType[] mapDeleteTypes;
         private ListDeleteType[] listDeleteTypes;
 
         private int mapUpdateTypesCounter = 0;
         private int listUpdateTypesCounter = 0;
 
-
+        /// <summary>
+        /// To create DELETE queries
+        /// </summary>
         public Delete()
         {
 
         }
 
 
+        /// <summary>
+        /// Set keyspace name
+        /// </summary>
+        /// <param name="keyspace">Keyspace name</param>
+        /// <returns>Delete</returns>
         public Delete Keyspace(String keyspace)
         {
             this.keyspace = keyspace;
@@ -36,6 +39,11 @@ namespace CassandraQueryBuilder
             return this;
         }
 
+        /// <summary>
+        /// Set table name
+        /// </summary>
+        /// <param name="table">Table name</param>
+        /// <returns>Delete</returns>
         public Delete Table(String table)
         {
             this.table = table;
@@ -43,6 +51,11 @@ namespace CassandraQueryBuilder
             return this;
         }
 
+        /// <summary>
+        /// The columns in the DELETE clause
+        /// </summary>
+        /// <param name="deleteColumns">The columns used in the DELETE clause</param>
+        /// <returns>Delete</returns>
         public Delete DeleteColumns(params Column[] deleteColumns)
         {
             this.deleteColumns = deleteColumns;
@@ -50,6 +63,11 @@ namespace CassandraQueryBuilder
             return this;
         }
 
+        /// <summary>
+        /// The columns used in the WHERE clause
+        /// </summary>
+        /// <param name="whereColumns">The columns used in the WHERE clause</param>
+        /// <returns>Delete</returns>
         public Delete WhereColumns(params Column[] whereColumns)
         {
             this.whereColumns = whereColumns;
@@ -57,6 +75,10 @@ namespace CassandraQueryBuilder
             return this;
         }
 
+        /// <summary>
+        /// Add IF EXISTS to the query
+        /// </summary>
+        /// <returns>Delete</returns>
         public Delete IfExists()
         {
             this.ifExists = true;
@@ -64,6 +86,10 @@ namespace CassandraQueryBuilder
             return this;
         }
 
+        /// <summary>
+        /// Add timestamp to the query
+        /// </summary>
+        /// <returns>Delete</returns>
         public Delete Timestamp()
         {
             this.setTimestamp= true;
@@ -71,6 +97,11 @@ namespace CassandraQueryBuilder
             return this;
         }
 
+        /// <summary>
+        /// Set delete type for LIST
+        /// </summary>
+        /// <param name="listDeleteTypes">SELECTED, ALL</param>
+        /// <returns>Delete</returns>
         public Delete ListDeleteType(params ListDeleteType[] listDeleteTypes)
         {
             this.listDeleteTypes = listDeleteTypes;
@@ -78,6 +109,11 @@ namespace CassandraQueryBuilder
             return this;
         }
         
+        /// <summary>
+        /// Set delete type for MAP
+        /// </summary>
+        /// <param name="mapDeleteTypes">SELECTED, ALL</param>
+        /// <returns>Delete</returns>
         public Delete MapDeleteType(params MapDeleteType[] mapDeleteTypes)
         {
             this.mapDeleteTypes = mapDeleteTypes;
@@ -128,8 +164,12 @@ namespace CassandraQueryBuilder
             }
         }
 
-        //Om man har ttl så ska den ligga sist i valuesVariables
-        //DELETE v1, v2 FROM ks.tb WHERE v1 = ? AND v2 = ? IF EXISTS;
+        /// <summary>
+        /// Creates the prepared statement string
+        /// 
+        /// E.g. DELETE v1, v2 FROM ks.tb WHERE v1 = ? AND v2 = ? IF EXISTS;
+        /// </summary>
+        /// <returns>String</returns>
         public override String ToString()
         {
             if (keyspace == null)

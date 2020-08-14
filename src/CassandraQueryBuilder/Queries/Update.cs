@@ -3,19 +3,15 @@ using System.Text;
 
 namespace CassandraQueryBuilder
 {
-    public class Update : Query// : IPreparedStatement
+    public class Update : Query
     {
         private String keyspace;
         private String table;
         private Column[] updateColumns;
         private Column[] whereColumns;
-        private Boolean ttl = false; //Om man har ttl så ska den ligga sist i valuesVariables;
+        private Boolean ttl = false;
         private Boolean ifExists = false;
         private Boolean setTimestamp = false;
-
-        //private Object preparedStatmentLock = new Object();
-        //private PreparedStatement preparedStatement;
-        // private ConsistencyLevel consistencyLevel;
 
         private MapUpdateType[] mapUpdateTypes;
         private SetUpdateType[] setUpdateTypes;
@@ -25,12 +21,19 @@ namespace CassandraQueryBuilder
         private int setUpdateTypesCounter = 0;
         private int listUpdateTypesCounter = 0;
 
+        /// <summary>
+        /// To create UPDATE queries
+        /// </summary>
         public Update()
         {
 
         }
 
-
+        /// <summary>
+        /// Set keyspace name
+        /// </summary>
+        /// <param name="keyspace">Keyspace name</param>
+        /// <returns>Update</returns>
         public Update Keyspace(String keyspace)
         {
             this.keyspace = keyspace;
@@ -38,6 +41,11 @@ namespace CassandraQueryBuilder
             return this;
         }
 
+        /// <summary>
+        /// Set table name
+        /// </summary>
+        /// <param name="table">Table name</param>
+        /// <returns>Update</returns>
         public Update Table(String table)
         {
             this.table = table;
@@ -45,6 +53,11 @@ namespace CassandraQueryBuilder
             return this;
         }
 
+        /// <summary>
+        /// The columns in the UPDATE clause
+        /// </summary>
+        /// <param name="updateColumns">The columns used in the UPDATE clause</param>
+        /// <returns>Update</returns>
         public Update UpdateColumns(params Column[] updateColumns)
         {
             this.updateColumns = updateColumns;
@@ -52,6 +65,11 @@ namespace CassandraQueryBuilder
             return this;
         }
 
+        /// <summary>
+        /// The columns used in the WHERE clause
+        /// </summary>
+        /// <param name="whereColumns">The columns used in the WHERE clause</param>
+        /// <returns>Update</returns>
         public Update WhereColumns(params Column[] whereColumns)
         {
             this.whereColumns = whereColumns;
@@ -59,7 +77,12 @@ namespace CassandraQueryBuilder
             return this;
         }
 
-        //Om man har ttl så ska den ligga sist i valuesVariables
+        /// <summary>
+        /// Set Time To Live (TTL) in the UPDATE clause
+        /// 
+        /// E.g. UPDATE ks.tb USING TTL ? SET v2 = ? WHERE v1 = ?
+        /// </summary>
+        /// <returns>Update</returns>
         public Update TTL()
         {
             this.ttl = true;
@@ -67,6 +90,10 @@ namespace CassandraQueryBuilder
             return this;
         }
 
+        /// <summary>
+        /// Set IF EXISTS in the UPDATE clause
+        /// </summary>
+        /// <returns>Update</returns>
         public Update IfExists()
         {
             this.ifExists = true;
@@ -74,6 +101,12 @@ namespace CassandraQueryBuilder
             return this;
         }
 
+        /// <summary>
+        /// Set update timestamp
+        /// 
+        /// /// E.g. UPDATE ks.tb USING TIMESTAMP ? SET v2 = ? WHERE v1 = ?;";
+        /// </summary>
+        /// <returns>Update</returns>
         public Update Timestamp()
         {
             this.setTimestamp = true;
@@ -81,6 +114,11 @@ namespace CassandraQueryBuilder
             return this;
         }
 
+        /// <summary>
+        /// Set update type for MAP
+        /// </summary>
+        /// <param name="mapUpdateTypes">ADD, REMOVE</param>
+        /// <returns>Update</returns>
         public Update MapUpdateType(params MapUpdateType[] mapUpdateTypes)
         {
             this.mapUpdateTypes = mapUpdateTypes;
@@ -88,6 +126,11 @@ namespace CassandraQueryBuilder
             return this;
         }
         
+        /// <summary>
+        /// Set update type for SET
+        /// </summary>
+        /// <param name="setUpdateTypes">ADD, REMOVE</param>
+        /// <returns>Update</returns>
         public Update SetUpdateType(params SetUpdateType[] setUpdateTypes)
         {
             this.setUpdateTypes = setUpdateTypes;
@@ -95,6 +138,11 @@ namespace CassandraQueryBuilder
             return this;
         }
         
+        /// <summary>
+        /// Set update type for LIST
+        /// </summary>
+        /// <param name="listUpdateTypes">PREPEND, APPEND, REPLACE_ALL, SPECIFY_INDEX_TO_OVERWRITE</param>
+        /// <returns>Update</returns>
         public Update ListUpdateType(params ListUpdateType[] listUpdateTypes)
         {
             this.listUpdateTypes = listUpdateTypes;
@@ -159,8 +207,12 @@ namespace CassandraQueryBuilder
             }
         }
 
-        //Om man har ttl så ska den ligga sist i valuesVariables
-        //UPDATE ks.tb SET v1 = ?, v2 = ? WHERE v1 = ? AND v2 = ? IF EXISTS;
+        /// <summary>
+        /// Creates the prepared statement string
+        /// 
+        /// E.g. UPDATE ks.tb SET v1 = ?, v2 = ? WHERE v1 = ? AND v2 = ? IF EXISTS;
+        /// </summary>
+        /// <returns>String</returns>
         public override String ToString()
         {
             if (keyspace == null)

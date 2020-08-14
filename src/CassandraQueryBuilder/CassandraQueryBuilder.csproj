@@ -1,7 +1,20 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssemblyName>CassandraQueryBuilder</AssemblyName>
+    <Product>C# Query Builder for Apache Cassandra</Product>
+    <Description>Query builder for the Cassandra database</Description>
+    <Copyright>Copyright © by Entrit</Copyright>
+    <Authors>Entrit</Authors>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    
+    <PackageId>CassandraCSharpQueryBuilder</PackageId>
+    <Title>C# Query Builder for Apache Cassandra</Title>
+    <PackageTags>cassandra;apache;query;builder;cql;datastax;database;nosql;dotnet;netcore;db</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/EntritGroup/db.cassandra.csharp.query-builder</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/EntritGroup/db.cassandra.csharp.query-builder</PackageProjectUrl>
   </PropertyGroup>
 
 </Project>

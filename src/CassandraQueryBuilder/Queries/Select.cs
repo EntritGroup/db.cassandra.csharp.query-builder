@@ -3,7 +3,7 @@ using System.Text;
 
 namespace CassandraQueryBuilder
 {
-    public class Select : Query// : IPreparedStatement
+    public class Select : Query
     {
         private String keyspace;
         private String table;
@@ -14,16 +14,19 @@ namespace CassandraQueryBuilder
         private int? limit;
         private int?[] inLength;
 
-        //private Object preparedStatmentLock = new Object();
-        //private PreparedStatement preparedStatement;
-        // private ConsistencyLevel consistencyLevel;
-
+        /// <summary>
+        /// To create SELECT queries
+        /// </summary>
         public Select()
         {
 
         }
 
-
+        /// <summary>
+        /// Set keyspace name
+        /// </summary>
+        /// <param name="keyspace">Keyspace name</param>
+        /// <returns>Select</returns>
         public Select Keyspace(String keyspace)
         {
             this.keyspace = keyspace;
@@ -31,6 +34,11 @@ namespace CassandraQueryBuilder
             return this;
         }
 
+        /// <summary>
+        /// Set table name
+        /// </summary>
+        /// <param name="table">Table name</param>
+        /// <returns>Select</returns>
         public Select Table(String table)
         {
             this.table = table;
@@ -38,6 +46,11 @@ namespace CassandraQueryBuilder
             return this;
         }
 
+        /// <summary>
+        /// The columns in the SELECT clause
+        /// </summary>
+        /// <param name="columns">The columns used in the SELECT clause</param>
+        /// <returns>Select</returns>
         public Select SelectColumns(params Column[] columns)
         {
             this.selectColumns = columns;
@@ -45,14 +58,25 @@ namespace CassandraQueryBuilder
             return this;
         }
 
-        //COUNT, SUM, AVG, MAX, MIN
+        /// <summary>
+        /// The aggregates in the SELECT clause
+        /// 
+        /// SELECT COUNT(...), SELECT SUM(...) etc.
+        /// </summary>
+        /// <param name="selectAggregates">COUNT, SUM, AVG, MAX, MIN</param>
+        /// <returns>Select</returns>
         public Select SelectAggregates(params SelectAggregate[] selectAggregates)
         {
             this.selectAggregates = selectAggregates;
-
+            
             return this;
         }
 
+        /// <summary>
+        /// The columns used in the WHERE clause
+        /// </summary>
+        /// <param name="whereColumns">The columns used in the WHERE clause</param>
+        /// <returns>Select</returns>
         public Select WhereColumns(params Column[] whereColumns)
         {
             this.whereColumns = whereColumns;
@@ -60,7 +84,11 @@ namespace CassandraQueryBuilder
             return this;
         }
 
-        //=, <, >, <=, >=, CONTAINS, CONTAINS KEY
+        /// <summary>
+        /// The operators in the WHERE clause
+        /// </summary>
+        /// <param name="whereOperators">=, <, >, <=, >=, CONTAINS, CONTAINS KEY</param>
+        /// <returns>Select</returns>
         public Select WhereOperators(params WhereOperator[] whereOperators)
         {
             this.whereOperators = whereOperators;
@@ -69,6 +97,14 @@ namespace CassandraQueryBuilder
         }
 
         //if limit = null here, then it will be "?", otherwise, it will be 1,2,3, or whatever you set
+        /// <summary>
+        /// To limit the number of results returned
+        /// 
+        /// If limit = null, then it will be a questionmark (?) to be filled in by the stored procedure.null
+        /// If limit != not null, it will be the number you set here
+        /// </summary>
+        /// <param name="limit">null or a number</param>
+        /// <returns>Select</returns>
         public Select Limit(int? limit = null)
         {
             if (limit == null)
@@ -79,7 +115,15 @@ namespace CassandraQueryBuilder
             return this;
         }
 
-        //for the In clause (where X in Y)
+        /// <summary>
+        /// For the WHERE part of the clause
+        /// 
+        /// If null or 0, it will not be included as IN
+        /// If not null or 0, it will have as many questionmarks (?) as stated
+        /// E.g. SELECT * FROM keyspace.table WHERE name IN (?, ?)
+        /// </summary>
+        /// <param name="inLength">null, 0 or a number</param>
+        /// <returns>Select</returns>
         public Select InColumns(params int?[] inLength)
         {
             this.inLength = inLength;
@@ -154,8 +198,12 @@ namespace CassandraQueryBuilder
             }
         }
         
-        //Om man har ttl så ska den ligga sist i valuesVariables
-        //SELECT v1, v2 FROM ks.tb WHERE v1 = ? AND v2 = ?;
+        /// <summary>
+        /// Creates the prepared statement string
+        /// 
+        /// E.g. SELECT v1, v2 FROM ks.tb WHERE v1 = ? AND v2 = ?;
+        /// </summary>
+        /// <returns>String</returns>
         public override String ToString()
         {
             if (keyspace == null)

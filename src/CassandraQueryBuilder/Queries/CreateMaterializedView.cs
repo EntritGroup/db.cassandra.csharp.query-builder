@@ -17,11 +17,19 @@ namespace CassandraQueryBuilder
         Column[] columns;
         private CompactionStrategy dbCompactionStrategy;
 
+        /// <summary>
+        /// To create materialized views queries
+        /// </summary>
         public CreateMaterializedView()
         {
 
         }
 
+        /// <summary>
+        /// Set keyspace name
+        /// </summary>
+        /// <param name="keyspace">Keyspace name</param>
+        /// <returns>CreateMaterializedView</returns>
         public CreateMaterializedView Keyspace(String keyspace)
         {
             this.keyspace = keyspace;
@@ -29,6 +37,11 @@ namespace CassandraQueryBuilder
             return this;
         }
 
+        /// <summary>
+        /// Set to table name (the materialized view table name)
+        /// </summary>
+        /// <param name="toTable">To Table name</param>
+        /// <returns>CreateMaterlializedView</returns>
         public CreateMaterializedView ToTable(String toTable)
         {
             this.toTable = toTable;
@@ -36,6 +49,11 @@ namespace CassandraQueryBuilder
             return this;
         }
 
+        /// <summary>
+        /// Set from table name (the table to build the materialized view from)
+        /// </summary>
+        /// <param name="fromTable">Table name</param>
+        /// <returns>CreateMaterializedView</returns>
         public CreateMaterializedView FromTable(String fromTable)
         {
             this.fromTable = fromTable;
@@ -43,6 +61,11 @@ namespace CassandraQueryBuilder
             return this;
         }
 
+        /// <summary>
+        /// The columns for the partition keys
+        /// </summary>
+        /// <param name="partitionKeys">The columns used for partition keys</param>
+        /// <returns>CreateMaterializedView</returns>
         public CreateMaterializedView PartitionKeys(params Column[] partitionKeys)
         {
             this.partitionKeys = partitionKeys;
@@ -50,6 +73,11 @@ namespace CassandraQueryBuilder
             return this;
         }
         
+        /// <summary>
+        /// The columns for the clustering keys
+        /// </summary>
+        /// <param name="partitionKeys">The columns used for clustering keys</param>
+        /// <returns>CreateMaterializedView</returns>
         public CreateMaterializedView ClusteringKeys(params Column[] clusteringKeys)
         {
             this.clusteringKeys = clusteringKeys;
@@ -57,6 +85,11 @@ namespace CassandraQueryBuilder
             return this;
         }
 
+        /// <summary>
+        /// If the clustering keys should be ordered by ASC or DESC
+        /// </summary>
+        /// <param name="clusteringKeysOrderByASC">ASC = true, DESC = false</param>
+        /// <returns>CreateMaterializedView</returns>
         public CreateMaterializedView ClusteringKeysOrderByASC(params Boolean[] clusteringKeysOrderByASC)
         {
             this.clusteringKeysOrderByASC = clusteringKeysOrderByASC;
@@ -64,6 +97,11 @@ namespace CassandraQueryBuilder
             return this;
         }
 
+        /// <summary>
+        /// The general columns for the table
+        /// </summary>
+        /// <param name="columns">The columns in the table</param>
+        /// <returns>CreateMaterializedView</returns>
         public CreateMaterializedView Columns(params Column[] columns)
         {
             this.columns = columns;
@@ -71,6 +109,11 @@ namespace CassandraQueryBuilder
             return this;
         }
 
+        /// <summary>
+        /// Set compaction strategy
+        /// </summary>
+        /// <param name="dbCompactionStrategy">SizeTieredCompactionStrategy, DateTieredCompactionStrategy, "LeveledCompactionStrategy</param>
+        /// <returns>CreateMaterializedView</returns>
         public CreateMaterializedView CompactionStrategy(CompactionStrategy dbCompactionStrategy)
         {
             this.dbCompactionStrategy = dbCompactionStrategy;
@@ -154,6 +197,10 @@ namespace CassandraQueryBuilder
             }
         }
 
+        /// <summary>
+        /// Creates the prepared statement string
+        /// </summary>
+        /// <returns>String</returns>
         public override String ToString()
         {
             if (keyspace == null)

@@ -6,12 +6,20 @@ namespace CassandraQueryBuilder
     {
         private String name;
 
+        /// <summary>
+        /// To create DROP KEYSPACE queries
+        /// </summary>
         public DropKeyspace()
         {
 
         }
 
 
+        /// <summary>
+        /// Set keyspace name
+        /// </summary>
+        /// <param name="keyspace">Keyspace name</param>
+        /// <returns>DropKeyspace</returns>
         public DropKeyspace Keyspace(String keyspace)
         {
             this.name = keyspace;
@@ -19,6 +27,10 @@ namespace CassandraQueryBuilder
             return this;
         }
 
+        /// <summary>
+        /// Creates the prepared statement string
+        /// </summary>
+        /// <returns>String</returns>
         public override String ToString()
         {
             if (name == null)

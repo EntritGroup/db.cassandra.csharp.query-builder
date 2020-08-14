@@ -20,11 +20,19 @@ namespace CassandraQueryBuilder
 
         private List<String> withProperties = new List<string>();
 
+        /// <summary>
+        /// To create table queries
+        /// </summary>
         public CreateTable()
         {
 
         }
 
+        /// <summary>
+        /// Set keyspace name
+        /// </summary>
+        /// <param name="keyspace">Keyspace name</param>
+        /// <returns>CreateTable</returns>
         public CreateTable Keyspace(String keyspace)
         {
             this.keyspace = keyspace;
@@ -32,6 +40,11 @@ namespace CassandraQueryBuilder
             return this;
         }
 
+        /// <summary>
+        /// Set table name
+        /// </summary>
+        /// <param name="table">Table name</param>
+        /// <returns>CreateTable</returns>
         public CreateTable Table(String table)
         {
             this.table = table;
@@ -39,6 +52,11 @@ namespace CassandraQueryBuilder
             return this;
         }
 
+        /// <summary>
+        /// The columns for the partition keys
+        /// </summary>
+        /// <param name="partitionKeys">The columns used for partition keys</param>
+        /// <returns>CreateTable</returns>
         public CreateTable PartitionKeys(params Column[] partitionKeys)
         {
             this.partitionKeys = partitionKeys;
@@ -46,6 +64,12 @@ namespace CassandraQueryBuilder
             return this;
         }
 
+
+        /// <summary>
+        /// The columns for the clustering keys
+        /// </summary>
+        /// <param name="clusteringKeys">The columns used for clustering keys</param>
+        /// <returns>CreateTable</returns>
         public CreateTable ClusteringKeys(params Column[] clusteringKeys)
         {
             this.clusteringKeys = clusteringKeys;
@@ -53,6 +77,11 @@ namespace CassandraQueryBuilder
             return this;
         }
 
+        /// <summary>
+        /// If the clustering keys should be ordered by ASC or DESC
+        /// </summary>
+        /// <param name="clusteringKeysOrderByASC">ASC = true, DESC = false</param>
+        /// <returns>CreateTable</returns>
         public CreateTable ClusteringKeysOrderByASC(params Boolean[] clusteringKeysOrderByASC)
         {
             if (isClusteringKeysOrderByAscSet)
@@ -73,6 +102,11 @@ namespace CassandraQueryBuilder
             return this;
         }
 
+        /// <summary>
+        /// The general columns for the table
+        /// </summary>
+        /// <param name="columns">The columns in the table</param>
+        /// <returns>CreateTable</returns>
         public CreateTable Columns(params Column[] columns)
         {
             this.colums = columns;
@@ -80,6 +114,11 @@ namespace CassandraQueryBuilder
             return this;
         }
 
+        /// <summary>
+        /// Set compaction strategy
+        /// </summary>
+        /// <param name="dbCompactionStrategy">SizeTieredCompactionStrategy, DateTieredCompactionStrategy, "LeveledCompactionStrategy</param>
+        /// <returns>CreateTable</returns>
         public CreateTable CompactionStrategy(CompactionStrategy dbCompactionStrategy)
         {
             if (isDbCompactionStrategySet)
@@ -92,6 +131,13 @@ namespace CassandraQueryBuilder
             return this;
         }
 
+        /// <summary>
+        /// Set Gcace
+        /// 
+        /// The time (in seconds) Cassandra keeps tombstones around
+        /// </summary>
+        /// <param name="gcGraceSeconds">Seconds for GC Grace</param>
+        /// <returns>CreateTable</returns>
         public CreateTable GcGrace(int gcGraceSeconds)
         {
             if (isGcGraceSecondsSet)
@@ -162,6 +208,10 @@ namespace CassandraQueryBuilder
             }
         }
 
+        /// <summary>
+        /// Creates the prepared statement string
+        /// </summary>
+        /// <returns>String</returns>
         public override String ToString()
         {
             if (keyspace == null)

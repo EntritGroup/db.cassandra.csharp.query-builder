@@ -3,7 +3,7 @@ using System.Text;
 
 namespace CassandraQueryBuilder
 {
-    public class UpdateCounter : Query// : IPreparedStatement
+    public class UpdateCounter : Query
     {
         private String keyspace;
         private String table;
@@ -11,16 +11,19 @@ namespace CassandraQueryBuilder
         private Column[] whereColumns;
         private int? increaseBy; //increaseBy = Increase or decrease by (e.g. 1, 2, -1, -5)
 
-        //private Object preparedStatmentLock = new Object();
-        //private PreparedStatement preparedStatement;
-        // private ConsistencyLevel consistencyLevel;
-
+        /// <summary>
+        /// To create UPDATE queries for counters
+        /// </summary>
         public UpdateCounter()
         {
 
         }
 
-
+        /// <summary>
+        /// Set keyspace name
+        /// </summary>
+        /// <param name="keyspace">Keyspace name</param>
+        /// <returns>UpdateCounter</returns>
         public UpdateCounter Keyspace(String keyspace)
         {
             this.keyspace = keyspace;
@@ -28,6 +31,11 @@ namespace CassandraQueryBuilder
             return this;
         }
 
+        /// <summary>
+        /// Set table name
+        /// </summary>
+        /// <param name="table">Table name</param>
+        /// <returns>UpdateCounter</returns>
         public UpdateCounter Table(String table)
         {
             this.table = table;
@@ -35,6 +43,11 @@ namespace CassandraQueryBuilder
             return this;
         }
 
+        /// <summary>
+        /// The columns in the UPDATE clause
+        /// </summary>
+        /// <param name="columns">The columns used in the UPDATE clause</param>
+        /// <returns>UpdateCounter</returns>
         public UpdateCounter UpdateColumn(Column column)
         {
             this.column = column;
@@ -42,6 +55,11 @@ namespace CassandraQueryBuilder
             return this;
         }
 
+        /// <summary>
+        /// The columns used in the WHERE clause
+        /// </summary>
+        /// <param name="whereColumns">The columns used in the WHERE clause</param>
+        /// <returns>UpdateCounter</returns>
         public UpdateCounter WhereColumns(params Column[] whereColumns)
         {
             this.whereColumns = whereColumns;
@@ -49,7 +67,11 @@ namespace CassandraQueryBuilder
             return this;
         }
 
-        //increaseBy = Increase or decrease by (e.g. 1, 2, -1, -5)
+        /// <summary>
+        /// Increase or decrease in the counter
+        /// </summary>
+        /// <param name="increaseBy">E.g. 1, 2, -1, -5</param>
+        /// <returns>UpdateCounter</returns>
         public UpdateCounter IncreaseBy(int increaseBy)
         {
             this.increaseBy = increaseBy;
@@ -79,8 +101,12 @@ namespace CassandraQueryBuilder
         }
         
         //increaseBy = Increase or decrease by (e.g. 1, 2, -1, -5)
-        //Om man har ttl så ska den ligga sist i valuesVariables
-        //UPDATE ks.tb SET counter_column_name = counter_column_name + -1 WHERE pk1 = ? AND pk2 = ?;
+        /// <summary>
+        /// Creates the prepared statement string
+        /// 
+        /// E.g. UPDATE ks.tb SET counter_column_name = counter_column_name + -1 WHERE pk1 = ? AND pk2 = ?;
+        /// </summary>
+        /// <returns>String</returns>
         public override String ToString()
         {
             if (keyspace == null)

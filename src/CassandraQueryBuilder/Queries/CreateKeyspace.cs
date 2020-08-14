@@ -11,12 +11,20 @@ namespace CassandraQueryBuilder
         //For SimpleStrategy
         private DataCenter[] dbDataCenters;
 
+        /// <summary>
+        /// To create keyspace queries
+        /// </summary>
         public CreateKeyspace()
         {
 
         }
 
 
+        /// <summary>
+        /// Set keyspace name
+        /// </summary>
+        /// <param name="keyspace">Keyspace name</param>
+        /// <returns>CreateKeyspace</returns>
         public CreateKeyspace Keyspace(String keyspace)
         {
             this.keyspace = keyspace;
@@ -24,6 +32,11 @@ namespace CassandraQueryBuilder
             return this;
         }
 
+        /// <summary>
+        /// Set replication strategy
+        /// </summary>
+        /// <param name="dbReplicationStrategy">SimpleStrategy, NetworkTopologyStrategy</param>
+        /// <returns>CreateKeyspace</returns>
         public CreateKeyspace ReplicationStrategy(ReplicationStrategy dbReplicationStrategy)
         {
             this.dbReplicationStrategy = dbReplicationStrategy;
@@ -31,6 +44,11 @@ namespace CassandraQueryBuilder
             return this;
         }
         
+        /// <summary>
+        /// Set data center
+        /// </summary>
+        /// <param name="dbDataCenters">DataCenters</param>
+        /// <returns>CreateKeyspace</returns>
         public CreateKeyspace DataCenters(DataCenter[] dbDataCenters)
         {
             this.dbDataCenters = dbDataCenters;
@@ -59,8 +77,11 @@ namespace CassandraQueryBuilder
             }
         }
 
-        //Om man har ttl så ska den ligga sist i valuesVariables
         // return "CREATE KEYSPACE " + keyspace + @" WITH REPLICATION = { 'class' : 'NetworkTopologyStrategy', '" + StaticSettings.dbSettings.DataCenterName() + "' : " + StaticSettings.dbSettings.ReplicationFactor() + @" };";
+        /// <summary>
+        /// Creates the prepared statement string
+        /// </summary>
+        /// <returns>String</returns>
         public override String ToString()
         {
             if (keyspace == null)

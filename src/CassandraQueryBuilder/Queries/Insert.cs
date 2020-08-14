@@ -3,25 +3,28 @@ using System.Text;
 
 namespace CassandraQueryBuilder
 {
-    public class Insert : Query// : IPreparedStatement
+    public class Insert : Query
     {
         private String keyspace;
         private String table;
         private Column[] insertColumns;
-        private Boolean ttl = false; //Om man har ttl så ska den ligga sist i valuesVariables
+        private Boolean ttl = false;
         private Boolean ifNotExists = false;
         private Boolean setTimestamp = false;
 
-        //private Object preparedStatmentLock = new Object();
-        //private PreparedStatement preparedStatement;
-        // private ConsistencyLevel consistencyLevel;
-
+        /// <summary>
+        /// To create INSERT queries
+        /// </summary>
         public Insert()
         {
 
         }
 
-
+        /// <summary>
+        /// Set keyspace name
+        /// </summary>
+        /// <param name="keyspace">Keyspace name</param>
+        /// <returns>Insert</returns>
         public Insert Keyspace(String keyspace)
         {
             this.keyspace = keyspace;
@@ -29,6 +32,11 @@ namespace CassandraQueryBuilder
             return this;
         }
 
+        /// <summary>
+        /// Set table name
+        /// </summary>
+        /// <param name="table">Table name</param>
+        /// <returns>Insert</returns>
         public Insert Table(String table)
         {
             this.table = table;
@@ -36,14 +44,22 @@ namespace CassandraQueryBuilder
             return this;
         }
 
-        public Insert InsertColumns(params Column[] variables)
+        /// <summary>
+        /// The columns in the INSERT clause
+        /// </summary>
+        /// <param name="insertColumns">The columns used in the INSERT clause</param>
+        /// <returns>Insert</returns>
+        public Insert InsertColumns(params Column[] insertColumns)
         {
-            this.insertColumns = variables;
+            this.insertColumns = insertColumns;
 
             return this;
         }
 
-        //Om man har ttl så ska den ligga sist i valuesVariables
+        /// <summary>
+        /// Set Time To Live (TTL) in the INSERT clause
+        /// </summary>
+        /// <returns>Insert</returns>
         public Insert TTL()
         {
             this.ttl = true;
@@ -51,6 +67,10 @@ namespace CassandraQueryBuilder
             return this;
         }
 
+        /// <summary>
+        /// Set IF NOT EXISTS in the INSERT clause
+        /// </summary>
+        /// <returns>Insert</returns>
         public Insert IfNotExists()
         {
             this.ifNotExists = true;
@@ -58,6 +78,10 @@ namespace CassandraQueryBuilder
             return this;
         }
 
+        /// <summary>
+        /// Set insert timestamp
+        /// </summary>
+        /// <returns>Insert</returns>
         public Insert Timestamp()
         {
             this.setTimestamp = true;
@@ -87,8 +111,12 @@ namespace CassandraQueryBuilder
             }
         }
         
-        //Om man har ttl så ska den ligga sist i valuesVariables
-        //INSERT INTO ks.tb (v1, v2) VALUES (?, ?) IF NOT EXISTS USING TTL ?;
+        /// <summary>
+        /// Creates the prepared statement string
+        /// 
+        /// E.g. INSERT INTO ks.tb (v1, v2) VALUES (?, ?) IF NOT EXISTS USING TTL ?;
+        /// </summary>
+        /// <returns>String</returns>
         public override String ToString()
         {
             if (keyspace == null)
