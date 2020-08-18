@@ -131,24 +131,6 @@ namespace CassandraQueryBuilder
             return this;
         }
 
-        //Returns e.g. "name text, " or "name text static, "
-        private void AppendColumnRow(StringBuilder sb, Column column)
-        {
-            sb.Append(column.Name());
-        }
-
-        //Returns e.g. "name text, " or "name text static, "
-        private void AppendColumnRow(StringBuilder sb, Column column, String suffix)
-        {
-            sb.Append(column.Name() + suffix);
-        }
-
-        //Returns e.g. "name text, " or "name text static, "
-        private void AppendColumnRow(StringBuilder sb, Column column, String prefix, String suffix)
-        {
-            sb.Append(prefix + column.Name() + suffix);
-        }
-
         //Returns e.g. "name text, address text, " or "" if null
         private void AppendSelectColumnRows(StringBuilder sb, Column[] columns, String delimiter, SelectAggregate[] selectAggregates)
         {
@@ -158,9 +140,9 @@ namespace CassandraQueryBuilder
             for (int i = 0; i < columns.Length; i++)
             {
                 if (selectAggregates == null || selectAggregates[i] == null || selectAggregates.Length == 0 || selectAggregates[i] == null)
-                    AppendColumnRow(sb, columns[i]);
+                    Utils.AppendColumnRow(sb, columns[i]);
                 else
-                    AppendColumnRow(sb, columns[i], selectAggregates[i].Value + "(", ")");
+                    Utils.AppendColumnRow(sb, columns[i], selectAggregates[i].Value + "(", ")");
 
                 if (i < columns.Length - 1)
                     sb.Append(delimiter + " ");
@@ -189,9 +171,9 @@ namespace CassandraQueryBuilder
                     sb.Append(")");
                 }
                 else if (whereOperators == null || whereOperators[i] == null || whereOperators.Length == 0 || whereOperators[i] == null)
-                    AppendColumnRow(sb, columns[i], " = ?");
+                    Utils.AppendColumnRow(sb, columns[i], " = ?");
                 else
-                    AppendColumnRow(sb, columns[i], " " + whereOperators[i].Value + " ?");
+                    Utils.AppendColumnRow(sb, columns[i], " " + whereOperators[i].Value + " ?");
 
                 if (i < columns.Length - 1)
                     sb.Append(delimiter + " ");

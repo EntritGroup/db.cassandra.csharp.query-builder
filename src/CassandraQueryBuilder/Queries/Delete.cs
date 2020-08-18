@@ -125,7 +125,7 @@ namespace CassandraQueryBuilder
 
         //Returns e.g. "name text, " or "name text static, "
         //https://docs.datastax.com/en/dse/6.7/cql/cql/cql_reference/cql_commands/cqlDelete.html
-        private void AppendVariableRow(StringBuilder sb, Column column, String suffix)
+        private void AppendColumnRow(StringBuilder sb, Column column, String suffix)
         {
             if (column.ColumnType().StartsWith("MAP<"))
             {
@@ -150,16 +150,16 @@ namespace CassandraQueryBuilder
         }
 
         //Returns e.g. "name text, address text, " or "" if null
-        private void AppendVariableRows(StringBuilder sb, Column[] variables, String delimiter, String suffix)
+        private void AppendColumnRows(StringBuilder sb, Column[] columns, String delimiter, String suffix)
         {
-            if (variables == null)
+            if (columns == null)
                 return;
 
-            for (int i = 0; i < variables.Length; i++)
+            for (int i = 0; i < columns.Length; i++)
             {
-                AppendVariableRow(sb, variables[i], suffix);
+                AppendColumnRow(sb, columns[i], suffix);
 
-                if (i < variables.Length - 1)
+                if (i < columns.Length - 1)
                     sb.Append(delimiter + " ");
             }
         }
@@ -188,7 +188,7 @@ namespace CassandraQueryBuilder
 
             if (deleteColumns != null)
             {
-                AppendVariableRows(sb, deleteColumns, ",", "");
+                AppendColumnRows(sb, deleteColumns, ",", "");
                 sb.Append(" ");
             }
 
@@ -200,7 +200,7 @@ namespace CassandraQueryBuilder
 
             sb.Append(" WHERE ");
 
-            AppendVariableRows(sb, whereColumns, " AND", " = ?");
+            AppendColumnRows(sb, whereColumns, " AND", " = ?");
 
 
             if (ifExists)

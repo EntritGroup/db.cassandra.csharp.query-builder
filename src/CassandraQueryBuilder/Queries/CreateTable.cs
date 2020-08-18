@@ -175,20 +175,6 @@ namespace CassandraQueryBuilder
         }
 
         //Returns e.g. "name" or "name, address"
-        private void AppendColumnNames(StringBuilder sb, Column[] column)
-        {
-            if (column != null)
-            {
-                for (int i = 0; i < column.Length; i++)
-                {
-                    if (i > 0)
-                        sb.Append(", ");
-                    sb.Append(column[i].Name());
-                }
-            }
-        }
-
-        //Returns e.g. "name" or "name, address"
         private void AppendClusteringOrder(StringBuilder sb, Boolean[] clusteringKeysOrderByASC)
         {
             if (clusteringKeys != null && clusteringKeysOrderByASC != null)
@@ -242,14 +228,14 @@ namespace CassandraQueryBuilder
             if (clusteringKeys != null)
                 sb.Append("(");
 
-            AppendColumnNames(sb, partitionKeys);
+            Utils.AppendColumnRows(sb, partitionKeys);
 
             sb.Append(")");
 
             if (clusteringKeys != null)
                 sb.Append(", ");
 
-            AppendColumnNames(sb, clusteringKeys);
+            Utils.AppendColumnRows(sb, clusteringKeys);
 
             if (clusteringKeys != null)
                 sb.Append(")");

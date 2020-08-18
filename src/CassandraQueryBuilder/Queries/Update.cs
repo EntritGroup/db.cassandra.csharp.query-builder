@@ -155,7 +155,7 @@ namespace CassandraQueryBuilder
 
 
         //Returns e.g. "name text, " or "name text static, "
-        private void AppendVariableRow(StringBuilder sb, Column column)
+        private void AppendColumnRow(StringBuilder sb, Column column)
         {
             if(column.ColumnType().StartsWith("MAP<"))
             {
@@ -193,16 +193,16 @@ namespace CassandraQueryBuilder
         }
 
         //Returns e.g. "name text, address text, " or "" if null
-        private void AppendVariableRows(StringBuilder sb, Column[] variables, String delimiter)
+        private void AppendColumnRows(StringBuilder sb, Column[] columns, String delimiter)
         {
-            if (variables == null)
+            if (columns == null)
                 return;
 
-            for (int i = 0; i < variables.Length; i++)
+            for (int i = 0; i < columns.Length; i++)
             {
-                AppendVariableRow(sb, variables[i]);
+                AppendColumnRow(sb, columns[i]);
 
-                if (i < variables.Length - 1)
+                if (i < columns.Length - 1)
                     sb.Append(delimiter + " ");
             }
         }
@@ -246,13 +246,13 @@ namespace CassandraQueryBuilder
 
             sb.Append(" SET ");
 
-            AppendVariableRows(sb, updateColumns, ",");
+            AppendColumnRows(sb, updateColumns, ",");
 
 
             sb.Append(" WHERE ");
 
 
-            AppendVariableRows(sb, whereColumns, " AND");
+            AppendColumnRows(sb, whereColumns, " AND");
             
 
             if (ifExists)

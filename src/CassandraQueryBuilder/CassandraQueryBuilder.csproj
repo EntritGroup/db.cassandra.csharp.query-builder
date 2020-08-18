@@ -17,4 +17,10 @@
     <PackageProjectUrl>https://github.com/EntritGroup/db.cassandra.csharp.query-builder</PackageProjectUrl>
   </PropertyGroup>
 
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+      <_Parameter1>CassandraQueryBuilder.Tests.UT</_Parameter1>
+    </AssemblyAttribute>
+</ItemGroup>
+
 </Project>

@@ -56,27 +56,6 @@ namespace CassandraQueryBuilder
             return this;
         }
 
-        //Returns e.g. "name text, " or "name text static, "
-        private void AppendVariableRow(StringBuilder sb, Column variable)
-        {
-            sb.Append(variable.Name());
-        }
-
-        //Returns e.g. "name text, address text, " or "" if null
-        private void AppendVariableRows(StringBuilder sb, Column[] variables)
-        {
-            if (variables == null)
-                return;
-
-            for (int i = 0; i < variables.Length; i++)
-            {
-                AppendVariableRow(sb, variables[i]);
-
-                if (i < variables.Length - 1)
-                    sb.Append(", ");
-            }
-        }
-
         // return "CREATE KEYSPACE " + keyspace + @" WITH REPLICATION = { 'class' : 'NetworkTopologyStrategy', '" + StaticSettings.dbSettings.DataCenterName() + "' : " + StaticSettings.dbSettings.ReplicationFactor() + @" };";
         /// <summary>
         /// Creates the prepared statement string

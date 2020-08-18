@@ -125,44 +125,6 @@ namespace CassandraQueryBuilder
 
 
 
-
-
-
-        //Returns e.g. "name text, " or "name text static, "
-        private void AppendColumnRow(StringBuilder sb, Column column)
-        {
-            sb.Append(column.Name());
-        }
-
-        //Returns e.g. "name text, address text, " or "" if null
-        private void AppendColumnRows(StringBuilder sb, Column[] column)
-        {
-            if (column == null)
-                return;
-
-            for (int i = 0; i < column.Length; i++)
-            {
-                AppendColumnRow(sb, column[i]);
-
-                if (i < column.Length - 1)
-                    sb.Append(", ");
-            }
-        }
-
-        //Returns e.g. "name" or "name, address"
-        private void AppendColumnNames(StringBuilder sb, Column[] column)
-        {
-            if (column != null)
-            {
-                for (int i = 0; i < column.Length; i++)
-                {
-                    if (i > 0)
-                        sb.Append(", ");
-                    sb.Append(column[i].Name());
-                }
-            }
-        }
-
         //Returns e.g. "name IS NOT NULL AND address IS NOT NULL"
         private void AppendColumnNamesWithIsNotNull(StringBuilder sb, Column[] columns)
         {
@@ -223,13 +185,13 @@ namespace CassandraQueryBuilder
             sb.Append("CREATE MATERIALIZED VIEW " + keyspace + "." + toTable + " AS SELECT ");
 
 
-            AppendColumnRows(sb, partitionKeys);
+            Utils.AppendColumnRows(sb, partitionKeys);
             if (clusteringKeys != null)
                 sb.Append(", ");
-            AppendColumnRows(sb, clusteringKeys);
+            Utils.AppendColumnRows(sb, clusteringKeys);
             if (columns != null)
                 sb.Append(", ");
-            AppendColumnRows(sb, columns);
+            Utils.AppendColumnRows(sb, columns);
 
             sb.Append(" FROM " + keyspace + "." + fromTable + " WHERE ");
 
@@ -251,14 +213,14 @@ namespace CassandraQueryBuilder
             if (clusteringKeys != null)
                 sb.Append("(");
 
-            AppendColumnNames(sb, partitionKeys);
+            Utils.AppendColumnRows(sb, partitionKeys);
 
             sb.Append(")");
 
             if (clusteringKeys != null)
                 sb.Append(", ");
 
-            AppendColumnNames(sb, clusteringKeys);
+            Utils.AppendColumnRows(sb, clusteringKeys);
 
             if (clusteringKeys != null)
                 sb.Append(")");
