@@ -34,7 +34,7 @@ namespace CassandraQueryBuilder
         public override String ToString()
         {
             if (name == null)
-                throw new NullReferenceException("Name cannot be null");
+                throw new NullReferenceException("Keyspace name cannot be null");
 
             return "DROP KEYSPACE IF EXISTS " + name + ";";
         }

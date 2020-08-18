@@ -177,7 +177,7 @@ namespace CassandraQueryBuilder
             if (table == null)
                 throw new NullReferenceException("TableName cannot be null");
             if (whereColumns == null)
-                throw new NullReferenceException("WhereVariables cannot be null");
+                throw new NullReferenceException("WhereColumns cannot be null");
 
 
 

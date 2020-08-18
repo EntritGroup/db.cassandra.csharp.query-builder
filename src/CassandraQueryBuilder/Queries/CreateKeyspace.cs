@@ -64,7 +64,7 @@ namespace CassandraQueryBuilder
         public override String ToString()
         {
             if (keyspace == null)
-                throw new NullReferenceException("Name cannot be null");
+                throw new NullReferenceException("Keyspace name cannot be null");
             if (dbReplicationStrategy == null)
                 throw new NullReferenceException("ReplicationStrategy cannot be null");
             if (dbDataCenters == null)
