@@ -3,7 +3,7 @@ using System.Text;
 
 namespace CassandraQueryBuilder
 {
-    public class Utils
+    internal class Utils
     {
         internal static bool CompareStrings(String s1, String s2)
         {
