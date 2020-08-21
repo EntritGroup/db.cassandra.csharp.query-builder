@@ -80,7 +80,7 @@ namespace CassandraQueryBuilder
                 if (dbDataCenters.Length != 1)
                     throw new Exception("DataCenters must contain exactly one object for SimpleStrategy");
 
-                sb.Append(", 'replication_factor' : " + dbDataCenters[0].GetReplicationFactor()); //dbDataCenters[1].GetReplicationFactor() throws error if replication factor is not set
+                sb.Append(", 'replication_factor' : " + dbDataCenters[0].ReplicationFactor()); //dbDataCenters[1].GetReplicationFactor() throws error if replication factor is not set
             }
             else if (Utils.CompareStrings(dbReplicationStrategy.Value, CassandraQueryBuilder.ReplicationStrategy.NetworkTopologyStrategy.Value))
             {
@@ -88,7 +88,7 @@ namespace CassandraQueryBuilder
                     throw new Exception("DataCenters must contain at least one object for NetworkTopotogyStrategy");
 
                 foreach(DataCenter dataCenter in dbDataCenters)
-                    sb.Append(", '" + dataCenter.GetName() + "' : " + dataCenter.GetReplicationFactor()); //dbDataCenters[1].GetReplicationFactor() throws error if replication factor is not set
+                    sb.Append(", '" + dataCenter.Name() + "' : " + dataCenter.ReplicationFactor()); //dbDataCenters[1].GetReplicationFactor() throws error if replication factor is not set
             }
             
 

@@ -14,11 +14,11 @@ namespace CassandraQueryBuilder
             this.replicationFactor = replicationFactor;
         }
 
-        public String GetName()
+        public String Name()
         {
             return name;
         }
-        public int GetReplicationFactor()
+        public int ReplicationFactor()
         {
             if(replicationFactor == null)
                 throw new NullReferenceException("ReplicationFactor cannot be null");

@@ -4,9 +4,9 @@ namespace CassandraQueryBuilder
 {
     public class Column
     {
-        String name;
-        ColumnType columnType;
-        bool isStatic;
+        private String name;
+        private ColumnType columnType;
+        private bool isStatic;
 
         public Column(String name, ColumnType columnType, bool isStatic = false)
         {
