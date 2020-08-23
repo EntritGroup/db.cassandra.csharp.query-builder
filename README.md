@@ -3,9 +3,7 @@ Query builder for the Cassandra database
 
 ## Description
 
-This library makes it easy for developers to create CQL queries in code to be used for prepared statements for the Cassandra database. Perfect to use together with the Datastax CassandraCSharpDriver for prepared statements and batch statements. The advantages with this is for developers to easily change names in tables, columns etc. during development time using refactor as well as creating a good overview of all names, variables etc. used.
-
-It does not cover all use cases yet, but feel free to help cover those creating issues or pull requests.
+This library makes it easy for developers to create CQL queries in code to be used as prepared statements for the Cassandra database. Perfect to use together with the Datastax CassandraCSharpDriver for prepared statements and batch statements.
 
 ## Installing the library
 Get it on Nuget
@@ -19,42 +17,14 @@ PM> Install-Package CassandraCSharpQueryBuilder
 There are many examples in the sample project as well as in the test project. Most common use cases below are linked to examples in these projects.
 
 ### Create columns
-For creating tables as well as creating queries, you need to specify columns and their respective type. They can for example be set up as below:
-
-Column USER_ID = new Column("column_name", ColumnType.UUID);
-
-#### Column Types
-As per the documentation for respective type: [https://cassandra.apache.org/doc/latest/cql/types.html](https://cassandra.apache.org/doc/latest/cql/types.html)
-
-- BIGINT
-- BLOB
-- BOOLEAN
-- COUNTER
-- DATE
-- DECIMAL
-- DOUBLE
-- DURATION
-- FLOAT
-- INET
-- INT
-- SMALLINT
-- TEXT
-- TIME
-- TIMESTAMP
-- TIMEUUID
-- TINYINT
-- UUID
-- VARCHAR
-- VARINT
-    - MAP
-    - SET
-    - LIST   
-
+For creating tables as well as creating queries, you need to specify columns and their respective type. 
 
 #### Examples of creating columns
 - [Sample project](samples/ExampleProject/DBColumns.cs)
 - [Test project](tests/CassandraQueryBuilder.Tests.UT/Columns.cs)
 
+#### Column Types
+As per the documentation for respective type: [https://cassandra.apache.org/doc/latest/cql/types.html](https://cassandra.apache.org/doc/latest/cql/types.html)
 
 ### Query Strings
 
@@ -94,7 +64,6 @@ As per the documentation for respective type: [https://cassandra.apache.org/doc/
 #### Counter query
 - [Sample project](samples/ExampleProject/Queries/Counter_Queries.cs)
 - [Test project](tests/CassandraQueryBuilder.Tests.UT/Queries/UT_UpdateCounter.cs)
-
 
 ## Contribution guidelines ###
 There are many ways in which you can participate in the project, for example:
