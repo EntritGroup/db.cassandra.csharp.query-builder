@@ -62,6 +62,8 @@ namespace CassandraQueryBuilder
         /// The aggregates in the SELECT clause
         /// 
         /// SELECT COUNT(...), SELECT SUM(...) etc.
+        /// 
+        /// Use null for columns not using aggregates
         /// </summary>
         /// <param name="selectAggregates">COUNT, SUM, AVG, MAX, MIN</param>
         /// <returns>Select</returns>
@@ -74,6 +76,9 @@ namespace CassandraQueryBuilder
 
         /// <summary>
         /// The columns used in the WHERE clause
+        /// 
+        /// Default operator is equals (=)
+        /// To change operator, use WhereOperators
         /// </summary>
         /// <param name="whereColumns">The columns used in the WHERE clause</param>
         /// <returns>Select</returns>
@@ -193,7 +198,7 @@ namespace CassandraQueryBuilder
             if (table == null)
                 throw new NullReferenceException("TableName cannot be null");
             if (selectColumns != null && selectAggregates != null && selectColumns.Length != selectAggregates.Length)
-                throw new IndexOutOfRangeException("WhereColumns and WhereOperators must be same length if WhereOperators is not null");
+                throw new IndexOutOfRangeException("SelectColumns and SelectAggregates must be same length if SelectAggregates is not null");
             if (whereColumns != null && whereOperators != null && whereColumns.Length != whereOperators.Length)
                 throw new IndexOutOfRangeException("WhereColumns and WhereOperators must be same length if WhereOperators is not null");
 
