@@ -3,7 +3,7 @@
   <PropertyGroup>
     <AssemblyName>CassandraQueryBuilder</AssemblyName>
     <Authors>Entrit</Authors>
-    
+
     <TargetFramework>netstandard2.0</TargetFramework>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     
@@ -11,7 +11,7 @@
     <Title>C# Query Builder for Apache Cassandra</Title>
     <Description>Query builder for the Cassandra database</Description>
     <Copyright>Copyright © by Entrit</Copyright>
-    <PackageTags>cassandra;apache;query;builder;cql;datastax;database;nosql;dotnet;netcore;db</PackageTags>
+    <PackageTags>cassandra;apache;query;builder;cql;datastax;database;nosql;dotnet;netcore;db;entrit</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/EntritGroup/db.cassandra.csharp.query-builder</RepositoryUrl>
     <PackageProjectUrl>https://github.com/EntritGroup/db.cassandra.csharp.query-builder</PackageProjectUrl>
