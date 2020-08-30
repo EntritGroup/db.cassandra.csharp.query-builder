@@ -6,7 +6,7 @@ Query builder for the Cassandra database
 This library makes it easy for developers to create CQL queries in code to be used as prepared statements for the Cassandra database. Perfect to use together with the Datastax CassandraCSharpDriver for prepared statements and batch statements.
 
 ## Installing the library
-Get it on Nuget
+Get it on Nuget: [https://www.nuget.org/packages/CassandraCSharpQueryBuilder/](https://www.nuget.org/packages/CassandraCSharpQueryBuilder/)
 
 ```
 PM> Install-Package CassandraCSharpQueryBuilder
