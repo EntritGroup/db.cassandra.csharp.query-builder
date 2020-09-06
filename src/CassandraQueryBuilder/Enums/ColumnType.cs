@@ -1,8 +1,5 @@
 ﻿namespace CassandraQueryBuilder
 {
-    //http://stackoverflow.com/questions/630803/associating-enums-with-strings-in-c-sharp
-
-    //CQL types https://docs.datastax.com/en/cql/3.0/cql/cql_reference/cql_data_types_c.html
     public class ColumnType
     {
         public string Value { get; private set; }

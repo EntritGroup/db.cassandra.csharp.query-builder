@@ -1,8 +1,5 @@
 ﻿namespace CassandraQueryBuilder
 {
-    //http://stackoverflow.com/questions/630803/associating-enums-with-strings-in-c-sharp
-
-    //https://docs.datastax.com/en/cql-oss/3.3/cql/cql_reference/cqlSelect.html
     //= | < | > | <= | >= | CONTAINS | CONTAINS KEY
     public class WhereOperator
     {

@@ -1,8 +1,5 @@
 ﻿namespace CassandraQueryBuilder
 {
-    //http://stackoverflow.com/questions/630803/associating-enums-with-strings-in-c-sharp
-
-    //https://cassandra.apache.org/doc/latest/cql/functions.html
     public class SelectAggregate
     {
         public string Value { get; private set; }
