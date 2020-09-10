@@ -168,7 +168,7 @@ namespace CassandraQueryBuilder.Tests.UT
             );
 
 
-            result = "CREATE TABLE ks.tb (pk1 TEXT, pk2 TEXT, ck1 TEXT, ck2 TEXT, ck3 TEXT, v1 TEXT, v2 TEXT, v3 TEXT, v4 TEXT STATIC, PRIMARY KEY ((pk1, pk2), ck1, ck2, ck3)) WITH CLUSTERING ORDER BY (ck1 DESC, ck2 ASC, ck3 DESC) AND compaction = { 'class' : 'DateTieredCompactionStrategy' };";
+            result = "CREATE TABLE ks.tb (pk1 TEXT, pk2 TEXT, ck1 TEXT, ck2 TEXT, ck3 TEXT, v1 TEXT, v2 TEXT, v3 TEXT, v4 TEXT STATIC, PRIMARY KEY ((pk1, pk2), ck1, ck2, ck3)) WITH CLUSTERING ORDER BY (ck1 DESC, ck2 ASC, ck3 DESC) AND compaction = { 'class' : 'TimeWindowCompactionStrategy' };";
             Assert.AreEqual(result,
                 new CreateTable()
                     .Keyspace(Variables.keyspace)
@@ -177,7 +177,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .ClusteringKeys(Columns.clusteringKey1, Columns.clusteringKey2, Columns.clusteringKey3)
                     .ClusteringKeysOrderByASC(false, true, false)
                     .Columns(Columns.columns1, Columns.columns2, Columns.columns3, Columns.columns4_STATIC)
-                    .CompactionStrategy(CompactionStrategy.DateTieredCompactionStrategy)
+                    .CompactionStrategy(CompactionStrategy.TimeWindowCompactionStrategy)
                     .ToString()
             );
 
@@ -268,8 +268,8 @@ namespace CassandraQueryBuilder.Tests.UT
                         .Table(Tables.tableName)
                         .PartitionKeys(Columns.partitionKey1)
                         .ClusteringKeys(Columns.clusteringKey1)
-                        .CompactionStrategy(CompactionStrategy.DateTieredCompactionStrategy)
-                        .CompactionStrategy(CompactionStrategy.DateTieredCompactionStrategy)
+                        .CompactionStrategy(CompactionStrategy.TimeWindowCompactionStrategy)
+                        .CompactionStrategy(CompactionStrategy.TimeWindowCompactionStrategy)
                         .ToString();
                 }
             );
