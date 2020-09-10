@@ -77,5 +77,8 @@ You can run the tests by typing "dotnet test .\tests\CassandraQueryBuilder.Tests
 
 ## Releases
 
+### Version 1.1.0
+Added support for TimeWindowCompactionStrategy
+
 ### Version 1.0.0
 Initial release
