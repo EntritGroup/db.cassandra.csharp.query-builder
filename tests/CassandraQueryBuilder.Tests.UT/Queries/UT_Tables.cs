@@ -12,7 +12,7 @@ namespace CassandraQueryBuilder.Tests.UT
         [TestMethod]
         public void UT_Tables_GetString()
         {
-            String result = "CREATE TABLE ks.tb (pk1 TEXT, v1 TEXT, v2 TEXT, v3 TEXT, PRIMARY KEY (pk1));";
+            String result = "CREATE TABLE ks.tb (pk1 TEXT, v1 TEXT, v2 TEXT, v3 TEXT, PRIMARY KEY ((pk1)));";
             Assert.AreEqual(result,
                 new CreateTable()
                     .Keyspace(Variables.keyspace)
@@ -22,7 +22,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .ToString()
             );
             
-            result = "CREATE TABLE ks.tb (pk1 TEXT, pk2 TEXT, v1 TEXT, v2 TEXT, v3 TEXT, PRIMARY KEY (pk1, pk2));";
+            result = "CREATE TABLE ks.tb (pk1 TEXT, pk2 TEXT, v1 TEXT, v2 TEXT, v3 TEXT, PRIMARY KEY ((pk1, pk2)));";
             Assert.AreEqual(result,
                 new CreateTable()
                     .Keyspace(Variables.keyspace)
@@ -293,7 +293,7 @@ namespace CassandraQueryBuilder.Tests.UT
         [TestMethod]
         public void UT_Tables_GetStringForCounter()
         {
-            String result = "CREATE TABLE ks.tb (pk1 TEXT, pk2 TEXT, counter_column_name COUNTER, PRIMARY KEY (pk1, pk2));";
+            String result = "CREATE TABLE ks.tb (pk1 TEXT, pk2 TEXT, counter_column_name COUNTER, PRIMARY KEY ((pk1, pk2)));";
             Assert.AreEqual(result,
                 new CreateTable()
                     .Keyspace(Variables.keyspace)
