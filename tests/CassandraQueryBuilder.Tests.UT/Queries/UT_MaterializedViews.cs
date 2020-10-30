@@ -10,7 +10,7 @@ namespace CassandraQueryBuilder.Tests.UT
         [TestMethod]
         public void UT_MaterializedViews_GetString()
         {
-            String result = "CREATE MATERIALIZED VIEW ks.mv AS SELECT pk1, pk2 FROM ks.tb WHERE pk1 IS NOT NULL AND pk2 IS NOT NULL PRIMARY KEY (pk1, pk2);";
+            String result = "CREATE MATERIALIZED VIEW ks.mv AS SELECT pk1, pk2 FROM ks.tb WHERE pk1 IS NOT NULL AND pk2 IS NOT NULL PRIMARY KEY ((pk1, pk2));";
             Assert.AreEqual(result,
                 new CreateMaterializedView()
                     .Keyspace(Variables.keyspace)

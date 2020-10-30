@@ -208,10 +208,7 @@ namespace CassandraQueryBuilder
 
             //----Create primary and clustering key "PRIMARY KEY ((pk) ck)" or "PRIMARY KEY (pk)"
 
-            sb.Append("PRIMARY KEY (");
-
-            if (clusteringKeys != null)
-                sb.Append("(");
+            sb.Append("PRIMARY KEY ((");
 
             Utils.AppendColumnRows(sb, partitionKeys);
 
@@ -222,8 +219,7 @@ namespace CassandraQueryBuilder
 
             Utils.AppendColumnRows(sb, clusteringKeys);
 
-            if (clusteringKeys != null)
-                sb.Append(")");
+            sb.Append(")");
 
 
             //----

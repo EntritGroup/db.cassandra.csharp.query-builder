@@ -77,6 +77,9 @@ You can run the tests by typing "dotnet test .\tests\CassandraQueryBuilder.Tests
 
 ## Releases
 
+### Version 1.1.2
+Fixed bug for materialized view when only primary keys are present
+
 ### Version 1.1.1
 Fixed bug for create table when only primary keys are present
 
