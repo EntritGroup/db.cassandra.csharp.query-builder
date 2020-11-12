@@ -41,6 +41,10 @@ As per the documentation for respective type: [https://cassandra.apache.org/doc/
 - [Sample project](samples/ExampleProject/Queries/CreateTable_Queries.cs)
 - [Test project](tests/CassandraQueryBuilder.Tests.UT/Queries/UT_Tables.cs)
 
+#### Create user defined types query
+- [Sample project](samples/ExampleProject/Queries/CreateType_Queries.cs)
+- [Test project](tests/CassandraQueryBuilder.Tests.UT/Queries/UT_Types.cs)
+
 #### Create materalized view query
 - [Sample project](samples/ExampleProject/Queries/CreateMaterializedView_Queries.cs)
 - [Test project](tests/CassandraQueryBuilder.Tests.UT/Queries/UT_MaterializedViews.cs)
@@ -76,6 +80,9 @@ There are many ways in which you can participate in the project, for example:
 You can run the tests by typing "dotnet test .\tests\CassandraQueryBuilder.Tests.UT\"
 
 ## Releases
+
+<!-- ### Version 1.2.0
+Added support for Creating User Defined Types -->
 
 ### Version 1.1.2
 Fixed bug for materialized view when only primary keys are present

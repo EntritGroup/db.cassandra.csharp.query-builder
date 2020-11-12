@@ -5,24 +5,47 @@ namespace CassandraQueryBuilder.Tests.UT
     [TestClass]
     public class UT_Columns
     {
-        private static readonly Column column = new Column ("v1", ColumnType.TEXT, true);
 
         [TestMethod]
-        public void UT_Utils_GetColumnsName()
+        public void UT_Columns_GetColumnName()
         {
+            Column column = new Column ("v1", ColumnType.TEXT, true);
             Assert.AreEqual("v1", column.Name());
         }
 
         [TestMethod]
-        public void UT_Utils_GetColumnsType()
+        public void UT_Columns_GetColumnType()
         {
+            Column column = new Column ("v1", ColumnType.TEXT, true);
             Assert.AreEqual("TEXT", column.ColumnType());
         }
 
         [TestMethod]
-        public void UT_Utils_GetColumnsStatic()
+        public void UT_Columns_GetColumnStatic()
         {
+            Column column = new Column ("v1", ColumnType.TEXT, true);
             Assert.IsTrue(column.IsStatic());
+        }
+        
+        [TestMethod]
+        public void UT_ColumnTypes_GetFrozenColumn()
+        {
+            Column column = new Column ("l1", ColumnType.FROZEN(ColumnType.LIST(ColumnType.TEXT)));
+            Assert.AreEqual("FROZEN<LIST<TEXT>>", column.ColumnType());
+        }
+
+        [TestMethod]
+        public void UT_ColumnTypes_GetTupleColumn()
+        {
+            Column column = new Column ("v1", ColumnType.TUPLE(new ColumnType[] { ColumnType.TEXT, ColumnType.BOOLEAN } ));
+            Assert.AreEqual("TUPLE<TEXT, BOOLEAN>", column.ColumnType());
+        }
+    
+        [TestMethod]
+        public void UT_ColumnTypes_GetFrozenTupleColumn()
+        {
+            Column column = new Column ("v1", ColumnType.FROZEN(ColumnType.TUPLE(new ColumnType[] { ColumnType.TEXT, ColumnType.BOOLEAN } )));
+            Assert.AreEqual("FROZEN<TUPLE<TEXT, BOOLEAN>>", column.ColumnType());
         }
     }
 }

@@ -243,6 +243,50 @@ namespace CassandraQueryBuilder.Tests.UT
                     .ToString()
             );
 
+
+            //---- Frozen and Tuple
+            
+
+            result = "CREATE TABLE ks.tb (pk1 TEXT, v1 TEXT, fl1 FROZEN<LIST<TEXT>>, v3 TEXT, PRIMARY KEY ((pk1)));";
+            Assert.AreEqual(result,
+                new CreateTable()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .PartitionKeys(Columns.partitionKey1)
+                    .Columns(Columns.columns1, Columns.frozen_list1, Columns.columns3)
+                    .ToString()
+            );
+            
+            result = "CREATE TABLE ks.tb (pk1 TEXT, v1 TEXT, fl1 FROZEN<LIST<TEXT>>, t1 TUPLE<TEXT, BOOLEAN>, PRIMARY KEY ((pk1)));";
+            Assert.AreEqual(result,
+                new CreateTable()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .PartitionKeys(Columns.partitionKey1)
+                    .Columns(Columns.columns1, Columns.frozen_list1, Columns.tuple1)
+                    .ToString()
+            );
+
+            result = "CREATE TABLE ks.tb (pk1 TEXT, v1 TEXT, fl1 FROZEN<LIST<TEXT>>, t1 TUPLE<TEXT, BOOLEAN>, ft1 FROZEN<TUPLE<TEXT, BOOLEAN>>, PRIMARY KEY ((pk1)));";
+            Assert.AreEqual(result,
+                new CreateTable()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .PartitionKeys(Columns.partitionKey1)
+                    .Columns(Columns.columns1, Columns.frozen_list1, Columns.tuple1, Columns.frozen_tuple1)
+                    .ToString()
+            );
+
+            result = "CREATE TABLE ks.tb (pk1 TEXT, v1 TEXT, fl1 FROZEN<LIST<TEXT>>, t1 TUPLE<TEXT, BOOLEAN>, ft1 FROZEN<TUPLE<TEXT, BOOLEAN>>, lft1 LIST<FROZEN<TUPLE<TEXT, BOOLEAN>>>, PRIMARY KEY ((pk1)));";
+            Assert.AreEqual(result,
+                new CreateTable()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .PartitionKeys(Columns.partitionKey1)
+                    .Columns(Columns.columns1, Columns.frozen_list1, Columns.tuple1, Columns.frozen_tuple1, Columns.list_frozen_tuple1)
+                    .ToString()
+            );
+
         }
 
         [TestMethod]

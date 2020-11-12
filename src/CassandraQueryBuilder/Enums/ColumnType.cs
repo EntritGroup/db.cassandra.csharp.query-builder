@@ -1,11 +1,13 @@
-﻿namespace CassandraQueryBuilder
+﻿using System;
+
+namespace CassandraQueryBuilder
 {
     public class ColumnType
     {
         public string Value { get; private set; }
         public bool IsCollection { get; private set; }
 
-        private ColumnType(string value, bool isCollection = false)
+        public ColumnType(string value, bool isCollection = false)
         {
             Value = value;
             IsCollection = isCollection;
@@ -37,6 +39,29 @@
         public static ColumnType MAP(ColumnType dbColumnType1, ColumnType dbColumnType2) { return new ColumnType("MAP<" + dbColumnType1.Value + ", " + dbColumnType2.Value + ">", true); } //e.g. MAP<TEXT, TEXT>
         public static ColumnType SET(ColumnType dbColumnType) { return new ColumnType("SET<" + dbColumnType.Value + ">", true); } //e.g. SET<TEXT>
         public static ColumnType LIST(ColumnType dbColumnType) { return new ColumnType("LIST<" + dbColumnType.Value + ">", true); } //e.g. LIST<TEXT>
+
+        //Other
+        public static ColumnType FROZEN(ColumnType dbColumnType) { return new ColumnType("FROZEN<" + dbColumnType.Value + ">"); } //e.g. FROZEN<LIST<TEXT>>
+        public static ColumnType TUPLE(ColumnType[] dbColumnType) { return new ColumnType("TUPLE<" + GetTupleList(dbColumnType) + ">", true); } //e.g. TYPLE<TEXT, TEXT>>
+
+
+        private static String GetTupleList(ColumnType[] dbColumnType)
+        {
+            String ret = "";
+
+            if (dbColumnType == null || dbColumnType.Length == 0)
+                throw new ArgumentNullException();
+            
+            for (int i = 0; i < dbColumnType.Length; i++)
+            {
+                if(i == dbColumnType.Length-1)
+                    ret = ret + dbColumnType[i].Value;
+                else
+                    ret = ret + dbColumnType[i].Value + ", ";
+            }
+
+            return ret;
+        }
 
         //https://cassandra.apache.org/doc/latest/cql/types.html
         //CQL3 data type    C# type
