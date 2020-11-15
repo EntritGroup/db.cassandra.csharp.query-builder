@@ -81,8 +81,9 @@ You can run the tests by typing "dotnet test .\tests\CassandraQueryBuilder.Tests
 
 ## Releases
 
-<!-- ### Version 1.2.0
-Added support for Creating User Defined Types -->
+### Version 1.2.0
+Added support for Frozen and Tuple
+Added support for Creating User Defined Types
 
 ### Version 1.1.2
 Fixed bug for materialized view when only primary keys are present

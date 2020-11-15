@@ -5,12 +5,10 @@ namespace CassandraQueryBuilder
     public class ColumnType
     {
         public string Value { get; private set; }
-        public bool IsCollection { get; private set; }
 
-        public ColumnType(string value, bool isCollection = false)
+        public ColumnType(string value)
         {
             Value = value;
-            IsCollection = isCollection;
         }
 
         public static ColumnType ASCII { get { return new ColumnType("ASCII"); } }
@@ -36,28 +34,28 @@ namespace CassandraQueryBuilder
         public static ColumnType VARINT { get { return new ColumnType("VARINT"); } }
 
         //Collections
-        public static ColumnType MAP(ColumnType dbColumnType1, ColumnType dbColumnType2) { return new ColumnType("MAP<" + dbColumnType1.Value + ", " + dbColumnType2.Value + ">", true); } //e.g. MAP<TEXT, TEXT>
-        public static ColumnType SET(ColumnType dbColumnType) { return new ColumnType("SET<" + dbColumnType.Value + ">", true); } //e.g. SET<TEXT>
-        public static ColumnType LIST(ColumnType dbColumnType) { return new ColumnType("LIST<" + dbColumnType.Value + ">", true); } //e.g. LIST<TEXT>
+        public static ColumnType MAP(ColumnType columnType1, ColumnType columnType2) { return new ColumnType("MAP<" + columnType1.Value + ", " + columnType2.Value + ">"); } //e.g. MAP<TEXT, TEXT>
+        public static ColumnType SET(ColumnType columnType) { return new ColumnType("SET<" + columnType.Value + ">"); } //e.g. SET<TEXT>
+        public static ColumnType LIST(ColumnType columnType) { return new ColumnType("LIST<" + columnType.Value + ">"); } //e.g. LIST<TEXT>
 
         //Other
-        public static ColumnType FROZEN(ColumnType dbColumnType) { return new ColumnType("FROZEN<" + dbColumnType.Value + ">"); } //e.g. FROZEN<LIST<TEXT>>
-        public static ColumnType TUPLE(ColumnType[] dbColumnType) { return new ColumnType("TUPLE<" + GetTupleList(dbColumnType) + ">", true); } //e.g. TYPLE<TEXT, TEXT>>
+        public static ColumnType FROZEN(ColumnType columnType) { return new ColumnType("FROZEN<" + columnType.Value + ">"); } //e.g. FROZEN<LIST<TEXT>>
+        public static ColumnType TUPLE(ColumnType[] columnType) { return new ColumnType("TUPLE<" + GetTupleList(columnType) + ">"); } //e.g. TUPLE<TEXT, TEXT>>
 
 
-        private static String GetTupleList(ColumnType[] dbColumnType)
+        private static String GetTupleList(ColumnType[] columnType)
         {
             String ret = "";
 
-            if (dbColumnType == null || dbColumnType.Length == 0)
+            if (columnType == null || columnType.Length == 0)
                 throw new ArgumentNullException();
             
-            for (int i = 0; i < dbColumnType.Length; i++)
+            for (int i = 0; i < columnType.Length; i++)
             {
-                if(i == dbColumnType.Length-1)
-                    ret = ret + dbColumnType[i].Value;
+                if(i == columnType.Length-1)
+                    ret = ret + columnType[i].Value;
                 else
-                    ret = ret + dbColumnType[i].Value + ", ";
+                    ret = ret + columnType[i].Value + ", ";
             }
 
             return ret;
