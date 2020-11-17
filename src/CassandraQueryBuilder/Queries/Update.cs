@@ -119,7 +119,7 @@ namespace CassandraQueryBuilder
         /// </summary>
         /// <param name="mapUpdateTypes">ADD, REMOVE</param>
         /// <returns>Update</returns>
-        public Update MapUpdateType(params MapUpdateType[] mapUpdateTypes)
+        public Update MapUpdateTypes(params MapUpdateType[] mapUpdateTypes)
         {
             this.mapUpdateTypes = mapUpdateTypes;
 
@@ -131,7 +131,7 @@ namespace CassandraQueryBuilder
         /// </summary>
         /// <param name="setUpdateTypes">ADD, REMOVE</param>
         /// <returns>Update</returns>
-        public Update SetUpdateType(params SetUpdateType[] setUpdateTypes)
+        public Update SetUpdateTypes(params SetUpdateType[] setUpdateTypes)
         {
             this.setUpdateTypes = setUpdateTypes;
 
@@ -143,7 +143,7 @@ namespace CassandraQueryBuilder
         /// </summary>
         /// <param name="listUpdateTypes">PREPEND, APPEND, REPLACE_ALL, SPECIFY_INDEX_TO_OVERWRITE</param>
         /// <returns>Update</returns>
-        public Update ListUpdateType(params ListUpdateType[] listUpdateTypes)
+        public Update ListUpdateTypes(params ListUpdateType[] listUpdateTypes)
         {
             this.listUpdateTypes = listUpdateTypes;
 

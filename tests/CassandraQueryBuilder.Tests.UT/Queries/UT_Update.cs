@@ -98,7 +98,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .Keyspace(Variables.keyspace)
                     .Table(Tables.tableName)
                     .UpdateColumns(Columns.columns_list1)
-                    .ListUpdateType(ListUpdateType.APPEND)
+                    .ListUpdateTypes(ListUpdateType.APPEND)
                     .WhereColumns(Columns.columns1)
                     .ToString()
             );
@@ -109,7 +109,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .Keyspace(Variables.keyspace)
                     .Table(Tables.tableName)
                     .UpdateColumns(Columns.columns_list1)
-                    .ListUpdateType(ListUpdateType.PREPEND)
+                    .ListUpdateTypes(ListUpdateType.PREPEND)
                     .WhereColumns(Columns.columns1)
                     .ToString()
             );
@@ -120,7 +120,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .Keyspace(Variables.keyspace)
                     .Table(Tables.tableName)
                     .UpdateColumns(Columns.columns_list1)
-                    .ListUpdateType(ListUpdateType.SPECIFY_INDEX_TO_OVERWRITE)
+                    .ListUpdateTypes(ListUpdateType.SPECIFY_INDEX_TO_OVERWRITE)
                     .WhereColumns(Columns.columns1)
                     .ToString()
             );
@@ -131,7 +131,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .Keyspace(Variables.keyspace)
                     .Table(Tables.tableName)
                     .UpdateColumns(Columns.LIST_FROZEN_TUPLE)
-                    .ListUpdateType(ListUpdateType.REPLACE_ALL)
+                    .ListUpdateTypes(ListUpdateType.REPLACE_ALL)
                     .WhereColumns(Columns.columns1)
                     .ToString()
             );
@@ -148,7 +148,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .Table(Tables.tableName)
                     .UpdateColumns(Columns.columns1, Columns.columns2, Columns.columns_map1)
                     .WhereColumns(Columns.columns1, Columns.columns3)
-                    .MapUpdateType(MapUpdateType.ADD)
+                    .MapUpdateTypes(MapUpdateType.ADD)
                     .ToString()
             );
 
@@ -159,7 +159,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .Table(Tables.tableName)
                     .UpdateColumns(Columns.columns1, Columns.columns2, Columns.columns_map1)
                     .WhereColumns(Columns.columns1, Columns.columns3)
-                    .MapUpdateType(MapUpdateType.REMOVE)
+                    .MapUpdateTypes(MapUpdateType.REMOVE)
                     .ToString()
             );
             
@@ -170,7 +170,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .Table(Tables.tableName)
                     .UpdateColumns(Columns.columns1, Columns.columns2, Columns.columns_map1, Columns.columns_map2)
                     .WhereColumns(Columns.columns1, Columns.columns3)
-                    .MapUpdateType(MapUpdateType.ADD, MapUpdateType.REMOVE)
+                    .MapUpdateTypes(MapUpdateType.ADD, MapUpdateType.REMOVE)
                     .ToString()
             );
         }
@@ -185,7 +185,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .Table(Tables.tableName)
                     .UpdateColumns(Columns.columns1, Columns.columns2, Columns.columns_set1)
                     .WhereColumns(Columns.columns1, Columns.columns3)
-                    .SetUpdateType(SetUpdateType.ADD)
+                    .SetUpdateTypes(SetUpdateType.ADD)
                     .ToString()
             );
 
@@ -196,7 +196,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .Table(Tables.tableName)
                     .UpdateColumns(Columns.columns1, Columns.columns2, Columns.columns_set1)
                     .WhereColumns(Columns.columns1, Columns.columns3)
-                    .SetUpdateType(SetUpdateType.REMOVE)
+                    .SetUpdateTypes(SetUpdateType.REMOVE)
                     .ToString()
             );
 
@@ -207,7 +207,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .Table(Tables.tableName)
                     .UpdateColumns(Columns.columns1, Columns.columns2, Columns.columns_set1, Columns.columns_set2)
                     .WhereColumns(Columns.columns1, Columns.columns3)
-                    .SetUpdateType(SetUpdateType.ADD, SetUpdateType.REMOVE)
+                    .SetUpdateTypes(SetUpdateType.ADD, SetUpdateType.REMOVE)
                     .ToString()
             );
         }
@@ -222,7 +222,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .Table(Tables.tableName)
                     .UpdateColumns(Columns.columns1, Columns.columns2, Columns.columns_list1)
                     .WhereColumns(Columns.columns1, Columns.columns3)
-                    .ListUpdateType(ListUpdateType.PREPEND)
+                    .ListUpdateTypes(ListUpdateType.PREPEND)
                     .ToString()
             );
 
@@ -233,7 +233,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .Table(Tables.tableName)
                     .UpdateColumns(Columns.columns1, Columns.columns2, Columns.columns_list1)
                     .WhereColumns(Columns.columns1, Columns.columns3)
-                    .ListUpdateType(ListUpdateType.APPEND)
+                    .ListUpdateTypes(ListUpdateType.APPEND)
                     .ToString()
             );
 
@@ -244,7 +244,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .Table(Tables.tableName)
                     .UpdateColumns(Columns.columns1, Columns.columns2, Columns.columns_list1)
                     .WhereColumns(Columns.columns1, Columns.columns3)
-                    .ListUpdateType(ListUpdateType.REPLACE_ALL)
+                    .ListUpdateTypes(ListUpdateType.REPLACE_ALL)
                     .ToString()
             );
 
@@ -255,7 +255,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .Table(Tables.tableName)
                     .UpdateColumns(Columns.columns1, Columns.columns2, Columns.columns_list1)
                     .WhereColumns(Columns.columns1, Columns.columns3)
-                    .ListUpdateType(ListUpdateType.SPECIFY_INDEX_TO_OVERWRITE)
+                    .ListUpdateTypes(ListUpdateType.SPECIFY_INDEX_TO_OVERWRITE)
                     .ToString()
             );
 
@@ -266,7 +266,7 @@ namespace CassandraQueryBuilder.Tests.UT
                     .Table(Tables.tableName)
                     .UpdateColumns(Columns.columns1, Columns.columns2, Columns.columns_list1, Columns.columns_list2)
                     .WhereColumns(Columns.columns1, Columns.columns3)
-                    .ListUpdateType(ListUpdateType.PREPEND, ListUpdateType.APPEND)
+                    .ListUpdateTypes(ListUpdateType.PREPEND, ListUpdateType.APPEND)
                     .ToString()
             );
 
