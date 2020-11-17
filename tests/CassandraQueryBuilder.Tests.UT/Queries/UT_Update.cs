@@ -88,6 +88,54 @@ namespace CassandraQueryBuilder.Tests.UT
                     .TTL()
                     .ToString()
             );
+
+
+            //---- List Frozen Tuple
+            
+            result = "UPDATE ks.tb SET vl1 = vl1 + ? WHERE v1 = ?;";
+            Assert.AreEqual(result,
+                new Update()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .UpdateColumns(Columns.columns_list1)
+                    .ListUpdateType(ListUpdateType.APPEND)
+                    .WhereColumns(Columns.columns1)
+                    .ToString()
+            );
+
+            result = "UPDATE ks.tb SET vl1 = ? + vl1 WHERE v1 = ?;";
+            Assert.AreEqual(result,
+                new Update()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .UpdateColumns(Columns.columns_list1)
+                    .ListUpdateType(ListUpdateType.PREPEND)
+                    .WhereColumns(Columns.columns1)
+                    .ToString()
+            );
+            
+            result = "UPDATE ks.tb SET vl1[?] = ? WHERE v1 = ?;";
+            Assert.AreEqual(result,
+                new Update()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .UpdateColumns(Columns.columns_list1)
+                    .ListUpdateType(ListUpdateType.SPECIFY_INDEX_TO_OVERWRITE)
+                    .WhereColumns(Columns.columns1)
+                    .ToString()
+            );
+
+            result = "UPDATE ks.tb SET list_frozen_tuple = ? WHERE v1 = ?;";
+            Assert.AreEqual(result,
+                new Update()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .UpdateColumns(Columns.LIST_FROZEN_TUPLE)
+                    .ListUpdateType(ListUpdateType.REPLACE_ALL)
+                    .WhereColumns(Columns.columns1)
+                    .ToString()
+            );
+            
         }
 
         [TestMethod]

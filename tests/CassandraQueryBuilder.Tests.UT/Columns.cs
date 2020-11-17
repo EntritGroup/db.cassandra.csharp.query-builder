@@ -22,5 +22,7 @@
         internal static readonly Column tuple1 = new Column ("t1", ColumnType.TUPLE(new ColumnType[] { ColumnType.TEXT, ColumnType.BOOLEAN } ));
         internal static readonly Column frozen_tuple1 = new Column ("ft1", ColumnType.FROZEN(ColumnType.TUPLE(new ColumnType[] { ColumnType.TEXT, ColumnType.BOOLEAN } )));
         internal static readonly Column list_frozen_tuple1 = new Column ("lft1", ColumnType.LIST(ColumnType.FROZEN(ColumnType.TUPLE(new ColumnType[] { ColumnType.TEXT, ColumnType.BOOLEAN } ))));
+        internal static readonly Column LIST_FROZEN_TUPLE = new Column("list_frozen_tuple", ColumnType.LIST(ColumnType.FROZEN(ColumnType.TUPLE(new ColumnType[] { ColumnType.DOUBLE, ColumnType.DOUBLE, ColumnType.DOUBLE } )))); //+90 to -90 //LIST<FROZEN<TUPLE<STRING, STRING, STRING>>>
+        
     }
 }
