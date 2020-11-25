@@ -337,13 +337,23 @@ namespace CassandraQueryBuilder.Tests.UT
         [TestMethod]
         public void UT_Tables_GetStringForCounter()
         {
-            String result = "CREATE TABLE ks.tb (pk1 TEXT, pk2 TEXT, counter_column_name COUNTER, PRIMARY KEY ((pk1, pk2)));";
+            String result = "CREATE TABLE ks.tb (pk1 TEXT, pk2 TEXT, c1 COUNTER, PRIMARY KEY ((pk1, pk2)));";
             Assert.AreEqual(result,
                 new CreateTable()
                     .Keyspace(Variables.keyspace)
                     .Table(Tables.tableName)
                     .PartitionKeys(Columns.partitionKey1, Columns.partitionKey2)
-                    .Columns(Columns.columnsCounter)
+                    .Columns(Columns.columnsCounter1)
+                    .ToString()
+            );
+            
+            result = "CREATE TABLE ks.tb (pk1 TEXT, pk2 TEXT, c1 COUNTER, c2 COUNTER, PRIMARY KEY ((pk1, pk2)));";
+            Assert.AreEqual(result,
+                new CreateTable()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .PartitionKeys(Columns.partitionKey1, Columns.partitionKey2)
+                    .Columns(Columns.columnsCounter1, Columns.columnsCounter2)
                     .ToString()
             );
         }

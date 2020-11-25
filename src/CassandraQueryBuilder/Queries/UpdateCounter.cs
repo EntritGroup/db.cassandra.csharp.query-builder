@@ -44,9 +44,9 @@ namespace CassandraQueryBuilder
         }
 
         /// <summary>
-        /// The columns in the UPDATE clause
+        /// The column in the UPDATE clause
         /// </summary>
-        /// <param name="columns">The columns used in the UPDATE clause</param>
+        /// <param name="column">The column used in the UPDATE clause</param>
         /// <returns>UpdateCounter</returns>
         public UpdateCounter UpdateColumn(Column column)
         {
@@ -68,7 +68,7 @@ namespace CassandraQueryBuilder
         }
 
         /// <summary>
-        /// Increase or decrease in the counter
+        /// Increase or decrease the counter
         /// </summary>
         /// <param name="increaseBy">E.g. 1, 2, -1, -5</param>
         /// <returns>UpdateCounter</returns>
@@ -98,7 +98,7 @@ namespace CassandraQueryBuilder
         /// <summary>
         /// Creates the prepared statement string
         /// 
-        /// E.g. UPDATE ks.tb SET counter_column_name = counter_column_name + -1 WHERE pk1 = ? AND pk2 = ?;
+        /// E.g. UPDATE ks.tb SET c1 = c1 + -1 WHERE pk1 = ? AND pk2 = ?;
         /// </summary>
         /// <returns>String</returns>
         public override String ToString()

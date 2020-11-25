@@ -45,11 +45,11 @@ namespace CassandraQueryBuilder
 
         private static String GetTupleList(ColumnType[] columnType)
         {
-            String ret = "";
-
             if (columnType == null || columnType.Length == 0)
                 throw new ArgumentNullException();
-            
+         
+            String ret = "";
+               
             for (int i = 0; i < columnType.Length; i++)
             {
                 if(i == columnType.Length-1)

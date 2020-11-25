@@ -17,12 +17,12 @@
         internal static readonly Column columns_list1 = new Column("vl1", ColumnType.LIST(ColumnType.TEXT));
         internal static readonly Column columns_list2 = new Column("vl2", ColumnType.LIST(ColumnType.TEXT));
         internal static readonly Column columns4_STATIC = new Column("v4", ColumnType.TEXT, true);
-        internal static readonly Column columnsCounter = new Column("counter_column_name", ColumnType.COUNTER);
+        internal static readonly Column columnsCounter1 = new Column("c1", ColumnType.COUNTER);
+        internal static readonly Column columnsCounter2 = new Column("c2", ColumnType.COUNTER);
         internal static readonly Column frozen_list1 = new Column("fl1", ColumnType.FROZEN(ColumnType.LIST(ColumnType.TEXT)));
         internal static readonly Column tuple1 = new Column ("t1", ColumnType.TUPLE(new ColumnType[] { ColumnType.TEXT, ColumnType.BOOLEAN } ));
         internal static readonly Column frozen_tuple1 = new Column ("ft1", ColumnType.FROZEN(ColumnType.TUPLE(new ColumnType[] { ColumnType.TEXT, ColumnType.BOOLEAN } )));
         internal static readonly Column list_frozen_tuple1 = new Column ("lft1", ColumnType.LIST(ColumnType.FROZEN(ColumnType.TUPLE(new ColumnType[] { ColumnType.TEXT, ColumnType.BOOLEAN } ))));
-        internal static readonly Column LIST_FROZEN_TUPLE = new Column("list_frozen_tuple", ColumnType.LIST(ColumnType.FROZEN(ColumnType.TUPLE(new ColumnType[] { ColumnType.DOUBLE, ColumnType.DOUBLE, ColumnType.DOUBLE } )))); //+90 to -90 //LIST<FROZEN<TUPLE<STRING, STRING, STRING>>>
         
     }
 }

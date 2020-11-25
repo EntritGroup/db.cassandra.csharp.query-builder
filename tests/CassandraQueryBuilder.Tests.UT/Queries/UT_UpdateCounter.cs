@@ -10,45 +10,45 @@ namespace CassandraQueryBuilder.Tests.UT
         [TestMethod]
         public void UT_UpdateCounter_GetString()
         {
-            String result = "UPDATE ks.tb SET counter_column_name = counter_column_name + 1 WHERE pk1 = ?;";
+            String result = "UPDATE ks.tb SET c1 = c1 + 1 WHERE pk1 = ?;";
             Assert.AreEqual(result,
                 new UpdateCounter()
                     .Keyspace(Variables.keyspace)
                     .Table(Tables.tableName)
-                    .UpdateColumn(Columns.columnsCounter)
+                    .UpdateColumn(Columns.columnsCounter1)
                     .WhereColumns(Columns.partitionKey1)
                     .IncreaseBy(1)
                     .ToString()
             );
 
-            result = "UPDATE ks.tb SET counter_column_name = counter_column_name + 1 WHERE pk1 = ? AND pk2 = ?;";
+            result = "UPDATE ks.tb SET c1 = c1 + 1 WHERE pk1 = ? AND pk2 = ?;";
             Assert.AreEqual(result,
                 new UpdateCounter()
                     .Keyspace(Variables.keyspace)
                     .Table(Tables.tableName)
-                    .UpdateColumn(Columns.columnsCounter)
+                    .UpdateColumn(Columns.columnsCounter1)
                     .WhereColumns(Columns.partitionKey1, Columns.partitionKey2)
                     .IncreaseBy(1)
                     .ToString()
             );
 
-            result = "UPDATE ks.tb SET counter_column_name = counter_column_name + -1 WHERE pk1 = ? AND pk2 = ?;";
+            result = "UPDATE ks.tb SET c1 = c1 + -1 WHERE pk1 = ? AND pk2 = ?;";
             Assert.AreEqual(result,
                 new UpdateCounter()
                     .Keyspace(Variables.keyspace)
                     .Table(Tables.tableName)
-                    .UpdateColumn(Columns.columnsCounter)
+                    .UpdateColumn(Columns.columnsCounter1)
                     .WhereColumns(Columns.partitionKey1, Columns.partitionKey2)
                     .IncreaseBy(-1)
                     .ToString()
             );
 
-            result = "UPDATE ks.tb SET counter_column_name = counter_column_name + ? WHERE pk1 = ? AND pk2 = ?;";
+            result = "UPDATE ks.tb SET c1 = c1 + ? WHERE pk1 = ? AND pk2 = ?;";
             Assert.AreEqual(result,
                 new UpdateCounter()
                     .Keyspace(Variables.keyspace)
                     .Table(Tables.tableName)
-                    .UpdateColumn(Columns.columnsCounter)
+                    .UpdateColumn(Columns.columnsCounter1)
                     .WhereColumns(Columns.partitionKey1, Columns.partitionKey2)
                     .ToString()
             );

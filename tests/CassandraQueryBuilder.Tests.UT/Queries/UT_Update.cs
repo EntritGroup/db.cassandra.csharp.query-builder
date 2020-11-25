@@ -125,12 +125,12 @@ namespace CassandraQueryBuilder.Tests.UT
                     .ToString()
             );
 
-            result = "UPDATE ks.tb SET list_frozen_tuple = ? WHERE v1 = ?;";
+            result = "UPDATE ks.tb SET lft1 = ? WHERE v1 = ?;";
             Assert.AreEqual(result,
                 new Update()
                     .Keyspace(Variables.keyspace)
                     .Table(Tables.tableName)
-                    .UpdateColumns(Columns.LIST_FROZEN_TUPLE)
+                    .UpdateColumns(Columns.list_frozen_tuple1)
                     .ListUpdateTypes(ListUpdateType.REPLACE_ALL)
                     .WhereColumns(Columns.columns1)
                     .ToString()
