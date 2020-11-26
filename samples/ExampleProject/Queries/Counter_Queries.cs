@@ -10,7 +10,7 @@ namespace ExampleProject.Queries
         internal static readonly String INCREASE_NUMBER_OF_USERS_BY_1 = new UpdateCounter()
             .Keyspace(DBVariables.KEYSPACE)
             .Table(DBTables.COUNT_USERS)
-            .UpdateColumn(DBColumns.COUNT)
+            .UpdateColumns(DBColumns.COUNT)
             .IncreaseBy(1)
             .WhereColumns(
                 DBColumns.ID_TEXT
@@ -21,7 +21,7 @@ namespace ExampleProject.Queries
         internal static readonly String DECREASE_NUMBER_OF_USERS_BY_1 = new UpdateCounter()
             .Keyspace(DBVariables.KEYSPACE)
             .Table(DBTables.COUNT_USERS)
-            .UpdateColumn(DBColumns.COUNT)
+            .UpdateColumns(DBColumns.COUNT)
             .IncreaseBy(-1)
             .WhereColumns(
                 DBColumns.ID_TEXT
@@ -32,7 +32,7 @@ namespace ExampleProject.Queries
         internal static readonly String CHANGE_NUMBER_OF_USERS_BY_LATER_CHOICE = new UpdateCounter()
             .Keyspace(DBVariables.KEYSPACE)
             .Table(DBTables.COUNT_USERS)
-            .UpdateColumn(DBColumns.COUNT)
+            .UpdateColumns(DBColumns.COUNT)
             .WhereColumns(
                 DBColumns.ID_TEXT
             )
