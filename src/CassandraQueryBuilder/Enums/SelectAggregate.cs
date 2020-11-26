@@ -4,7 +4,7 @@
     {
         public string Value { get; private set; }
 
-        private SelectAggregate(string value) { Value = value; }
+        public SelectAggregate(string value) { Value = value; }
 
         public static SelectAggregate COUNT { get { return new SelectAggregate("COUNT"); } }
 

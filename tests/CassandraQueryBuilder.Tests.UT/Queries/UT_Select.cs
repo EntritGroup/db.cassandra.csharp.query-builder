@@ -190,6 +190,51 @@ namespace CassandraQueryBuilder.Tests.UT
 
 
         [TestMethod]
+        public void UT_Select_Functions_ToString()
+        {
+            String result = "SELECT TTL(v1) FROM ks.tb;";
+            Assert.AreEqual(result,
+                new Select()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .SelectColumns(Columns.columns1)
+                    .SelectFunctions(SelectFunction.TTL)
+                    .ToString()
+            );
+
+            result = "SELECT TTL(v1), TTL(v2) FROM ks.tb;";
+            Assert.AreEqual(result,
+                new Select()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .SelectColumns(Columns.columns1, Columns.columns2)
+                    .SelectFunctions(SelectFunction.TTL, SelectFunction.TTL)
+                    .ToString()
+            );
+
+            result = "SELECT v1, TTL(v2) FROM ks.tb;";
+            Assert.AreEqual(result,
+                new Select()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .SelectColumns(Columns.columns1, Columns.columns2)
+                    .SelectFunctions(null, SelectFunction.TTL)
+                    .ToString()
+            );
+
+            result = "SELECT TTL(v1), v2 FROM ks.tb;";
+            Assert.AreEqual(result,
+                new Select()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .SelectColumns(Columns.columns1, Columns.columns2)
+                    .SelectFunctions(SelectFunction.TTL, null)
+                    .ToString()
+            );
+
+        }
+
+        [TestMethod]
         public void UT_Select_Aggregates_ToString()
         {
             String result = "SELECT COUNT(*) FROM ks.tb;";
@@ -243,6 +288,45 @@ namespace CassandraQueryBuilder.Tests.UT
 
         }
 
+
+        [TestMethod]
+        public void UT_Select_Function_and_Aggregates_ToString()
+        {
+            String result = "SELECT TTL(v1), AVG(v2) FROM ks.tb;";
+            Assert.AreEqual(result,
+                new Select()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .SelectColumns(Columns.columns1, Columns.columns2)
+                    .SelectFunctions(SelectFunction.TTL, null)
+                    .SelectAggregates(null, SelectAggregate.AVG)
+                    .ToString()
+            );
+
+            result = "SELECT MIN(v1), TTL(v2) FROM ks.tb;";
+            Assert.AreEqual(result,
+                new Select()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .SelectColumns(Columns.columns1, Columns.columns2)
+                    .SelectFunctions(null, SelectFunction.TTL)
+                    .SelectAggregates(SelectAggregate.MIN, null)
+                    .ToString()
+            );
+
+            result = "SELECT AVG(v1), TTL(v2), v3 FROM ks.tb;";
+            Assert.AreEqual(result,
+                new Select()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .SelectColumns(Columns.columns1, Columns.columns2, Columns.columns3)
+                    .SelectFunctions(null, SelectFunction.TTL, null)
+                    .SelectAggregates(SelectAggregate.AVG, null, null)
+                    .ToString()
+            );
+
+        }
+
         [TestMethod]
         public void UT_Select_GetString_DataIsNullOrInvalid()
         {
@@ -257,6 +341,16 @@ namespace CassandraQueryBuilder.Tests.UT
                 () => {
                     new Select()
                         .Keyspace(Variables.keyspace)
+                        .ToString();
+                }
+            );
+
+            Assert.ThrowsException<IndexOutOfRangeException>(
+                () => {
+                    new Select()
+                        .Keyspace(Variables.keyspace).Table(Tables.tableName)
+                        .SelectColumns(Columns.columns1, Columns.columns2)
+                        .SelectFunctions(SelectFunction.TTL)
                         .ToString();
                 }
             );

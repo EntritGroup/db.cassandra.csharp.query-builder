@@ -8,6 +8,7 @@ namespace CassandraQueryBuilder
         private String keyspace;
         private String table;
         private Column[] selectColumns;
+        private SelectFunction[] selectFunctions;
         private SelectAggregate[] selectAggregates;
         private Column[] whereColumns;
         private WhereOperator[] whereOperators;
@@ -55,6 +56,22 @@ namespace CassandraQueryBuilder
         {
             this.selectColumns = columns;
 
+            return this;
+        }
+
+        /// <summary>
+        /// The functions in the SELECT clause
+        /// 
+        /// SELECT TTL(...) etc.
+        /// 
+        /// Use null for columns not using functions
+        /// </summary>
+        /// <param name="selectFunction">TTL</param>
+        /// <returns>Select</returns>
+        public Select SelectFunctions(params SelectFunction[] selectFunction)
+        {
+            this.selectFunctions = selectFunction;
+            
             return this;
         }
 
@@ -137,17 +154,20 @@ namespace CassandraQueryBuilder
         }
 
         //Returns e.g. "name text, address text, " or "" if null
-        private void AppendSelectColumnRows(StringBuilder sb, Column[] columns, String delimiter, SelectAggregate[] selectAggregates)
+        private void AppendSelectColumnRows(StringBuilder sb, Column[] columns, String delimiter, SelectFunction[] selectFunctions, SelectAggregate[] selectAggregates)
         {
             if (columns == null)
                 columns = new Column[] {new Column("*", null)};
 
             for (int i = 0; i < columns.Length; i++)
             {
-                if (selectAggregates == null || selectAggregates[i] == null || selectAggregates.Length == 0)
+                if ((selectAggregates == null || selectAggregates.Length == 0 || selectAggregates[i] == null) &&
+                    (selectFunctions == null || selectFunctions.Length == 0 || selectFunctions[i] == null))
                     Utils.AppendColumnRow(sb, columns[i]);
-                else
+                else if(selectAggregates != null && selectAggregates.Length != 0 && selectAggregates[i] != null)
                     Utils.AppendColumnRow(sb, columns[i], selectAggregates[i].Value + "(", ")");
+                else
+                    Utils.AppendColumnRow(sb, columns[i], selectFunctions[i].Value + "(", ")");
 
                 if (i < columns.Length - 1)
                     sb.Append(delimiter + " ");
@@ -197,6 +217,8 @@ namespace CassandraQueryBuilder
                 throw new NullReferenceException("Keyspace cannot be null");
             if (table == null)
                 throw new NullReferenceException("TableName cannot be null");
+            if (selectColumns != null && selectFunctions != null && selectColumns.Length != selectFunctions.Length)
+                throw new IndexOutOfRangeException("SelectColumns and SelectFunctions must be same length if SelectFunctions is not null");
             if (selectColumns != null && selectAggregates != null && selectColumns.Length != selectAggregates.Length)
                 throw new IndexOutOfRangeException("SelectColumns and SelectAggregates must be same length if SelectAggregates is not null");
             if (whereColumns != null && whereOperators != null && whereColumns.Length != whereOperators.Length)
@@ -208,7 +230,7 @@ namespace CassandraQueryBuilder
 
             sb.Append("SELECT ");
 
-            AppendSelectColumnRows(sb, selectColumns, ",", selectAggregates);
+            AppendSelectColumnRows(sb, selectColumns, ",", selectFunctions, selectAggregates);
             
 
             sb.Append(" FROM " + keyspace + "." + table);
