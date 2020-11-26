@@ -8,6 +8,7 @@ namespace CassandraQueryBuilder
         private String keyspace;
         private String table;
         private Column[] selectColumns;
+        private Column[] selectAsColumns;
         private SelectFunction[] selectFunctions;
         private SelectAggregate[] selectAggregates;
         private Column[] whereColumns;
@@ -56,6 +57,22 @@ namespace CassandraQueryBuilder
         {
             this.selectColumns = columns;
 
+            return this;
+        }
+
+        /// <summary>
+        /// The as in the SELECT clause
+        /// 
+        /// SELECT columns_name as other_name etc.
+        /// 
+        /// Use null for columns not using as
+        /// </summary>
+        /// <param name="columns">The columns used in the SELECT clause</param>
+        /// <returns>Select</returns>
+        public Select SelectAs(params Column[] columns)
+        {
+            this.selectAsColumns = columns;
+            
             return this;
         }
 
@@ -154,7 +171,7 @@ namespace CassandraQueryBuilder
         }
 
         //Returns e.g. "name text, address text, " or "" if null
-        private void AppendSelectColumnRows(StringBuilder sb, Column[] columns, String delimiter, SelectFunction[] selectFunctions, SelectAggregate[] selectAggregates)
+        private void AppendSelectColumnRows(StringBuilder sb, Column[] columns, String delimiter, Column[] selectAsColumns, SelectFunction[] selectFunctions, SelectAggregate[] selectAggregates)
         {
             if (columns == null)
                 columns = new Column[] {new Column("*", null)};
@@ -169,6 +186,9 @@ namespace CassandraQueryBuilder
                 else
                     Utils.AppendColumnRow(sb, columns[i], selectFunctions[i].Value + "(", ")");
 
+                if(selectAsColumns != null && selectAsColumns.Length != 0 && selectAsColumns[i] != null)
+                    sb.Append(" AS " + selectAsColumns[i].Name());
+                
                 if (i < columns.Length - 1)
                     sb.Append(delimiter + " ");
             }
@@ -217,6 +237,8 @@ namespace CassandraQueryBuilder
                 throw new NullReferenceException("Keyspace cannot be null");
             if (table == null)
                 throw new NullReferenceException("TableName cannot be null");
+            if (selectColumns != null && selectAsColumns != null && selectColumns.Length != selectAsColumns.Length)
+                throw new IndexOutOfRangeException("SelectColumns and SelectAs must be same length if SelectAs is not null");
             if (selectColumns != null && selectFunctions != null && selectColumns.Length != selectFunctions.Length)
                 throw new IndexOutOfRangeException("SelectColumns and SelectFunctions must be same length if SelectFunctions is not null");
             if (selectColumns != null && selectAggregates != null && selectColumns.Length != selectAggregates.Length)
@@ -230,7 +252,7 @@ namespace CassandraQueryBuilder
 
             sb.Append("SELECT ");
 
-            AppendSelectColumnRows(sb, selectColumns, ",", selectFunctions, selectAggregates);
+            AppendSelectColumnRows(sb, selectColumns, ",", selectAsColumns, selectFunctions, selectAggregates);
             
 
             sb.Append(" FROM " + keyspace + "." + table);

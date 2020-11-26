@@ -190,6 +190,54 @@ namespace CassandraQueryBuilder.Tests.UT
 
 
         [TestMethod]
+        public void UT_Select_AS_ToString()
+        {
+            String result = "SELECT TTL(v1) AS TTL FROM ks.tb;";
+            Assert.AreEqual(result,
+                new Select()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .SelectColumns(Columns.columns1)
+                    .SelectAs(new Column("TTL"))
+                    .SelectFunctions(SelectFunction.TTL)
+                    .ToString()
+            );
+
+            result = "SELECT v1 AS v3, v2 AS v4 FROM ks.tb;";
+            Assert.AreEqual(result,
+                new Select()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .SelectColumns(Columns.columns1, Columns.columns2)
+                    .SelectAs(Columns.columns3, Columns.columns4)
+                    .ToString()
+            );
+
+            result = "SELECT v1, TTL(v2) AS TTL FROM ks.tb;";
+            Assert.AreEqual(result,
+                new Select()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .SelectColumns(Columns.columns1, Columns.columns2)
+                    .SelectAs(null, new Column("TTL"))
+                    .SelectFunctions(null, SelectFunction.TTL)
+                    .ToString()
+            );
+
+            result = "SELECT TTL(v1) AS TTL, v2 FROM ks.tb;";
+            Assert.AreEqual(result,
+                new Select()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .SelectColumns(Columns.columns1, Columns.columns2)
+                    .SelectAs(new Column("TTL"), null)
+                    .SelectFunctions(SelectFunction.TTL, null)
+                    .ToString()
+            );
+
+        }
+
+        [TestMethod]
         public void UT_Select_Functions_ToString()
         {
             String result = "SELECT TTL(v1) FROM ks.tb;";
@@ -341,6 +389,16 @@ namespace CassandraQueryBuilder.Tests.UT
                 () => {
                     new Select()
                         .Keyspace(Variables.keyspace)
+                        .ToString();
+                }
+            );
+
+            Assert.ThrowsException<IndexOutOfRangeException>(
+                () => {
+                    new Select()
+                        .Keyspace(Variables.keyspace).Table(Tables.tableName)
+                        .SelectColumns(Columns.columns1, Columns.columns2)
+                        .SelectAs(Columns.columns3)
                         .ToString();
                 }
             );

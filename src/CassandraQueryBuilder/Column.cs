@@ -8,7 +8,7 @@ namespace CassandraQueryBuilder
         private ColumnType columnType;
         private bool isStatic;
 
-        public Column(String name, ColumnType columnType, bool isStatic = false)
+        public Column(String name, ColumnType columnType = null, bool isStatic = false)
         {
             this.name = name;
             this.columnType = columnType;
