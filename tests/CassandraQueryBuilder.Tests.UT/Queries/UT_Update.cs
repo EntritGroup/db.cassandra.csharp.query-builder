@@ -291,22 +291,22 @@ namespace CassandraQueryBuilder.Tests.UT
             );
 
             Assert.ThrowsException<NullReferenceException>(
-(Action)(() => {
+                () => {
                     new Update()
                         .Keyspace(Variables.keyspace)
                         .Table(Tables.tableName)
                         .ToString();
-                })
+                }
             );
 
             Assert.ThrowsException<NullReferenceException>(
-(Action)(() => {
+                () => {
                     new Update()
                         .Keyspace(Variables.keyspace)
                         .Table(Tables.tableName)
                         .UpdateColumns(Columns.columns1)
                         .ToString();
-                })
+                }
             );
         }
 

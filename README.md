@@ -81,6 +81,9 @@ You can run the tests by typing "dotnet test .\tests\CassandraQueryBuilder.Tests
 
 ## Releases
 
+<!-- ### Version 1.3.0
+Added support for multiple counter updates in same query -->
+
 ### Version 1.2.0
 Added support for Frozen and Tuple  
 Added support for creating User Defined Types

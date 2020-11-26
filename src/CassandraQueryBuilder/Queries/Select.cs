@@ -144,7 +144,7 @@ namespace CassandraQueryBuilder
 
             for (int i = 0; i < columns.Length; i++)
             {
-                if (selectAggregates == null || selectAggregates[i] == null || selectAggregates.Length == 0 || selectAggregates[i] == null)
+                if (selectAggregates == null || selectAggregates[i] == null || selectAggregates.Length == 0)
                     Utils.AppendColumnRow(sb, columns[i]);
                 else
                     Utils.AppendColumnRow(sb, columns[i], selectAggregates[i].Value + "(", ")");

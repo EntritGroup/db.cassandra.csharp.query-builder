@@ -102,12 +102,12 @@ namespace CassandraQueryBuilder.Tests.UT
             );
 
             Assert.ThrowsException<NullReferenceException>(
-(Action)(() => {
+                () => {
                     new Insert()
                         .Keyspace(Variables.keyspace)
                         .Table(Tables.tableName)
                         .ToString();
-                })
+                }
             );
         }
 

@@ -7,9 +7,9 @@ namespace CassandraQueryBuilder
     {
         private String keyspace;
         private String table;
-        private Column column;
+        private Column[] updateColumns;
         private Column[] whereColumns;
-        private int? increaseBy; //increaseBy = Increase or decrease by (e.g. 1, 2, -1, -5)
+        private int?[] increaseBy; //increaseBy = Increase or decrease by (e.g. 1, 2, -1, -5)
 
         /// <summary>
         /// To create UPDATE queries for counters
@@ -44,13 +44,13 @@ namespace CassandraQueryBuilder
         }
 
         /// <summary>
-        /// The column in the UPDATE clause
+        /// The columns in the UPDATE clause
         /// </summary>
-        /// <param name="column">The column used in the UPDATE clause</param>
+        /// <param name="column">The columns used in the UPDATE clause</param>
         /// <returns>UpdateCounter</returns>
-        public UpdateCounter UpdateColumn(Column column)
+        public UpdateCounter UpdateColumns(params Column[] updateColumns)
         {
-            this.column = column;
+            this.updateColumns = updateColumns;
 
             return this;
         }
@@ -68,11 +68,11 @@ namespace CassandraQueryBuilder
         }
 
         /// <summary>
-        /// Increase or decrease the counter
+        /// Increase or decrease the counters
         /// </summary>
-        /// <param name="increaseBy">E.g. 1, 2, -1, -5</param>
+        /// <param name="increaseBy">E.g. 1, 2, -1, -5, null (for ?)</param>
         /// <returns>UpdateCounter</returns>
-        public UpdateCounter IncreaseBy(int increaseBy)
+        public UpdateCounter IncreaseBy(params int?[] increaseBy)
         {
             this.increaseBy = increaseBy;
 
@@ -107,10 +107,13 @@ namespace CassandraQueryBuilder
                 throw new NullReferenceException("Keyspace cannot be null");
             if (table == null)
                 throw new NullReferenceException("TableName cannot be null");
-            if (column == null)
+            if (updateColumns == null)
                 throw new NullReferenceException("Columns cannot be null");
             if (whereColumns == null)
                 throw new NullReferenceException("WhereColumns cannot be null");
+            if (increaseBy != null && updateColumns.Length != increaseBy.Length) //updateColumns != null is already checked above
+                throw new IndexOutOfRangeException("UpdateColumns and IncreasyBy must be same length if increaseBy is not null");
+            
 
 
 
@@ -119,8 +122,16 @@ namespace CassandraQueryBuilder
             sb.Append("UPDATE " + keyspace + "." + table + " SET ");
 
 
-            
-            sb.Append(column.Name() + " = " + column.Name() + " + " + (increaseBy == null ? "?" : increaseBy.ToString()));
+            for (int i = 0; i < updateColumns.Length; i++)
+            {
+                if (increaseBy == null || increaseBy[i] == null || increaseBy.Length == 0)
+                    sb.Append(updateColumns[i].Name() + " = " + updateColumns[i].Name() + " + " + "?");
+                else
+                    sb.Append(updateColumns[i].Name() + " = " + updateColumns[i].Name() + " + " + increaseBy[i].ToString());
+
+                if (i < updateColumns.Length - 1)
+                    sb.Append(", ");
+            }
 
 
             sb.Append(" WHERE ");

@@ -180,12 +180,12 @@ namespace CassandraQueryBuilder.Tests.UT
             );
 
             Assert.ThrowsException<NullReferenceException>(
-(Action)(() => {
+                () => {
                     new Delete()
                         .Keyspace(Variables.keyspace)
                         .Table(Tables.tableName)
                         .ToString();
-                })
+                }
             );
         }
 
