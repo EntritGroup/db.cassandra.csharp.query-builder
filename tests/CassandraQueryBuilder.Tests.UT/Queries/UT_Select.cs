@@ -192,13 +192,13 @@ namespace CassandraQueryBuilder.Tests.UT
         [TestMethod]
         public void UT_Select_AS_ToString()
         {
-            String result = "SELECT TTL(v1) AS TTL FROM ks.tb;";
+            String result = "SELECT TTL(v1) AS ttl FROM ks.tb;";
             Assert.AreEqual(result,
                 new Select()
                     .Keyspace(Variables.keyspace)
                     .Table(Tables.tableName)
                     .SelectColumns(Columns.columns1)
-                    .SelectAs(new Column("TTL"))
+                    .SelectAs(new Column("ttl"))
                     .SelectFunctions(SelectFunction.TTL)
                     .ToString()
             );
@@ -213,24 +213,24 @@ namespace CassandraQueryBuilder.Tests.UT
                     .ToString()
             );
 
-            result = "SELECT v1, TTL(v2) AS TTL FROM ks.tb;";
+            result = "SELECT v1, TTL(v2) AS ttl FROM ks.tb;";
             Assert.AreEqual(result,
                 new Select()
                     .Keyspace(Variables.keyspace)
                     .Table(Tables.tableName)
                     .SelectColumns(Columns.columns1, Columns.columns2)
-                    .SelectAs(null, new Column("TTL"))
+                    .SelectAs(null, new Column("ttl"))
                     .SelectFunctions(null, SelectFunction.TTL)
                     .ToString()
             );
 
-            result = "SELECT TTL(v1) AS TTL, v2 FROM ks.tb;";
+            result = "SELECT TTL(v1) AS ttl, v2 FROM ks.tb;";
             Assert.AreEqual(result,
                 new Select()
                     .Keyspace(Variables.keyspace)
                     .Table(Tables.tableName)
                     .SelectColumns(Columns.columns1, Columns.columns2)
-                    .SelectAs(new Column("TTL"), null)
+                    .SelectAs(new Column("ttl"), null)
                     .SelectFunctions(SelectFunction.TTL, null)
                     .ToString()
             );

@@ -17,11 +17,17 @@ namespace CassandraQueryBuilder
 
         public String Name()
         {
+            if(name == null)
+                throw new NullReferenceException();
+
             return name;
         }
 
         public String ColumnType()
         {
+            if(columnType.Value == null)
+                throw new NullReferenceException();
+
             return columnType.Value;
         }
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace CassandraQueryBuilder.Tests.UT
 {
@@ -46,6 +47,23 @@ namespace CassandraQueryBuilder.Tests.UT
         {
             Column column = new Column ("v1", ColumnType.FROZEN(ColumnType.TUPLE(new ColumnType[] { ColumnType.TEXT, ColumnType.BOOLEAN } )));
             Assert.AreEqual("FROZEN<TUPLE<TEXT, BOOLEAN>>", column.ColumnType());
+        }
+
+        
+        [TestMethod]
+        public void UT_Columns_DataIsNullOrInvalid()
+        {
+            Assert.ThrowsException<NullReferenceException>(
+                () => {
+                    (new Column (null)).Name();
+                }
+            );
+            
+            Assert.ThrowsException<NullReferenceException>(
+                () => {
+                    (new Column ("v1", null)).ColumnType();
+                }
+            );
         }
     }
 }
