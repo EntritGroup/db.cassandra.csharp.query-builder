@@ -85,7 +85,7 @@ namespace CassandraQueryBuilder
         public CreateTable ClusteringKeysOrderByASC(params Boolean[] clusteringKeysOrderByASC)
         {
             if (isClusteringKeysOrderByAscSet)
-                throw new Exception("SetClusteringKeysOrderByASC already set");
+                throw new Exception("ClusteringKeysOrderByASC already set");
             if (clusteringKeys == null)
                 throw new NullReferenceException("ClusteringKeys cannon be null when clusteringKeysOrderByASC is not null");
             if (clusteringKeys != null && clusteringKeys.Length < clusteringKeysOrderByASC.Length)
@@ -122,7 +122,7 @@ namespace CassandraQueryBuilder
         public CreateTable CompactionStrategy(CompactionStrategy dbCompactionStrategy)
         {
             if (isDbCompactionStrategySet)
-                throw new Exception("SetCompactionStrategy already set");
+                throw new Exception("CompactionStrategy already set");
 
             isDbCompactionStrategySet = true;
             
@@ -141,7 +141,7 @@ namespace CassandraQueryBuilder
         public CreateTable GcGrace(int gcGraceSeconds)
         {
             if (isGcGraceSecondsSet)
-                throw new Exception("SetGcGrace already set");
+                throw new Exception("GcGrace already set");
 
             isGcGraceSecondsSet = true;
 

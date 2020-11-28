@@ -81,11 +81,11 @@ You can run the tests by typing "dotnet test .\tests\CassandraQueryBuilder.Tests
 
 ## Releases
 
-<!-- ### Version 1.3.0
+### Version 1.3.0
 Added support for multiple counter updates in same query  
 Added support for functions such as TTL on select columns  
 Added support for adding own functions and aggregates  
-Added support for naming columns in select queries using "as" -->
+Added support for naming columns in select queries using "as"
 
 ### Version 1.2.0
 Added support for Frozen and Tuple  
