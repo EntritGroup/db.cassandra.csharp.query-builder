@@ -244,7 +244,8 @@ namespace CassandraQueryBuilder
                     sb.Append(" TTL ?");
             }
 
-            sb.Append(" SET ");
+            if(updateColumns != null) //It can be null if only ttl is specified to update for whole partition without specifying columns
+                sb.Append(" SET ");
 
             AppendColumnRows(sb, updateColumns, ",");
 

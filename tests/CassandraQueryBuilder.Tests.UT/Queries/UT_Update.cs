@@ -139,6 +139,20 @@ namespace CassandraQueryBuilder.Tests.UT
         }
 
         [TestMethod]
+        public void UT_Update_TTLOnly_GetString()
+        {
+            String result = "UPDATE ks.tb USING TTL ? WHERE v1 = ?;";
+            Assert.AreEqual(result,
+                new Update()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .WhereColumns(Columns.columns1)
+                    .TTL()
+                    .ToString()
+            );
+        }
+
+        [TestMethod]
         public void UT_Update_Map_GetString()
         {
             String result = "UPDATE ks.tb SET v1 = ?, v2 = ?, vm1 = vm1 + ? WHERE v1 = ? AND v3 = ?;";
