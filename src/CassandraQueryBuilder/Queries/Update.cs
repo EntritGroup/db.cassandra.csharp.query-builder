@@ -219,8 +219,8 @@ namespace CassandraQueryBuilder
                 throw new NullReferenceException("Keyspace cannot be null");
             if (table == null)
                 throw new NullReferenceException("TableName cannot be null");
-            if (updateColumns == null)
-                throw new NullReferenceException("Columns cannot be null");
+            if (updateColumns == null && !ttl) //You can update the TTL for whole partition without specifying columns
+                throw new NullReferenceException("UpdateColumns cannot be null");
             if (whereColumns == null)
                 throw new NullReferenceException("WhereColumns cannot be null");
 

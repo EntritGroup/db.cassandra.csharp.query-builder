@@ -81,6 +81,9 @@ You can run the tests by typing "dotnet test .\tests\CassandraQueryBuilder.Tests
 
 ## Releases
 
+### Version 1.3.1
+Fixed bug for update query when only TTL is specified
+
 ### Version 1.3.0
 Added support for multiple counter updates in same query  
 Added support for functions such as TTL on select columns  
