@@ -88,7 +88,12 @@ namespace CassandraQueryBuilder
                     throw new Exception("DataCenters must contain at least one object for NetworkTopotogyStrategy");
 
                 foreach(DataCenter dataCenter in dbDataCenters)
-                    sb.Append(", '" + dataCenter.Name() + "' : " + dataCenter.ReplicationFactor()); //dbDataCenters[1].GetReplicationFactor() throws error if replication factor is not set
+                {
+                    if(dataCenter.Name() != null)
+                        sb.Append(", '" + dataCenter.Name() + "' : " + dataCenter.ReplicationFactor()); //dbDataCenters[1].GetReplicationFactor() throws error if replication factor is not set
+                    else
+                        sb.Append(", " + "replication_factor" + " : " + dataCenter.ReplicationFactor()); //dbDataCenters[1].GetReplicationFactor() throws error if replication factor is not set
+                }
             }
             
 

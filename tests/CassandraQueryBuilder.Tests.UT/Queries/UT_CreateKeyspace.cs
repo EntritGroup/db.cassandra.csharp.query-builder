@@ -7,6 +7,7 @@ namespace CassandraQueryBuilder.Tests.UT
     [TestClass]
     public class UT_CreateKeyspace
     {
+        //https://cassandra.apache.org/doc/latest/cql/ddl.html
         [TestMethod]
         public void UT_CreateKeyspace_GetString()
         {
@@ -16,6 +17,15 @@ namespace CassandraQueryBuilder.Tests.UT
                     .Keyspace(Variables.keyspace)
                     .ReplicationStrategy(ReplicationStrategy.SimpleStrategy)
                     .DataCenters(new DataCenter[] { new DataCenter(Variables.dataCenterName1, 3) })
+                    .ToString()
+            );
+
+            result = "CREATE KEYSPACE ks WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 3 };";
+            Assert.AreEqual(result,
+                new CreateKeyspace()
+                    .Keyspace(Variables.keyspace)
+                    .ReplicationStrategy(ReplicationStrategy.SimpleStrategy)
+                    .DataCenters(new DataCenter[] { new DataCenter(null, 3) })
                     .ToString()
             );
 
@@ -36,6 +46,25 @@ namespace CassandraQueryBuilder.Tests.UT
                     .DataCenters(new DataCenter[] { new DataCenter(Variables.dataCenterName1, 3), new DataCenter(Variables.dataCenterName2, 2) })
                     .ToString()
             );
+            
+            result = "CREATE KEYSPACE ks WITH REPLICATION = { 'class' : 'NetworkTopologyStrategy', replication_factor : 3 };";
+            Assert.AreEqual(result,
+                new CreateKeyspace()
+                    .Keyspace(Variables.keyspace)
+                    .ReplicationStrategy(ReplicationStrategy.NetworkTopologyStrategy)
+                    .DataCenters(new DataCenter[] { new DataCenter(null, 3) })
+                    .ToString()
+            );
+            
+            result = "CREATE KEYSPACE ks WITH REPLICATION = { 'class' : 'NetworkTopologyStrategy', replication_factor : 3, 'dc2' : 2 };";
+            Assert.AreEqual(result,
+                new CreateKeyspace()
+                    .Keyspace(Variables.keyspace)
+                    .ReplicationStrategy(ReplicationStrategy.NetworkTopologyStrategy)
+                    .DataCenters(new DataCenter[] { new DataCenter(null, 3), new DataCenter(Variables.dataCenterName2, 2) })
+                    .ToString()
+            );
+
         }
 
         [TestMethod]
