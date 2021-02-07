@@ -82,7 +82,7 @@ You can run the tests by typing "dotnet test .\tests\CassandraQueryBuilder.Tests
 ## Releases
 
 <!-- ### Version 1.4.0
-Added support for default replication factor for Network Topology Strategy when creating keysapace -->
+Added support for default replication factor for NetworkTopologyStrategy when creating keyspace -->
 
 ### Version 1.3.1
 Fixed bug for update query when only TTL is specified

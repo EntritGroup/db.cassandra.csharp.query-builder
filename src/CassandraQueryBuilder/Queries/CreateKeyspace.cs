@@ -106,13 +106,5 @@ namespace CassandraQueryBuilder
             return sb.ToString();
         }
 
-        public String GetDropString()
-        {
-            if (keyspace == null)
-                throw new NullReferenceException("Name cannot be null");
-
-            return "DROP KEYSPACE IF EXISTS " + keyspace + ";";
-        }
-
     }
 }
