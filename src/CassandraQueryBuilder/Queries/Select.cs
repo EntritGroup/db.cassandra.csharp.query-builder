@@ -178,15 +178,15 @@ namespace CassandraQueryBuilder
 
             for (int i = 0; i < columns.Length; i++)
             {
-                if ((selectAggregates == null || selectAggregates.Length == 0 || selectAggregates[i] == null) &&
-                    (selectFunctions == null || selectFunctions.Length == 0 || selectFunctions[i] == null))
+                if (!(selectAggregates != null && selectAggregates.Length > i && selectAggregates[i] != null) &&
+                    !(selectFunctions != null && selectFunctions.Length > i && selectFunctions[i] != null))
                     Utils.AppendColumnRow(sb, columns[i]);
-                else if(selectAggregates != null && selectAggregates.Length != 0 && selectAggregates[i] != null)
+                else if(selectAggregates != null && selectAggregates.Length > i && selectAggregates[i] != null)
                     Utils.AppendColumnRow(sb, columns[i], selectAggregates[i].Value + "(", ")");
                 else
                     Utils.AppendColumnRow(sb, columns[i], selectFunctions[i].Value + "(", ")");
 
-                if(selectAsColumns != null && selectAsColumns.Length != 0 && selectAsColumns[i] != null)
+                if(selectAsColumns != null && selectAsColumns.Length > i && selectAsColumns[i] != null)
                     sb.Append(" AS " + selectAsColumns[i].Name());
                 
                 if (i < columns.Length - 1)
@@ -237,12 +237,12 @@ namespace CassandraQueryBuilder
                 throw new NullReferenceException("Keyspace cannot be null");
             if (table == null)
                 throw new NullReferenceException("TableName cannot be null");
-            if (selectColumns != null && selectAsColumns != null && selectColumns.Length != selectAsColumns.Length)
-                throw new IndexOutOfRangeException("SelectColumns and SelectAs must be same length if SelectAs is not null");
-            if (selectColumns != null && selectFunctions != null && selectColumns.Length != selectFunctions.Length)
-                throw new IndexOutOfRangeException("SelectColumns and SelectFunctions must be same length if SelectFunctions is not null");
-            if (selectColumns != null && selectAggregates != null && selectColumns.Length != selectAggregates.Length)
-                throw new IndexOutOfRangeException("SelectColumns and SelectAggregates must be same length if SelectAggregates is not null");
+            if (selectColumns != null && selectAsColumns != null && selectColumns.Length < selectAsColumns.Length)
+                throw new IndexOutOfRangeException("SelectColumns must be larger or same size as SelectAs if SelectAs is not null");
+            if (selectColumns != null && selectFunctions != null && selectColumns.Length < selectFunctions.Length)
+                throw new IndexOutOfRangeException("SelectColumns must be larger or same size as SelectFunctions if SelectFunctions is not null");
+            if (selectColumns != null && selectAggregates != null && selectColumns.Length < selectAggregates.Length)
+                throw new IndexOutOfRangeException("SelectColumns must be larger or same size as SelectAggregates if SelectAggregates is not null");
             if (whereColumns != null && whereOperators != null && whereColumns.Length != whereOperators.Length)
                 throw new IndexOutOfRangeException("WhereColumns and WhereOperators must be same length if WhereOperators is not null");
 

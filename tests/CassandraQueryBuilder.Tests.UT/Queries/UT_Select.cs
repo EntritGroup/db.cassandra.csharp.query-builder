@@ -192,14 +192,23 @@ namespace CassandraQueryBuilder.Tests.UT
         [TestMethod]
         public void UT_Select_AS_ToString()
         {
-            String result = "SELECT TTL(v1) AS ttl FROM ks.tb;";
+            String result = "SELECT v1 AS v3, v2 FROM ks.tb;";
             Assert.AreEqual(result,
                 new Select()
                     .Keyspace(Variables.keyspace)
                     .Table(Tables.tableName)
-                    .SelectColumns(Columns.columns1)
-                    .SelectAs(new Column("ttl"))
-                    .SelectFunctions(SelectFunction.TTL)
+                    .SelectColumns(Columns.columns1, Columns.columns2)
+                    .SelectAs(Columns.columns3)
+                    .ToString()
+            );
+
+            result = "SELECT v1, v2 AS v3 FROM ks.tb;";
+            Assert.AreEqual(result,
+                new Select()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .SelectColumns(Columns.columns1, Columns.columns2)
+                    .SelectAs(null, Columns.columns3)
                     .ToString()
             );
 
@@ -212,29 +221,6 @@ namespace CassandraQueryBuilder.Tests.UT
                     .SelectAs(Columns.columns3, Columns.columns4)
                     .ToString()
             );
-
-            result = "SELECT v1, TTL(v2) AS ttl FROM ks.tb;";
-            Assert.AreEqual(result,
-                new Select()
-                    .Keyspace(Variables.keyspace)
-                    .Table(Tables.tableName)
-                    .SelectColumns(Columns.columns1, Columns.columns2)
-                    .SelectAs(null, new Column("ttl"))
-                    .SelectFunctions(null, SelectFunction.TTL)
-                    .ToString()
-            );
-
-            result = "SELECT TTL(v1) AS ttl, v2 FROM ks.tb;";
-            Assert.AreEqual(result,
-                new Select()
-                    .Keyspace(Variables.keyspace)
-                    .Table(Tables.tableName)
-                    .SelectColumns(Columns.columns1, Columns.columns2)
-                    .SelectAs(new Column("ttl"), null)
-                    .SelectFunctions(SelectFunction.TTL, null)
-                    .ToString()
-            );
-
         }
 
         [TestMethod]
@@ -277,6 +263,16 @@ namespace CassandraQueryBuilder.Tests.UT
                     .Table(Tables.tableName)
                     .SelectColumns(Columns.columns1, Columns.columns2)
                     .SelectFunctions(SelectFunction.TTL, null)
+                    .ToString()
+            );
+
+            result = "SELECT TTL(v1), v2 FROM ks.tb;";
+            Assert.AreEqual(result,
+                new Select()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .SelectColumns(Columns.columns1, Columns.columns2)
+                    .SelectFunctions(SelectFunction.TTL)
                     .ToString()
             );
 
@@ -334,8 +330,88 @@ namespace CassandraQueryBuilder.Tests.UT
                     .ToString()
             );
 
+            result = "SELECT AVG(v1), v2 FROM ks.tb;";
+            Assert.AreEqual(result,
+                new Select()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .SelectColumns(Columns.columns1, Columns.columns2)
+                    .SelectAggregates(SelectAggregate.AVG)
+                    .ToString()
+            );
+
         }
 
+
+        [TestMethod]
+        public void UT_Select_AS_and_Function_ToString()
+        {
+            String result = "SELECT TTL(v1) AS ttl FROM ks.tb;";
+            Assert.AreEqual(result,
+                new Select()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .SelectColumns(Columns.columns1)
+                    .SelectAs(new Column("ttl"))
+                    .SelectFunctions(SelectFunction.TTL)
+                    .ToString()
+            );
+
+            result = "SELECT v1, TTL(v2) AS ttl FROM ks.tb;";
+            Assert.AreEqual(result,
+                new Select()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .SelectColumns(Columns.columns1, Columns.columns2)
+                    .SelectAs(null, new Column("ttl"))
+                    .SelectFunctions(null, SelectFunction.TTL)
+                    .ToString()
+            );
+
+            result = "SELECT TTL(v1) AS ttl, v2 FROM ks.tb;";
+            Assert.AreEqual(result,
+                new Select()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .SelectColumns(Columns.columns1, Columns.columns2)
+                    .SelectAs(new Column("ttl"), null)
+                    .SelectFunctions(SelectFunction.TTL, null)
+                    .ToString()
+            );
+
+            result = "SELECT TTL(v1) AS ttl, v2 FROM ks.tb;";
+            Assert.AreEqual(result,
+                new Select()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .SelectColumns(Columns.columns1, Columns.columns2)
+                    .SelectAs(new Column("ttl"))
+                    .SelectFunctions(SelectFunction.TTL, null)
+                    .ToString()
+            );
+
+            result = "SELECT TTL(v1) AS ttl, v2 FROM ks.tb;";
+            Assert.AreEqual(result,
+                new Select()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .SelectColumns(Columns.columns1, Columns.columns2)
+                    .SelectAs(new Column("ttl"), null)
+                    .SelectFunctions(SelectFunction.TTL)
+                    .ToString()
+            );
+            
+            result = "SELECT TTL(v1) AS ttl, v2 FROM ks.tb;";
+            Assert.AreEqual(result,
+                new Select()
+                    .Keyspace(Variables.keyspace)
+                    .Table(Tables.tableName)
+                    .SelectColumns(Columns.columns1, Columns.columns2)
+                    .SelectAs(new Column("ttl"))
+                    .SelectFunctions(SelectFunction.TTL)
+                    .ToString()
+            );
+        }
 
         [TestMethod]
         public void UT_Select_Function_and_Aggregates_ToString()
@@ -397,8 +473,8 @@ namespace CassandraQueryBuilder.Tests.UT
                 () => {
                     new Select()
                         .Keyspace(Variables.keyspace).Table(Tables.tableName)
-                        .SelectColumns(Columns.columns1, Columns.columns2)
-                        .SelectAs(Columns.columns3)
+                        .SelectColumns(Columns.columns1)
+                        .SelectAs(Columns.columns2, Columns.columns3)
                         .ToString();
                 }
             );
@@ -407,8 +483,8 @@ namespace CassandraQueryBuilder.Tests.UT
                 () => {
                     new Select()
                         .Keyspace(Variables.keyspace).Table(Tables.tableName)
-                        .SelectColumns(Columns.columns1, Columns.columns2)
-                        .SelectFunctions(SelectFunction.TTL)
+                        .SelectColumns(Columns.columns1)
+                        .SelectFunctions(SelectFunction.TTL, SelectFunction.TTL)
                         .ToString();
                 }
             );
@@ -417,8 +493,8 @@ namespace CassandraQueryBuilder.Tests.UT
                 () => {
                     new Select()
                         .Keyspace(Variables.keyspace).Table(Tables.tableName)
-                        .SelectColumns(Columns.columns1, Columns.columns2)
-                        .SelectAggregates(SelectAggregate.COUNT)
+                        .SelectColumns(Columns.columns1)
+                        .SelectAggregates(SelectAggregate.COUNT, SelectAggregate.MAX)
                         .ToString();
                 }
             );
